@@ -1,14 +1,36 @@
 package demo;
 
+import javax.print.DocFlavor.STRING;
+
 public class Program {
-	
-	
 	
 	public static void main(String[] args)
 	{
+		String strNumber = "125";
+		//STRING msg = "hello";
+		
+		int num = Integer.parseInt(strNumber);
+		System.out.println("NUmber : " + num);
+	}
+	
+	
+	
+	
+	public static void main4(String[] args)
+	{
 		int number;
 		
-		//number = 10;
+		;
+		
+	}
+	
+	
+	
+	public static void main3(String[] args)
+	{
+		int number;
+		
+		number = 10;
 		System.out.println("Number : " + number);
 		
 	}
