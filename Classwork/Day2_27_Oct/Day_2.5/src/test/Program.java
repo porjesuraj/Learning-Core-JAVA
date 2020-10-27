@@ -3,7 +3,7 @@ package test;
 
 public class Program {
 	
-	public static void main(String[] args)
+	public static void main5(String[] args)
 	{
 		String str =  "1a23";
 		
