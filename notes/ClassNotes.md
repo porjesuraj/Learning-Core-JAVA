@@ -230,21 +230,113 @@ class Program{
 7. practical demos 
     1. in java we can overload main method (also call one main to another), in other language ??
     ```c#
+     public static void main(String[] args) {
+		
+		System.out.println("Hello ");  
+		
+		//Program::main(10,20); c++
+		Program.main(1, 2);
+		main(10,20);
+	}
+
+   // in java we can overload main method
+   public static void main(int num1,int num2)
+   {
+	   System.out.println("Num1 :" + num1);
+	   System.out.println("Num2 : " + num2);
+   }
 
     ```
     2. we can write , main method per class, but only one will be starting main method in it , we need to select it
       - calling main method job of main thread .
       ```c#
+          package test;
+          {}
 
+             class A
+             {
+             public static void main(String[] args) {
+             		
+             		System.out.println("A.main ");  
+             		
+             	}
+             }
+             
+             public class Program {
+             
+                public static void main(String[] args) {
+             		
+             		System.out.println("Program.main ");  
+             		
+             	}
+          }
       ```
-    3.    
+    3.  different print methods in printstream class  
     ```c#
+    public static void main3(String[] args) {
+		
+		String name = "suraj porje";
+		int empid = 26;
+		float salary = 90000.45f;
+		//System.out.println(name + " " + empid + " " + salary);
+		
+		System.out.printf("%-25s%-5d%-10.2f \n",name,empid,salary);
+		name = "sallu";
+		 empid = 36;
+		 salary = 60000.45f;
+		 System.out.printf("%-25s%-5d%-10.2f \n",name,empid,salary);
+		// System.out.println(name + " " + empid + " " + salary);
+	    }
+	
+        public static void main2(String[] args) {
+ 		
+		   System.out.println("DAC,"); // new line print 
+	
+	   }
+	
+	
+	      public static void main1(String[] args) {
+		
+		   System.out.print("DAC,"); // same line print 
+	
+	   }
 
     ```
+
+
+
     4. when both primitive datatype need conversion  , use c type casting 
      - widening conversion, smaller data type to large datatype conversionm, not required explicit casting 
      -  narrowing conversion,  large datatype conversion to smaller data type, explicitely casting in required
     ```c#
+    public static void main(String[] args) {
+		
+		double num1 = 10.5; //Initialization
+	    int  num2 ; // narrowing
+		num2 = (int) num1;
+		System.out.println("Num2 : " + num2);
+		}
+	
+	
+	public static void main2(String[] args) {
+		
+		int num1 = 10; //Initialization
+		double num2 = (double)num1; //wideening 
+		System.out.println("Num2 : " + num2);
+		
+		}
+	
+     public static void main1(String[] args) {
+		
+	   int num1 = 10; //Initialization
+     // C/C++ type casting 
+	   double num2 = (double) num1 ; // Initialization 
+	
+	    System.out.println("Num2 : " + num2);
+	
+	
+	}
+
 
     ```
     5.  primitive type are itself not classes, so need wrapper class
@@ -253,10 +345,62 @@ class Program{
         - e.g for string can use ,method 
            - toString()
            - valueOf
-     -       
-     ```c#
+            
+ ```c#
+     public class Program{
+	public static void main(String[] args) {
+		String str = "1a2b5"; // Non primitive
+		
+		int number = Integer.parseInt(str); // Primitive : Unboxing
+		
+		System.out.println("number : " + number);
+		//error : seen in stack trace
+	}
+	
+	
+	public static void main4(String[] args) {
+		String str = "125"; // Non primitive
+		
+		int number = Integer.parseInt(str); // Primitive : Unboxing
+		
+		System.out.println("number : " + number);
+	}
+	
+	public static void main3(String[] args) {
+		double number = 10.5;
+		String strNumber = Double.toString(number);//Non Primitive : Boxing
+		System.out.println(strNumber);
+	}
+	public static void main2(String[] args) {
+		int number = 10;	//Primitive
+		//String strNumber = Integer.toString(number); //Non Primitive : Boxing
+		String strNumber = String.valueOf(number);//Non Primitive : Boxing
+		System.out.println("Number	:	"+strNumber);
+	}
+		
+}
 
-    ```
+```
+
+  6.    use of scanner class to take input from user, demo 
+```c#
+public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Name : ");
+		String name = sc.nextLine();
+				
+		System.out.print(" Roll no : ");
+		int rollNumber = sc.nextInt();
+		System.out.print(" Marks : ");
+		float marks = sc.nextFloat();
+		
+		System.out.println(" Name : " + name + " roll no : " + rollNumber + " marks : " + marks);
+		
+	}
+
+
+```
 
 ## to read
 
