@@ -720,8 +720,64 @@ Account acc3 = new Account(); // in java: acc3: Reference
   - right click,
   - select source --> generate getter/setter
   
-- 10. 
+- 10. menu driver program, for account class
+```java
+public class Program {
+	static Scanner sc = new Scanner(System.in);
 
+	public static void acceptRecord(Account account) {
+		System.out.print("Number	:	");
+		account.setNumber(sc.nextInt());
+		System.out.print("Type	:	");
+		sc.nextLine();
+		account.setType(sc.nextLine());
+		System.out.print("Balance	:	");
+		account.setBalance(sc.nextFloat());
+	}
+
+	public static void printRecord(Account account) {
+		System.out.println("Number	:	" + account.getNumber());
+		System.out.println("Type	:	" + account.getType());
+		System.out.println("Balance	:	" + account.getBalance());
+	}
+
+	public static int menuList() {
+		System.out.println("0.Exit");
+		System.out.println("1.Accept Record");
+		System.out.println("2.Print Record");
+		System.out.print("Enter choice	:	");
+		int choice = sc.nextInt();
+		return choice;
+	}
+
+	public static void main(String[] args) {
+		int choice;
+		Account account = new Account();
+		while ((choice = Program.menuList()) != 0) {
+			switch (choice) {
+			case 1:
+				Program.acceptRecord(account);
+				break;
+			case 2:
+				Program.printRecord(account);
+				break;
+			}
+		}
+	}
+
+	public static void main1(String[] args) {
+		Account account = new Account();
+
+		Program.acceptRecord(account);
+
+		Program.printRecord(account);
+	}
+}
+
+
+```
+
+- 11. 
 
 
 ### class Notes : 
