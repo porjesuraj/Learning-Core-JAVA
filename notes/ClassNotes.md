@@ -1,5 +1,7 @@
 
-# Syllabys 
+Slogan of java: write once,run anywhere
+Slogan of .net : run once ,run always
+# Syllabus 
 
 1. Java intro : 1 day  
 2.  Datatype : 1 day
@@ -651,171 +653,8 @@ public Account() {
 		this.balance = balance;
 	}
 ```
-- 6. 
-
-
-
-### class Notes : 
-
-!['day3.1'](day3.1.png)
-
-!['day3.2'](day3.2.png)
-
-!['day3.3'](day3.3.png)
-
-!['day3.4'](day3.4.png)
-
-
-1. in java has no structure and union 
-
-2. in java ,object is called as instance 
-
-3. class 
-
-!['day3.5-class'](day3.5.png)
-
-  !['day3.6'](day3.6.png)
-
- !['day3.7'](day3.7.png)
-
- !['day3.8'](day3.8.png)
- 
-1. Anonymous Instance
-- if we create instance without refrence is anonymous instance
-   use when 
-     - 1. when we want to use instance only once
-       - to pass method as a argument
-       ```java
-         Person p = new Person();
-         p.setName("suraj");
-         p.setBirthDate(new Date(23,7,1994));
-
-
-       ``` 
-     - 2. if we want to use any instance as a method argument or if want to use any instance as  a exception then it should by anonymous
-
-
-```c#
-
-class Accounts{
-	//Field // default -> package level private
-  private int number; // 0
-  private String type; // null
-  private float balance; // 0.0
-}
-
-main(){
-new Accounts(); //instance without name, is anonymous instance
-}
-```
-6. if we want to perform operations on instance then it is neccessary to create  reference to it.
-
-```java
-
-Account acc1; // in C++ : object
-Account acc2; // in java: Reference
-Account acc3 = new Account(); // in java: Reference
-```
-
-7. consider following statement
-
-- answer : 2 instance, 3 reference 
-
-```java
-    Accounts a1 = new Accounts(1001,"Saving",45000);
-	Accounts a2 = a1;
-   Account a3 = new Account(1002,"Saving",45000);
-```
-
-
-8. Comments in java 
-
-```java
-
-1. //Single line comment
-2. /* Multi line comment */
-3. /** Java doc comment **/
-
-
-```
-
-9. this key word in java
- - 1. it is implicit reference variable available with all non static method of a class
-    - which id used to store referemnnce  of current/calling instance
-- 2. Using this refrence non static field and method can communicate with each other hence it is consider as line/connection 
-
-
-10. write account class
-
-```java
-class Accounts{
-	//Field // default -> package level private
-  private int number; // 0
-  private String type; // null
-  private float balance; // 0.0
-  
-  public void acceptRecord() {
-	  
-	  Scanner sc = new Scanner(System.in);
-	  System.out.println("Number: ");
-	  this.number = sc.nextInt();
-	  System.out.println("type: ");
-	 sc.nextLine();
-	  this.type = sc.nextLine();
-	  
-	  System.out.println("balance: ");
-	  this.balance = sc.nextFloat();
-	  
-	  
-  }
-  
-  public void printRecord() {
-	  
-	  System.out.println("Number: " + this.number);
-	  System.out.println("type :" + this.type );
-	  System.out.println("balance: " + this.balance);
-  }
-  
-}
-
-
-public class Program {
-
-	public static void main(String[] args) {
-		//instance without name, is anonymous instance
-		//new Accounts(); 
-		Accounts account = new Accounts(); 
-	   // local variable get memory on java stack
-		
-		// account is identifier of java stack memory, pointing to instance of account class
-		/*
-		 * Accounts a1 = new Accounts(1001,"Saving",45000); Accounts a2 = a1;
-		 * 
-		 * Account a3 = new Account(1002,"Saving",45000);
-		 */
-		// this is reference of account (which is refrence of instance of object
-		account.acceptRecord();
-		
-		account.printRecord();
-		
-		
-		
-	}
-
-
-```
-
-
-11. Constructor
-  - if we want to initialize instance ,then we should use constructor
-  - Types: 
-     1. Parameterless C (default C)
-     2. Parameterized C
-     3. Default constructor
-  - constructor initialize created instance
-
-
-12. Literal (constant value) in Java: 
+- 6. Null Object
+- 1.  Literal (constant value) in Java: 
 - literal  : datatype
 
 1. true :      boolean
@@ -848,5 +687,80 @@ to solve two methods
 		 if(acc1 != null) { acc1.printRecord(); }
 2. 	acc1 = new Accounts(); //instantiation
 ```
+- 7.  **Creating refrence(instance)**
+     -  if we want to perform operations on instance then it is neccessary to create  reference to it.
 
+```java
+
+Account acc1; // in C++ : object
+Account acc2; // in java: Reference
+Account acc3 = new Account(); // in java: acc3: Reference
+```
+
+- consider following statement
+```java
+    Accounts a1 = new Accounts(1001,"Saving",45000);
+	Accounts a2 = a1;
+   Account a3 = new Account(1002,"Saving",45000);
+```
+- answer : 2 instance, 3 reference 
+
+- 8.  Comments in java 
+
+```java
+
+1. //Single line comment
+2. /* Multi line comment */
+3. /** Java doc comment **/
+
+
+```
+
+- 9. 
+
+
+
+### class Notes : 
+
+!['day3.1'](day3.1.png)
+
+!['day3.2'](day3.2.png)
+
+!['day3.3'](day3.3.png)
+
+!['day3.4'](day3.4.png)
+
+
+1. in java has no structure and union 
+
+2. in java ,object is called as instance 
+
+3. class 
+
+!['day3.5-class'](day3.5.png)
+
+  !['day3.6'](day3.6.png)
+
+ !['day3.7'](day3.7.png)
+
+ !['day3.8'](day3.8.png)
+ 
+
+
+1. **this** key word in java
+ - 1. it is implicit reference variable available with all non static method of a class
+    - which id used to store referemnnce  of current/calling instance
+- 2. Using this refrence non static field and method can communicate with each other hence it is consider as line/connection 
+
+
+1.  Constructor
+  - if we want to initialize instance ,then we should use constructor
+  - Types: 
+     1. Parameterless C (default C)
+     2. Parameterized C
+     3. Default constructor
+  - constructor initialize created instance
+
+
+12.
 14. 
