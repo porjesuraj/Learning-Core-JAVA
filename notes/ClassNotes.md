@@ -548,6 +548,10 @@ As they run, Java programs cannot determine the word size of their host virtual 
 
 
 # Day3 
+- **reference for demo**
+!['day3.1'](day3.1.png)
+
+!['day3.2'](day3.2.png)
 
 ### demo on java 
 - 1. JOptionPane 
@@ -777,25 +781,19 @@ public class Program {
 
 ```
 
-- 11. 
+- 11. modular approach 
+  - using 3 class files
+   1. Class (contain class data member,cons,getter/setter) 
+   2. ClassTest(contains method of class to implement, with menuList method )
+   3. Program (contains menu driver logic )
 
 
 ### class Notes : 
 
-!['day3.1'](day3.1.png)
-
-!['day3.2'](day3.2.png)
 
 !['day3.3'](day3.3.png)
 
 !['day3.4'](day3.4.png)
-
-
-1. in java has no structure and union 
-
-2. in java ,object is called as instance 
-
-3. class 
 
 !['day3.5-class'](day3.5.png)
 
@@ -804,23 +802,9 @@ public class Program {
  !['day3.7'](day3.7.png)
 
  !['day3.8'](day3.8.png)
- 
 
+ ### extra points
+1. in java has no structure and union 
+2. in java ,object is called as instance 
 
-1. **this** key word in java
- - 1. it is implicit reference variable available with all non static method of a class
-    - which id used to store referemnnce  of current/calling instance
-- 2. Using this refrence non static field and method can communicate with each other hence it is consider as line/connection 
-
-
-1.  Constructor
-  - if we want to initialize instance ,then we should use constructor
-  - Types: 
-     1. Parameterless C (default C)
-     2. Parameterized C
-     3. Default constructor
-  - constructor initialize created instance
-
-
-12.
-14. 
+# Day4
