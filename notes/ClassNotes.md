@@ -202,7 +202,7 @@ class Program{
  - it is simple in comparison on C and C++
    - on basis of  syntax
  - has constructor chaining
-    
+
 2. **Object Oriented**
  - 
 3. **Architecture Neutral**
@@ -547,17 +547,42 @@ As they run, Java programs cannot determine the word size of their host virtual 
 
 # Day3 
 
-1. demo on java JOptionPane, InputStreamReader,scanner,BufferedReader
+### demo on java 
+- 1. JOptionPane 
 ```java
-package test;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+public static void main1(String[] args) {
+		String name = JOptionPane.showInputDialog("Enter Name");
+		int empid = Integer.parseInt( JOptionPane.showInputDialog("Enter Empid") );
+		float salary = Float.parseFloat(JOptionPane.showInputDialog("Enter Salary"));
+		
+		System.out.println("Name	:	"+name);
+		System.out.println("Empid	:	"+empid);
+		System.out.println("Salary	:	"+salary);
+	}
 
-import javax.swing.JOptionPane;
+```
 
-public class Program {
-	public static void main4(String[] args) {
+-  2. BufferedReader and InputStreamReader 
+```java
+public static void main3(String[] args)throws Exception {
+		BufferedReader reader = new BufferedReader( new InputStreamReader(System.in));
+		
+		System.out.print("Name	:	");
+		String name = reader.readLine();
+		System.out.print("Roll Number	:	");
+		int number = Integer.parseInt( reader.readLine() );
+		System.out.print("Marks	:	");
+		float marks = Float.parseFloat(reader.readLine());
+		
+		System.out.println("Name	:	"+name);
+		System.out.println("Number	:	"+number);
+		System.out.println("Marks	:	"+marks);
+	}
+
+```
+- 3.  scanner 
+```java
+public static void main4(String[] args) {
 		
 		try(Scanner sc = new Scanner(System.in)){
 			System.out.print("Name	:	");
@@ -572,50 +597,19 @@ public class Program {
 			System.out.println("Balance	:	"+balance);
 		}
 	}
-	public static void main3(String[] args)throws Exception {
-		BufferedReader reader = new BufferedReader( new InputStreamReader(System.in));
-		
-		System.out.print("Name	:	");
-		String name = reader.readLine();
-		System.out.print("Roll Number	:	");
-		int number = Integer.parseInt( reader.readLine() );
-		System.out.print("Marks	:	");
-		float marks = Float.parseFloat(reader.readLine());
-		
-		System.out.println("Name	:	"+name);
-		System.out.println("Number	:	"+number);
-		System.out.println("Marks	:	"+marks);
-	}
-	public static void main2(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.print("Name	:	");
-		String name = sc.nextLine();
-		System.out.print("Number	:	");
-		int number = sc.nextInt();
-		System.out.print("Balance	:	");
-		float balance = sc.nextFloat();
-		
-		System.out.println("Name	:	"+name);
-		System.out.println("Number	:	"+number);
-		System.out.println("Balance	:	"+balance);
-		
-		sc.close();
-	}
-	public static void main1(String[] args) {
-		String name = JOptionPane.showInputDialog("Enter Name");
-		int empid = Integer.parseInt( JOptionPane.showInputDialog("Enter Empid") );
-		float salary = Float.parseFloat(JOptionPane.showInputDialog("Enter Salary"));
-		
-		System.out.println("Name	:	"+name);
-		System.out.println("Empid	:	"+empid);
-		System.out.println("Salary	:	"+salary);
-	}
-}
-
-            
 
 ```
+- 4. needed library files
+```java
+package test;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+
+```
+
+### class Notes : 
 
 !['day3.1'](day3.1.png)
 
@@ -626,11 +620,11 @@ public class Program {
 !['day3.4'](day3.4.png)
 
 
-2. in java has no structure and union 
+1. in java has no structure and union 
 
-3. in java ,object is called as instance 
+2. in java ,object is called as instance 
 
-4. class 
+3. class 
 
 !['day3.5-class'](day3.5.png)
 
