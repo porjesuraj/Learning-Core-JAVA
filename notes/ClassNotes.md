@@ -716,7 +716,11 @@ Account acc3 = new Account(); // in java: acc3: Reference
 
 ```
 
-- 9. 
+- 9. in class ,
+  - right click,
+  - select source --> generate getter/setter
+  
+- 10. 
 
 
 
