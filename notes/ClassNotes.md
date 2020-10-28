@@ -550,6 +550,12 @@ As they run, Java programs cannot determine the word size of their host virtual 
 ### demo on java 
 - 1. JOptionPane 
 ```java
+
+
+import javax.swing.JOptionPane;
+
+
+
 public static void main1(String[] args) {
 		String name = JOptionPane.showInputDialog("Enter Name");
 		int empid = Integer.parseInt( JOptionPane.showInputDialog("Enter Empid") );
@@ -564,6 +570,9 @@ public static void main1(String[] args) {
 
 -  2. BufferedReader and InputStreamReader 
 ```java
+
+ import java.io.BufferedReader;
+import java.io.InputStreamReader;
 public static void main3(String[] args)throws Exception {
 		BufferedReader reader = new BufferedReader( new InputStreamReader(System.in));
 		
@@ -582,6 +591,7 @@ public static void main3(String[] args)throws Exception {
 ```
 - 3.  scanner 
 ```java
+import java.util.Scanner;
 public static void main4(String[] args) {
 		
 		try(Scanner sc = new Scanner(System.in)){
@@ -599,15 +609,51 @@ public static void main4(String[] args) {
 	}
 
 ```
-- 4. needed library files
-```java
-package test;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
+- 4. demo:  Anonymous Instance
+- if we create instance without refrence is anonymous instance
+   use when 
+     - 1. when we want to use instance only once
+       - to pass method as a argument
+       ```java
+         Person p = new Person();
+         p.setName("suraj");
+         p.setBirthDate(new Date(23,7,1994));
 
+
+       ``` 
+     - 2. if we want to use any instance as a method argument or if want to use any instance as  a exception then it should by anonymous
+
+
+```c#
+
+class Accounts{
+	//Field // default -> package level private
+  private int number; // 0
+  private String type; // null
+  private float balance; // 0.0
+}
+
+main(){
+new Accounts(); //instance without name, is anonymous instance
+}
 ```
+- 5. Constructor chaining
+  -  this it, to achieve constructor reusability, we can call constructor from another constructor
+  - for CC we should we this statement inside constructor body 
+     - this statement must be first statment in constructor body 
+```java
+public Account() {
+		this(1105, "Current", 85000);	//Constructor Chaining
+	}
+	public Account(int number, String type, float balance) {
+		this.number = number;
+		this.type = type;
+		this.balance = balance;
+	}
+```
+- 6. 
+
+
 
 ### class Notes : 
 
@@ -768,31 +814,8 @@ public class Program {
      3. Default constructor
   - constructor initialize created instance
 
-12. COnstructor chaining 
-- this it, to achieve constructor reusability, we can call constructor from another constructor
-- for CC we should we this statement inside constructor body 
-     - this statement must be first statment in constructor body 
 
-```java
- public Accounts(int i, String string, float f) {
-	
-	  this.number = i;
-	  this.type = string;
-	  this.balance = f;
-}
-
-public Accounts() {
-		
-	  this(101,"Loan",344555.0f); // constructor chaining
-	  
-	  
-		 // this.number = 001; this.type = "Saving"; this.balance = 1000;
-		 
-}
-
-```
-
-13. Literal (constant value) in Java: 
+12. Literal (constant value) in Java: 
 - literal  : datatype
 
 1. true :      boolean
