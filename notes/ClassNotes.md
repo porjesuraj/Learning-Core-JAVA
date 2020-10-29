@@ -890,8 +890,8 @@ Name spaces arise inside a Java virtual machine instance as a result of the proc
 !['day4.4'](day4.4.png)
 !['day4.5'](day4.5.png)
 !['day4.6'](day4.6.png)
-!['day4.7']()
-!['day4.8']()
+!['day4.7'](day4.7.png)
+
 
 1. Hashcode
  - it is a logical integer number. 
@@ -928,7 +928,7 @@ whereis is javac
  - so we cant access it directly, 
     + as we cannot import default package, as it has no name, hence it is impossible to use unpackaged type inside package type.  
 
-### demo 
+## demo 
 
 1. create a date object
 ```java
@@ -997,6 +997,10 @@ public class Program {
 
 ```
 
+3. 
+
+
+
 
 10. demo for importing static class, static method and variable of package class
 
@@ -1024,4 +1028,5 @@ public class Program{
 1. can we define multiple classes in single java file?
   - NO , as classname and .java file name should be same
   
-2.   
+2. java.lang.Object 
+  
