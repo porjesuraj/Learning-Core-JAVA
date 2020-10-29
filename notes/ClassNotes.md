@@ -978,6 +978,41 @@ whereis is javac
 	  - while executing need to use package name . file name  
       > java p1.Program;
 
+    - 3. how to import static method in a java file 
+    ```java
+	--- Test class
+	package test;
+
+     class Test{
+
+    public static void print()
+    {
+       System.out.println("hello from test");
+    }
+	 
+	--- Program class
+	      package test;
+          import static test.Test.print;
+           public class Program{
+
+         public static void main(String[] args) {
+       
+         System.out.println("Hello ");
+      
+            print();
+          }  
+        }
+	 
+	```
+     - command for compilation
+        1. >  javac -d ./bin ./src/Test.java
+        2. > 
+		3. >  export CLASSPATH=./bin/
+        4. >  javac -d ./bin/ ./src/Program.java
+
+    
+	  - while executing need to use package name . file name  
+      > java p1.Program;
 
 ## demo 
 
