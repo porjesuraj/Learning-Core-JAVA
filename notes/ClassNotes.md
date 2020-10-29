@@ -1029,4 +1029,7 @@ public class Program{
   - NO , as classname and .java file name should be same
   
 2. java.lang.Object 
-  
+- what are the methods in object ?
+- using this command on terminal we can get methods in java Object
+  > javap javaObject
+!['answer']()  
