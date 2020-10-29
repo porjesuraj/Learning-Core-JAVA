@@ -928,6 +928,57 @@ whereis is javac
  - so we cant access it directly, 
     + as we cannot import default package, as it has no name, hence it is impossible to use unpackaged type inside package type.  
 
+5. Command to be used while dealing with packages in compilation and execution
+    - 1. using package p1 class Complex in package p2 class Program file
+	  - while compiling  
+	```java
+          -- in Complex.java 
+          package p1;
+
+           public class Complex{ // Packaged class }
+
+		 -- in Program.java
+		    package p2;
+            import p1.Complex;
+             public class Program{// Packaged class }
+
+    ```
+
+	-  need to use command when in a project package to use is different and needed for compilation 
+	- command for compilation
+        1. >  javac -d ./bin ./src/Complex.java
+        2. >  export PACKAGEPATH=./bin/p1
+        3. >  export CLASSPATH=./bin/
+        4. >  javac -d ./bin/ ./src/Program.java
+
+    
+	  - while executing need to use package name . file name  
+      > java p2.Program;
+
+    - 2.  using package p1 class Complex in package p1 class Program file
+    ```java
+
+	  -- in Complex.java 
+          package p1;
+
+           public class Complex{ // Packaged class }
+
+		 -- in Program.java
+		    package p1;
+           
+             public class Program{// Packaged class }
+
+	```
+     - command for compilation
+        1. >  javac -d ./bin ./src/Complex.java
+        2. >  export CLASSPATH=./bin/
+        3. >  javac -d ./bin/ ./src/Program.java
+
+    
+	  - while executing need to use package name . file name  
+      > java p1.Program;
+
+
 ## demo 
 
 1. create a date object
