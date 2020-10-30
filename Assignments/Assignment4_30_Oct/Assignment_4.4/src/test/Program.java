@@ -14,7 +14,7 @@ public class Program {
 		      
 		      while (!theStack.isEmpty()) {
 		         long value = theStack.pop();
-		         System.out.print(value);
+		         System.out.print(value);Q.5 Write a class to simulate a Queue.
 		         System.out.print(" ");
 		      }
 		      System.out.println("");
