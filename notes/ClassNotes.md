@@ -416,142 +416,6 @@ public static void main(String[] args) {
 1. JVM
 > https://www.artima.com/insidejvm/ed2/jvm.html
 
-### Answer to What is a JVM ?
-
-1. The JVM is called "virtual" because it is an abstract computer defined by a specification.
-   -  To run a Java program, you need a concrete implementation of the abstract specification. 
-   - here we describe primarily the abstract specification of the JVM.
-   -  To illustrate the abstract definition of certain features,  also  various ways in which those features could be implemented.
-
-
-2.  when you say **"JVM."** You may be speaking of:
-
-    1. the abstract specification,
-       - described in detail in the book: The JVM Specification
-    2. a concrete implementation
-       -  it exist on many platforms and come from many vendors, are either all software or a combination of hardware and software.
-    3. a runtime instance.
-       -  A runtime instance hosts a single running Java application.
-        
-3.  Each Java application runs inside a runtime instance of some concrete implementation of the abstract specification of the JVM.
-
-
-4. **The Lifetime of a JVM**
-- A runtime instance of the JVM has a clear mission in life:
-   -  to run one Java application. 
--  When a Java application starts, a runtime instance is born.
--   When the application completes, the instance dies. 
--   If you start three Java applications at the same time, on the same computer, using the same concrete implementation, you'll get three JVM instances. 
--   Each Java application runs inside its own JVM.
-
-- A JVM instance starts running its solitary application by invoking the main() method of some initial class. 
-- The main() method must be public, static, return void, and accept one parameter: a String array. 
-
-1. Inside the JVM, threads come in two flavors:
--  daemon and non- daemon. 
-    -  **A daemon thread** is ordinarily a thread used by the virtual machine itself, **such as a thread that performs garbage collection.** The application, however, can mark any threads it creates as daemon threads. 
-    -  The initial thread of an application--the **one that begins at main()--is a non- daemon thread**.
-
-    - A Java application continues to execute (the virtual machine instance continues to live) as long as any non-daemon threads are still running.
-    -  When all non-daemon threads of a Java application terminate, the virtual machine instance will exit. 
-    -  If permitted by the security manager, the application can also cause its own demise by invoking the exit() method of class Runtime or System.
-  
-
-###  The Architecture of the JVM
-- In the JVM specification, 
-  - the behavior of a virtual machine instance is described in terms of
-     -  subsystems
-     -   memory areas
-     -    data types,
-     -    and instructions
-  -  These components describe an abstract inner architecture for the abstract JVM. 
-  -  The purpose of these components 
-        -    is more to provide a way to strictly define the external behavior of implementations. 
-  -   The specification defines the required behavior of any JVM implementation in terms of these abstract components and their interactions.
-
-- the major subsystems and memory areas described in the specification , each JVM has 
-   1. a class loader subsystem:
-    -  a mechanism for loading types (classes and interfaces). 
-   2. a execution engine: 
-   - a mechanism responsible for executing the instructions contained in the methods of loaded classes.
-
-!['jvm_arch'](jvm-arch.gif)
-
-Figure 5-1. The internal architecture of the JVM.
-- The JVM organizes the memory it needs to execute a program into several runtime data areas.
-
-- Although the same runtime data areas exist in some form in every JVM implementation, their specification is quite abstract. 
-- The abstract nature of the specification of the runtime data areas helps make it easier to implement the JVM on a wide variety of computers and devices.
-
--  Each instance of the JVM has one method area and one heap. 
--  These areas are shared by all threads running inside the virtual machine. 
--  When the virtual machine loads a class file, it parses information about a type from the binary data contained in the class file. 
--  It places this type information into the method area. 
--  As the program runs, the virtual machine places all objects the program instantiates onto the heap. S
-
-!['runtime-data-areas-shared-among-threads'](runtime-data-areas-shared-among-threads.gif)
-Figure 5-2. Runtime data areas shared among all threads.
-
-- The JVM has no registers to hold intermediate data values.
--  The instruction set uses the Java stack for storage of intermediate data values. 
--  This approach was taken by Java's designers to keep the JVM's instruction set compact and to facilitate implementation on architectures with few or irregular general purpose registers.
--   In addition, the stack-based architecture of the JVM's instruction set
-    -  facilitates the code optimization work done by just-in-time and dynamic compilers that operate at run-time in some virtual machine implementations.
-
-!['runtime-data-eare-exclusive-toeach-thread'](runtime-data-eare-exclusive.gif)
-
-### Data Types
-The JVM computes by performing operations on certain types of data.
- Both the data types and operations are strictly defined by the JVM specification.
-  The data types can be divided into a set of
-  1. **primitive types** 
-    -  Variables of the primitive types hold primitive values
-    -  Primitive values, do not refer to anything. They are the actual data themselves.
-    1. All the primitive types of the Java programming language are primitive types of the JVM. 
-    2. Although boolean qualifies as a primitive type of the JVM, the instruction set has very limited support for it.
-- compiler  uses ints or bytes to represent booleans. **In the JVM, false is represented by integer zero and true by any non-zero integer.** Operations involving boolean values use ints. 
-
-    3. The numeric types are divided between 
-         - the integral types: byte, short, int, long, and char, and 
-         - the floating- point types: float and double. 
-         - As with the Java programming language, the primitive types of the JVM have the same range everywhere. 
-         - A long in the JVM always  a 64-bit number, independent of the underlying host platform.
-
-    4. The JVM works with one other primitive type that is unavailable to the Java programmer:
-       -  the returnAddress type.
-          -  This primitive type is used to implement finally clauses of Java programs. 
-
-  2. **a reference type.**
-   - variables of the reference type hold reference values. 
-   -  Reference values refer to objects, but are not objects themselves. 
-    1. The reference type of the JVM is cleverly named reference.
-    2.  Values of type reference come in three flavors:
-	-  the class type, 
-	-  the interface type,
-	-   and the array type. 
-	3. All three types have values that are references to dynamically created objects.
-	-  The class type's values are references to class instances.
-	-  The array type's values are references to arrays, which are full-fledged objects in the JVM.
-	-  The interface type's values are references to class instances that implement an interface. 
-	4. One other reference value is the null value, which indicates the reference variable doesn't refer to any object.
-
-
-!['datatypesofJVM'](datatypesofJVM.gif)
-
-!['datatypes'](datatypes.jpg)
--  Ranges of the JVM's data types
-
-### Word Size
-1. The basic unit of size for data values in the JVM is the word--a fixed size chosen by the designer of each JVM implementation. 
-
-2. The specification of many of the JVM's runtime data areas are based upon this abstract concept of a word.
-3.  For example:
-  -  two sections of a Java stack frame--the local variables and operand stack-- are defined in terms of words. 
-  -  These areas can contain values of any of the virtual machine's data types. 
-  -  When placed into the local variables or operand stack, a value occupies either one or two words.
-
-4. The word size does not affect the behavior of a program. It is only an internal attribute of a virtual machine implementation.
-
 
 2. why main method is static? (an swer as what when it is not static)
 3.  to compile java program , need atleast one class
@@ -824,64 +688,6 @@ public class Program {
 1. in java has no structure and union 
 2. in java ,object is called as instance 
 
-### reading 
-
-> https://www.artima.com/insidejvm/ed2/jvm4.html
-
-
-1. The Class Loader Subsystem
-The part of a Java virtual machine implementation that takes care of finding and loading types is the class loader subsystem. Chapter 1, "Introduction to Java's Architecture," gives an overview of this subsystem. Chapter 3, "Security," shows how the subsystem fits into Java's security model. This chapter describes the class loader subsystem in more detail and show how it relates to the other components of the virtual machine's internal architecture.
-
-As mentioned in Chapter 1, the Java virtual machine contains two kinds of class loaders: a bootstrap class loader and user-defined class loaders. The bootstrap class loader is a part of the virtual machine implementation, and user-defined class loaders are part of the running Java application. Classes loaded by different class loaders are placed into separate name spaces inside the Java virtual machine.
-
-The class loader subsystem involves many other parts of the Java virtual machine and several classes from the java.lang library. For example, user-defined class loaders are regular Java objects whose class descends from java.lang.ClassLoader. The methods of class ClassLoader allow Java applications to access the virtual machine's class loading machinery. Also, for every type a Java virtual machine loads, it creates an instance of class java.lang.Class to represent that type. Like all objects, user-defined class loaders and instances of class Class reside on the heap. Data for loaded types resides in the method area.
-
-Loading, Linking and Initialization
-The class loader subsystem is responsible for more than just locating and importing the binary data for classes. It must also verify the correctness of imported classes, allocate and initialize memory for class variables, and assist in the resolution of symbolic references. These activities are performed in a strict order:
-
-Loading: finding and importing the binary data for a type
-Linking: performing verification, preparation, and (optionally) resolution
-Verification: ensuring the correctness of the imported type
-Preparation: allocating memory for class variables and initializing the memory to default values
-Resolution: transforming symbolic references from the type into direct references.
-Initialization: invoking Java code that initializes class variables to their proper starting values.
-The details of these processes are given Chapter 7, "The Lifetime of a Type."
-The Bootstrap Class Loader
-Java virtual machine implementations must be able to recognize and load classes and interfaces stored in binary files that conform to the Java class file format. An implementation is free to recognize other binary forms besides class files, but it must recognize class files.
-
-Every Java virtual machine implementation has a bootstrap class loader, which knows how to load trusted classes, including the classes of the Java API. The Java virtual machine specification doesn't define how the bootstrap loader should locate classes. That is another decision the specification leaves to implementation designers.
-
-Given a fully qualified type name, the bootstrap class loader must in some way attempt to produce the data that defines the type. One common approach is demonstrated by the Java virtual machine implementation in Sun's 1.1 JDK on Windows98. This implementation searches a user-defined directory path stored in an environment variable named CLASSPATH. The bootstrap loader looks in each directory, in the order the directories appear in the CLASSPATH, until it finds a file with the appropriate name: the type's simple name plus ".class". Unless the type is part of the unnamed package, the bootstrap loader expects the file to be in a subdirectory of one the directories in the CLASSPATH. The path name of the subdirectory is built from the package name of the type. For example, if the bootstrap class loader is searching for class java.lang.Object, it will look for Object.class in the java\lang subdirectory of each CLASSPATH directory.
-
-In 1.2, the bootstrap class loader of Sun's Java 2 SDK only looks in the directory in which the system classes (the class files of the Java API) were installed. The bootstrap class loader of the implementation of the Java virtual machine from Sun's Java 2 SDK does not look on the CLASSPATH. In Sun's Java 2 SDK virtual machine, searching the class path is the job of the system class loader, a user-defined class loader that is created automatically when the virtual machine starts up. More information on the class loading scheme of Sun's Java 2 SDK is given in Chapter 8, "The Linking Model."
-
-User-Defined Class Loaders
-Although user-defined class loaders themselves are part of the Java application, four of the methods in class ClassLoader are gateways into the Java virtual machine:
-
-// Four of the methods declared in class java.lang.ClassLoader:
-protected final Class defineClass(String name, byte data[],
-    int offset, int length);
-protected final Class defineClass(String name, byte data[],
-    int offset, int length, ProtectionDomain protectionDomain);
-protected final Class findSystemClass(String name);
-protected final void resolveClass(Class c);
-Any Java virtual machine implementation must take care to connect these methods of class ClassLoader to the internal class loader subsystem.
-
-The two overloaded defineClass() methods accept a byte array, data[], as input. Starting at position offset in the array and continuing for length bytes, class ClassLoader expects binary data conforming to the Java class file format--binary data that represents a new type for the running application -- with the fully qualified name specified in name. The type is assigned to either a default protection domain, if the first version of defineClass() is used, or to the protection domain object referenced by the protectionDomain parameter. Every Java virtual machine implementation must make sure the defineClass() method of class ClassLoader can cause a new type to be imported into the method area.
-
-The findSystemClass() method accepts a String representing a fully qualified name of a type. When a user-defined class loader invokes this method in version 1.0 and 1.1, it is requesting that the virtual machine attempt to load the named type via its bootstrap class loader. If the bootstrap class loader has already loaded or successfully loads the type, it returns a reference to the Class object representing the type. If it can't locate the binary data for the type, it throws ClassNotFoundException. In version 1.2, the findSystemClass() method attempts to load the requested type from the system class loader. Every Java virtual machine implementation must make sure the findSystemClass() method can invoke the bootstrap (if version 1.0 or 1.1) or system (if version 1.2 or later) class loader in this way.
-
-The resolveClass() method accepts a reference to a Class instance. This method causes the type represented by the Class instance to be linked (if it hasn't already been linked). The defineClass() method, described previous, only takes care of loading. (See the previous section, "Loading, Linking, and Initialization" for definitions of these terms.) When defineClass() returns a Class instance, the binary file for the type has definitely been located and imported into the method area, but not necessarily linked and initialized. Java virtual machine implementations make sure the resolveClass() method of class ClassLoader can cause the class loader subsystem to perform linking.
-
-The details of how a Java virtual machine performs class loading, linking, and initialization, with user- defined class loaders is given in Chapter 8, "The Linking Model."
-
-Name Spaces
-As mentioned in Chapter 3, "Security," each class loader maintains its own name space populated by the types it has loaded. Because each class loader has its own name space, a single Java application can load multiple types with the same fully qualified name. A type's fully qualified name, therefore, is not always enough to uniquely identify it inside a Java virtual machine instance. If multiple types of that same name have been loaded into different name spaces, the identity of the class loader that loaded the type (the identity of the name space it is in) will also be needed to uniquely identify that type.
-
-Name spaces arise inside a Java virtual machine instance as a result of the process of resolution. As part of the data for each loaded type, the Java virtual machine keeps track of the class loader that imported the type. When the virtual machine needs to resolve a symbolic reference from one class to another, it requests the referenced class from the same class loader that loaded the referencing class. This process is described in detail in Chapter 8, "The Linking Model." 
-
-
-
 # Day4
 
 !['day4.1'](day4.1.png)
@@ -1153,3 +959,778 @@ public class Program{
 - using this command on terminal we can get methods in java Object
   > javap javaObject
 !['answer']()  
+
+
+# Day5
+
+## notes 
+1. Non static data member declared inside class is called instance variable.
+2. Non static member function declared inside a class is called instance method.
+3. in java Object is called as instance. 
+- Ex: 
+```java 
+ Complex c1 = new Complex(); // c: refrence /object reference
+```
+4. Instance member are designed to access using object reference
+- Instance member = {Instance variable ,instance method}
+```java
+class Test{
+   int num = 10; // in java and C# we can initializa at time on 
+   public  void print(){
+      System.out.println(num);
+   }
+
+   main(){
+
+      Test t1 = null;
+      t1 = new Test();
+      t1.num = 10; 
+      t1.print();
+   }
+}
+
+
+```
+
+5. Instance variable gets space once per instance according their declaration inside class.
+6. to initialize instance variable,we should use constructor,and
+ - constructor get called once per instance.
+7. Static :
+- Static data member declared inside class,is called class level variable.
+- Static member function declared inside class is called class level method
+- class level members are designed to access using class name and dot(.) operator
+
+```java
+class Test
+{
+   static int number;
+   public static void print()
+   {
+      System.out.println(Test.number);
+   }
+}
+
+main( ) 
+{
+Test.number = 10;
+Test.print();
+}
+```
+- if we want to share value of field in all the instance of same class then we should declare such field static.
+- non static field do not get space inside instance.
+- static member get space once per classs during class loading on method area.
+- eg. for every instance of class A static member in called only once in first instance , on method area
+```java
+class A{
+   static int num;
+}
+// static variable get called once per class
+class B{
+   static int num;
+}
+
+```
+- **in C# static is a constructor (static,)??**
+- if we want to initialize static fileds of the class then we should use static initialiser block.
+```java
+
+static { //static member initiasize
+        }
+
+```
+!['']()
+
+
+```java
+class Test{
+	private int num1;
+	private int num2;
+	private static int num3;
+	static
+	{
+		System.out.println("Inside static initializer block of class test");
+	  Test.num3 = 500;	
+	}
+	public Test( int num1, int num2 ) {
+		this.num1 = num1;
+		this.num2 = num2;
+		System.out.println("Inside test constructor block" );
+		
+	}
+	
+	public void print()
+	{
+		System.out.println("num1 = " + num1);
+		System.out.println("num2 = " + num2 );
+		System.out.println("num3 = " +  num3);
+	}
+	
+	
+}
+public class Program {
+	
+	static {
+		System.out.println("inside static initializer block of program");
+	}
+	
+	public static void main(String[] args) {
+		
+		System.out.println("inside static block of program main");
+		
+		Test t1 = new Test( 10, 20 );
+		Test t2 = new Test( 30, 40 );
+		Test t3 = new Test( 50, 60 );
+		
+		t1.print();
+		t2.print();
+		t3.print();
+	  
+	}
+}
+
+
+```
+### this refrence for static and non-static
+- non static method are caleed by instance of classm so it gets this refrence/pointer
+- static method are called by class name, so it does not this refrence/pointer
+- this refrence  is link between not static member and nobn static method
+- (#) using instance we can refer non static variable in static method
+- tatic variable can directly be reffered in static method
+
+- method not containing this refrence ,should be static method
+
+```java
+public class Program {
+	
+	private int num1 = 10;
+	private static int num2 = 20;
+	
+	public static void main(String[] args) {
+		
+		
+		 (#) // System.out.println("Num1 : " + num1); // Not Ok
+		
+		Program p1 = new Program();
+		System.out.println("Num1 : " + p1.num1);
+		
+		
+		
+		System.out.println("Num2 : " + num2); // 20
+		
+		
+	  
+	}
+}
+
+```
+
+- 1. when to make static
+  - if in method , no need for **this reference** , then declare it static
+
+```java
+class Test{
+	//no need of this reference 
+	public static int square(int number)
+	{
+		return number * number;
+	}
+	
+	
+}
+public class Program {
+	
+	int number = Test.square(5);
+    
+}
+
+```
+
+
+- 2. cant declare local variable as static variable 
+  - as static is class level , it cant be local level 
+
+```java
+public class Program {
+	
+	private static int count;
+	public static void print( ) {
+	(#)	//int count = 0; // NOT OK
+		
+		count = count + 1;
+		System.out.println("Count	:	"+count);
+	}
+	public static void main(String[] args) {
+		Program.print();	//1
+		Program.print();	//1
+		Program.print();	//1
+	}
+}
+	
+
+        
+```
+
+- 3.**what is  singleton class? write code?**
+-  create  instance of singleton class using reflection ?
+
+
+```java
+class Singleton{
+	
+	private int number;
+	
+	private Singleton()
+	{
+		this.number = 0;
+		System.out.println("Inside constructor");
+	}
+
+	public int getNumber() 
+	{
+		return number;
+	}
+
+	public void setNumber(int number)
+	{
+		this.number = number;
+	}
+	private static Singleton instance = null;
+	public static Singleton getInstance() {
+		
+		if(instance == null)
+		instance = new Singleton();
+	     return instance;	
+	}
+	
+}
+
+public class Program {
+	
+	
+	public static void main(String[] args) {
+		
+		Singleton s1 = Singleton.getInstance();
+		Singleton s2 = Singleton.getInstance();
+		Singleton s3 = Singleton.getInstance();
+	}
+}
+
+```
+
+- 4. final /cosntant
+   - read only variable,
+   - not mandetory to inilializing , after declaration 
+   - but once initilize ,cant change the value
+   - we can take final value at run time , using scanner, also assign at compile time 
+
+```java
+public static void main1(String[] args) {
+		final int number = 10;
+		//number = number + 1;
+		System.out.println("Number : " + number);
+   }
+   
+   public static void main(String[] args) {
+		final int number;
+		number = 10;
+		System.out.println("Number : " + number);
+   }
+   
+   public static void main(String[] args) {
+		final int number = 10;//OK
+		//number = 20; // Not OK
+		System.out.println("Number : " + number);
+   }
+   
+   public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		final int number = 10;//OK
+		//number = 20; // Not OK
+		System.out.println("Number : " + number);
+		
+		System.out.println("Num2 : ");
+		
+		final int number2 = sc.nextInt();
+		
+		System.out.println("Number : " + number);
+	}
+
+```
+
+- 5.  to make a variablee constant , for every instance, and avoid memory loss, by giving static memory is given once
+
+```java
+class Test{
+	
+	final int num1;
+	
+  public static final int num2 = 20;
+	
+	public Test()
+	{
+		this.num1 = 10;
+	}
+	public void print()
+	{
+		System.out.println("num1 : " + this.num1);
+		System.out.println("num1 : " + this.num2);
+	}
+	
+}
+
+```
+
+- 6. when final  is used at refrence of instance , 
+ - here refrence is final (c1) , instance is not final 
+- so qwe cannot declare instance final 
+```java
+
+class Complex{
+	private int real;
+   private int imag;
+}
+
+public static void main(String[] args) {
+		
+		// (#)
+		final Complex c1 = new Complex(10,20);
+		
+		System.out.println(c1.toString());
+		c1.setReal(100);
+		c1.setImag(200);
+		// c1 = new Complex(30,40);
+		System.out.println(c1.toString());
+	}
+	
+
+```
+
+- 7. refernce type 
+1. 4 types : 
+    - 1. Array
+      - it is arefence type 
+      -  , in other word to create a array it is neccesary to use new operator
+    - 2. class
+    - 3. enum
+    - 4. Interface
+2. Array 
+- there are three type of Array : 
+    - 1. Single dimensional array
+    - 2. multi dimensional array
+    - 3. Ragged array
+      - jagged array is not in java
+- if we want to process element of array ,then 
+   - we should use method declared in java.util.Arrays class   
+3. Single D Array:
+- for array of primitive type ,default value of datatype
+- for arrray of reference type , default value null
+-  array refrence , get spack on java stack
+     
+  - 7. .1 create Single D array in java
+
+```java
+
+int arr[]; //OK
+		int [] arr2 ; //OK
+		//int [arr3]; // Not OK
+
+		int[] arr = null;
+		arr = new int[3];//OK
+   
+   -- method to use
+      int[] arr2 = new int[3];
+      
+		//int arr3[] = new int[3];
+	
+	int[] arr1 = new int[-3]; // NOT OK // Negative array size exception
+		
+
+```
+- printing array, with exception handling for null
+```java
+public static void printArray(int[] arr)
+ {
+	 if(arr != null)
+	 {
+		 for (int i = 0; i < arr.length; i++) {
+				
+				System.out.println(arr[i]);
+			}
+		 
+	 }
+	
+ }
+
+public static void main(String[] args) {
+		
+	int[] arr1 = new int[3]; 
+		
+		Program.printArray(arr1);
+	 	
+int[] arr2 = new int[5]; 
+		
+	//	Program.printArray(arr2);
+		
+Program.printArray(null);
+	}
+```   
+- how to declare array initializer list
+```java
+public static void main(String[] args) {
+		//int[] arr = new int[ 3 ] { 10, 20, 30 };	//Not OK // cannot provide dimension , with array initializer list
+      int[] arr2 = new int[ ] { 10, 20, 30 };	//OK
+      int[] arr3 = new int[ ]; //Not Ok
+		int[] arr3 = new int[ 1];	//OK
+		Program.printArray(arr);
+	}
+``` 
+
+- how to accept and print array
+```java
+private static void acceptArray(int[] arr) {
+		if( arr != null ) {
+			for( int index = 0; index < arr.length; ++ index ) {
+				System.out.print("arr[ "+index+" ]	:	");
+				arr[ index ] = sc.nextInt();
+			}
+		}
+   }
+   
+	private static void printArray(int[] arr) {
+		if( arr != null ) {
+			for( int index = 0; index < arr.length; ++ index )
+				System.out.println(arr[ index ] );
+		}
+	}
+	
+	public static void main7(String[] args) {
+		int[] arr = new int[ 3 ];
+		Program.acceptArray(arr);
+		Program.printArray(arr);
+	}
+
+```
+- how to use methods to manipulate array
+```java
+int[] arr = new int[] {50,10,20,30,40};
+		Program.printArray(arr);
+	
+		Arrays.sort(arr);
+      Program.printArray(arr);
+      
+
+```
+- how to foreach  loop in java
+    - forward only and read only loop 
+```java
+ public static void main(String[] args) {
+			
+			int[] arr = new int[] {50,10,20,30,40};
+			// for each n java
+			for(int element : arr)  // forward only and read only loop
+			{
+	        System.out.println(element);
+         }
+			
+			
+			
+		}
+
+```
+- how to call toString on array 
+```java
+ public static void main(String[] args) {
+			
+			int[] arr = new int[] {50,10,20,30,40};
+			// for each n java
+		System.out.println(arr.toString()); // output: [I@677327b6 // NOT OK
+			
+		System.out.println(Arrays.toString(arr)); //[50, 10, 20, 30, 40] //OK
+			
+		}
+
+```
+
+
+- 8. Multi Dimensional Array [MDA]
+
+- how to declare MDA
+```java
+       int arr[] []; //OK
+		int[] arr1[]; //ok
+		int [] [] arr3; //ok
+		int[][] arr4 = null; //ok
+      arr4 = new int[4][3];//ok
+```
+- how to accept and  print MDA
+```java
+static Scanner sc = new Scanner(System.in);
+	
+	private static void acceptArray(int[][] arr) {
+		if( arr != null ) {
+			for( int row = 0; row < arr.length; ++ row ) {
+				for( int col = 0; col < arr[ row ].length; ++ col ) {
+					System.out.print("arr[ "+row+" ][ "+col+" ]	:	");
+					arr[ row ][ col ] = sc.nextInt();
+				}
+			}
+		}
+	}
+	private static void printArray(int[][] arr) {
+		if( arr != null ) {
+			for( int row = 0; row < arr.length; ++ row ) {
+				for( int col = 0; col < arr[ row ].length; ++ col ) {
+					System.out.print(arr[ row ][ col ]+"	");
+				}
+				System.out.println();
+			}
+		}
+   }
+   
+   public static void main2(String[] args) {
+		
+	int [][] arr = new int[4][3];
+	
+	Program.acceptArray(arr);
+	
+	Program.printArray(arr);
+		
+	}
+
+
+
+```
+- how to initialize MDA, using array initializing list
+```java
+     public static void main3(String[] args) {
+		
+		int [][] arr = new int[][] {{1,2,3},{4,5,6},{7,8,9}};
+		int[][] arr2 = {{1,2,3},{4,5,6},{7,8,9}};
+		//int [][] arr = new int[4][3];
+		
+		Program.acceptArray(arr);
+		
+		Program.printArray(arr);
+			
+		}
+
+```
+
+- how to use toString method on MDA
+```java
+public static void main4(String[] args) {
+		
+		int [][] arr = new int[][] {{1,2,3},{4,5,6},{7,8,9}};
+		for (int row = 0; row < arr.length; row++) {
+				
+			System.err.println(Arrays.toString(arr[row]));
+		}
+			
+		}
+
+```
+
+
+
+
+
+- 9. Ragged array (for java) (in C# jagged array)
+   - it is array of arrays such that member arrays can be of different sizes, i.e., 
+       - we can create a 2-D arrays but with variable number of columns in each row.
+       -  These type of arrays are also known as Jagged arrays.
+       -  A Jagged or also called Ragged array is a n-dimensional array that need not the be reactangular
+- how to declare a ragged
+```java
+public static void main(String[] args) {	
+		int [][] arr = new int[4][];
+		
+		arr[0] = new int[] {1,2,3};
+		arr[1] = new int[] {4,5};
+		arr[2] = new int[] {6,7,8,9};
+		arr[3] = new int[] {10};		
+}	
+
+```
+
+- how to initialize ragged array using array inilializer list
+```java
+public static void main(String[] args) {
+		
+		int [][] arr = new int[4][];
+		
+		arr[0] = new int[] {1,2,3};
+		arr[1] = new int[] {4,5};
+		arr[2] = new int[] {6,7,8,9};
+		arr[3] = new int[] {10};
+		
+		
+		
+}	
+
+```
+
+- 10. array of primitive type 
+
+- how to 
+```java
+public static void main(String[] args) {
+		
+		double[] arr = new double[3]; //array of primitive type
+		
+		System.out.println(Arrays.toString(arr));//
+	}
+public static void main2(String[] args) {
+	
+		int[] arr = new int[3]; //array of primitive type
+		
+		System.out.println(Arrays.toString(arr));//
+	}
+	public static void main1(String[] args) {
+		
+		
+		boolean[] arr = new boolean[3]; //array of primitive type
+		
+		System.out.println(Arrays.toString(arr));//[false, false, false]
+		
+		
+		
+	}
+
+```
+
+- 11.  array of non-primitive/reference type 
+ 
+- how to declare array of referencssa
+    - here it is array of referneces ,as out shows 
+```java
+
+class Complex{}
+
+public static void main(String[] args) {
+		
+		Complex[] complex = new Complex[3];
+		
+		System.out.println(Arrays.toString(complex));//[null, null, null]
+		
+		
+	}
+```
+- how to declare array of instances/object
+```java
+public static void main(String[] args) {
+	
+		Complex[] complex = new Complex[3];
+		
+		for (int i = 0; i < complex.length; i++) {
+			complex[i] = new Complex(); //aray of objects
+		}
+		
+		System.out.println(Arrays.toString(complex));//[Complex [real=10, imag=20], Complex [real=10, imag=20], Complex [real=10, imag=20]]
+	}
+
+```
+
+- 12. ways to pass value to function 
+    - 1. C -  2 ways, value/address
+    - 2. C++ - 3 ways , value/address/reference
+    - 3. C# - using unsafe keyword (i.e pointer can be used to pass to function as argument)
+    - 4. Java -
+        - no concept of pass by reference
+        - each argument is passed to function by value in java
+        - so how to pass by reference is if required ? e.g (for swap function)
+        - answer: can be done using array, it will update values in array , of varailbe we want to pass by reference
+```java
+private static void swap(int a,int b) //NOT WORKING
+	{
+		int temp = a;
+		a = b;
+		
+		b = temp;
+	}
+	private static void swap(int[] arr ) // WORKING
+	{
+		int temp =arr[0];
+		arr[0] = arr[1];
+		
+		arr[1] = temp;
+	}
+   public static void main(String[] args)// WORKING
+    {
+		
+		int a = 10;
+		int b = 20;
+		
+		int[] arr = new int[] {a,b}; 
+		Program.swap(arr);
+		
+		a = arr[0];
+		b = arr[1];
+		System.out.println("a :" +  a);
+		System.out.println("b :" +  b);
+		
+		}
+public static void main1(String[] args) //NOT WORKING
+ {
+		
+	int a = 10;
+	int b = 20;
+	//Program.swap(a, b);
+	
+	System.out.println("a :" +  a);
+	System.out.println("b :" +  b);
+	
+	}
+
+```
+- how to 
+```java
+
+```
+
+- 11.
+```java
+
+```
+- how to 
+```java
+
+```
+- 11.
+```java
+
+```
+- how to 
+```java
+
+```
+
+
+### Slides
+
+!['Day5.1'](day5.1.png)
+!['Day5.2'](day5.2.png)
+!['Day5.3'](day5.3.png)
+!['Day5.4'](day5.4.png)
+!['Day5.5'](day5.5.png)
+!['Day5.6'](day5.6.png)
+!['Day5.7'](day5.7.png)
+!['Day5.8'](day5.8.png)
+!['Day5.9'](day5.9.png)
+
+### READ
+
+
+1. **what is  singleton class? write code?**
+  -  create  instance of singleton class using reflection ?
+
+2. for sorting The sorting algorithm is a <u>Dual-Pivot Quicksort</u> by Vladimir Yaroslavskiy, Jon Bentley, and Joshua Bloch
+
+
+
+
+
+
+
+
+# Day6

@@ -12,7 +12,7 @@ public class Program {
 		
 		test.getSalesPersonEarning(sp);
 		
-	System.out.println( sp.toString());	
+	//System.out.println( sp.toString());	
 
 	}
 
