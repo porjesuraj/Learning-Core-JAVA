@@ -5,8 +5,7 @@ public class TrafficLightTest {
 	public static void main(String[] args) {
 		
  
-		TrafficLight test = null; 
-		
+		TrafficLight test =  null;
 		
 		System.out.println("RED LIGHT : " + test.RED.getTime() + " MINUTES");
 		
