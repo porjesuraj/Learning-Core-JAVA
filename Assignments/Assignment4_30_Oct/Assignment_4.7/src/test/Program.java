@@ -13,9 +13,9 @@ public class Program {
 		 test.acceptCustomerInfo(saver1); test.acceptCustomerInfo(saver2);
 		 test.modifyInterestRate();
 		 
-		// test.monthlyBalance(saver1,12);
+		 test.monthlyBalance(saver1,12);
 		 
-		 //test.monthlyBalance(saver2,12);
+		 test.monthlyBalance(saver2,12);
 		 
 		
 		test.modifyInterestRate();
