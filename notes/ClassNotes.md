@@ -691,7 +691,7 @@ public class Program {
 # Day4
 
 !['day4.1'](day4.1.png)
-!['day4.2'](day4.2.png)
+
 !['day4.3'](day4.3.png)
 !['day4.4'](day4.4.png)
 !['day4.5'](day4.5.png)
@@ -709,8 +709,12 @@ public class Program {
 
 
 ## demo 
-
-1. create a date object
+- reference is always on java stack, instance is always on heap section 
+!['day4.2'](day4.2.png)
+1. create a date object, as a date member of Employee class ,so birthDate is a reference 
+ - in C ++ this use of date class as data member of Employee is called Association , i.e tight coupling 
+ - here emp is reference stored on java stack
+ - instance of Employee containing(empid,bithdate) stored on heap section
 ```java
 class Date{	
 }
