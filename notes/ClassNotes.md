@@ -1910,12 +1910,154 @@ public static void main(String[] args) {
 ```
 
 5. using methods of java.util class 
+- 1. Calender
 ```java
+
+public static void main1(String[] args) {
+		Calendar c = Calendar.getInstance();
+		
+		int day = c.get(Calendar.DATE);
+		int month = c.get(Calendar.MONTH)  + 1;
+		int year = c.get(Calendar.YEAR);
+		
+		System.out.println(day + "/" + month + "/" + year);	
+		
+		}
+public static void main2(String[] args) {
+		// to find system date
+		
+		Calendar c = Calendar.getInstance();
+	
+		//Date time = c.getTime(); 
+		
+		int hour = c.get(Calendar.HOUR);
+		int minute = c.get(Calendar.MINUTE);
+		int second = c.get(Calendar.SECOND);
+		int millisecond = c.get(Calendar.MILLISECOND);
+		
+		
+		System.out.println(hour + ":" + minute + ":" + second + ":" + millisecond);	
+		
+		}
+	
+
+```
+- 2.   java.time package classes localtime,localdate
+  - java.Date class is depricated
+```java
+public static void main(String[] args) {
+		// to find system date
+		
+		LocalTime lt = LocalTime.now();
+	
+		//Date time = c.getTime(); 
+		
+		int hour = lt.getHour();
+		int minute = lt.getMinute();
+		int second = lt.getSecond();
+		int nanosecond = lt.getNano();
+		
+		
+		System.out.println(hour + ":" + minute + ":" + second + ":" + nanosecond);	
+		
+		}
+	public static void main3(String[] args) {
+		// to find local date
+
+		LocalDate ld = LocalDate.now();
+		
+		int day = ld.getDayOfMonth();
+		int month = ld.getMonthValue();
+		int year = ld.getYear();
+		
+		System.out.println(day + "/" + month + "/" + year);	
+		
+		
+		
+		}
 
 ```
 
-6. creating jar file 
+- 3. java.util.Date class demo, but mostly depricated, not to use
+
 ```java
+public class Program {
+	public static void main(String[] args) {
+		Date date = new Date();
+		
+		int day = date.getDay();
+		int month = date.getMonth();
+		int year = date.getYear();
+		
+		System.out.println(day + "/" + month + "/" + year);	
+		
+		
+		
+		}
+```
+
+6. inheritence in java, using sper keyword 
+- default mode of inheritence is public 
+- in java, except constructor,all member(static,not static,private) of superclass inherit in sub class
+- using super keyword we can access member of super class in method of sub class
+```java
+class Person{
+	private String name;
+	private int age;
+	
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	public void printRecord()
+	{
+		System.out.println("Name: " + this.name);
+		System.out.println("Age : " + this.age);
+	}	
+}
+
+class Employee extends Person{
+	
+	
+	private int empid;
+	private float salary;
+	
+	public Employee() {
+		this.empid = 0;
+		this.salary = 0;
+		System.out.println("Employeee cont");
+	}
+	
+	public Employee(String name,int age,int empid,float salary) {
+         // in c++ , constructor base initializing list   
+		super(name,age); 
+		this.empid = empid;
+		this.salary = salary;
+		System.out.println("Employeee cont");
+	}
+	
+	public void printRecord()
+	{// using super keyword we can access member of super class in method of sub class
+		super.printRecord();
+		
+		System.out.println("emp id: " + this.empid);
+		System.out.println("Salary : " + this.salary);
+		
+	}
+	
+	public static void main(String[] args) {
+		
+		Employee emp = new Employee("suraj",26,1,23);
+		emp.printRecord();
+		// output Name: suraj Age : 26 empid  : 1Salary : 23.0
+       // ie.base class method also implemented
+		
+			
+		}
+}
+
+
 
 ```
 
