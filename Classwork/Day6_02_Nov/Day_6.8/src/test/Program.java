@@ -23,7 +23,7 @@ class Person{
 		this.age = age;
 	}
 }
-class Employee //extends Person
+class Employee extends Person
 {
 	private int empid;
 	private float salary;
@@ -31,7 +31,7 @@ class Employee //extends Person
 	}
 	
 	public Employee(String name, int age, int empid, float salary) {
-		//super(name,age);
+		super(name,age);
 		this.empid = empid;
 		this.salary = salary;
 	}
