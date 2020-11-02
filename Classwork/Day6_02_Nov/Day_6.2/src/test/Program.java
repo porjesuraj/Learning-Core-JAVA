@@ -1,5 +1,6 @@
 package test;
 
+import java.lang.Thread.State;
 import java.util.Scanner;
 
 public class Program {
@@ -9,7 +10,18 @@ public class Program {
 	}
 	
 	static Scanner sc = new Scanner(System.in);
-public static void main(String[] args) {
+	
+	public static void main(String[] args) {
+		// demo - didnt work 
+		Thread thread = Thread.currentThread();
+		State state = thread.getState();
+		String name =  state.getDeclaringClass().getSimpleName();
+		System.out.println(name);
+		
+		}
+	
+	
+public static void main4(String[] args) {
 		
 	System.out.println("Enum element Name : ");
 	
