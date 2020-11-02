@@ -1996,7 +1996,7 @@ public class Program {
 		}
 ```
 
-6. inheritence in java, using sper keyword 
+6. **inheritence in java, using super keyword** 
 - default mode of inheritence is public 
 - in java, except constructor,all member(static,not static,private) of superclass inherit in sub class
 - using super keyword we can access member of super class in method of sub class
@@ -2061,7 +2061,9 @@ class Employee extends Person{
 
 ```
 
-5. 
+7.  **upcasting and downcasting in java**
+- upcasting : process of asigning/converting of reference of sub class to reference of super class
+- Downcasting : process of converting reference of super class into reference of sub class is called
 ```java
 
 ```
