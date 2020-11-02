@@ -2064,6 +2064,107 @@ class Employee extends Person{
 7.  **upcasting and downcasting in java**
 - upcasting : process of asigning/converting of reference of sub class to reference of super class
 - Downcasting : process of converting reference of super class into reference of sub class is called
+- Exception :**ClassCastException**:
+Thrown to indicate that the code has attempted to cast an object to a subclass of which it is not an instance
+```java
+public static void main1(String[] args) {
+		Employee emp = new Employee("suraj",26,1,23;
+		emp.printRecord();	
+		Employee emp2 = emp; //Shallow copy			
+		}
+
+public static void main2(String[] args) {
+		Employee emp = new Employee("suraj",26,1,23;
+		Person p = emp;  //OK //UPcasting 	
+		}
+
+	public static void main4(String[] args) {
+		Person p1 = null;
+		
+		Employee emp = (Employee) p1; //downcasting
+		System.out.println(p1);
+		System.out.println(emp);
+			}	
+
+	public static void main5(String[] args) {	
+		Person p1 = new Employee();// upcasting
+		Employee emp = (Employee) p1;//downcasting
+		System.out.println(p1);
+		System.out.println(emp);
+			}	
+public static void main(String[] args) {		
+Person p1 = new Person();		
+Employee emp = (Employee) p1;
+// ClassCastException
+	}			
+
+```
+
+8. How to 
+- runtime polymorphism in c++, in java we have 
+- **Dynamic method dispatch**
+   - it is a process of calling method of sub class using reference of super class 
+-  it works on method printRecord in demo, showing
+   - in java, method are by default virtual
+
+```java
+class Person{
+	private String name;
+	private int age;
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	public void printRecord( ) {
+		System.out.println("Name	:	"+this.name;
+		System.out.println("Age	:	"+this.age);
+	}
+}
+class Employee extends Person{
+	private int empid;
+	private float salary;
+	public Employee(String name, int age, int empid, float salary){
+		super( name, age );
+		this.empid = empid;
+		this.salary = salary;
+	}
+	public void printRecord( ) {
+		super.printRecord();
+		System.out.println("Empid	:	"+this.empid);
+		System.out.println("Salary	:	"+this.salary);
+	}
+}
+
+
+public static void main(String[] args) {
+		
+		// Dynamic method dispatch
+		// in java, method are by default virtual
+		Person p = new Employee(); //upcasting 
+		
+		p.printRecord();
+	}
+```
+
+9. How to 
+
 ```java
 
 ```
+10. How to 
+
+```java
+
+```
+11. How to 
+
+```java
+
+```
+
+12. How to 
+
+```java
+
+```
+

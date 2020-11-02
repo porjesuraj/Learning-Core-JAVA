@@ -70,7 +70,7 @@ public static void main(String[] args) {
 		Person p1 = new Person();
 		
 		Employee emp = (Employee) p1;
-		// ClassCastException:Thrown to indicate that the code has attempted to cast an object to a subclass of which it is not an instance
+		
 			}	
 public static void main5(String[] args) {
 		
