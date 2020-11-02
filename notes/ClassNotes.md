@@ -2146,25 +2146,14 @@ public static void main(String[] args) {
 	}
 ```
 
-9. How to 
+9. How to make a jar(Java ARchieve) file
+- make a project ,and write your code in package class, mostly methofs,no main method 
+- right click on project
+   + go to export ---> java---> Jar file(select it)
+   + give destination folder for jar file , done 
 
-```java
+10. How to refer/import a jar file from a folder
+- right click on project in which you want to refer the jar file
+   + click on build path ---> Add external jar files , done   
 
-```
-10. How to 
-
-```java
-
-```
-11. How to 
-
-```java
-
-```
-
-12. How to 
-
-```java
-
-```
-
+# Day7 
