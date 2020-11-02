@@ -9,8 +9,8 @@
 1. The JVM is called "virtual" because it is an abstract computer defined by a specification.
    -  To run a Java program, you need a concrete implementation of the abstract specification. 
    - here we describe primarily the abstract specification of the JVM.
-   -  To illustrate the abstract definition of certain features,  also  various ways in which those features could be implemented.
-
+   - The Java Virtual Machine is responsible for the memory safety, platform independence, and security features of the Java programming language.
+  
 
 2.  when you say **"JVM."** You may be speaking of:
 
@@ -42,7 +42,7 @@
 
     - A Java application continues to execute (the virtual machine instance continues to live) as long as any non-daemon threads are still running.
     -  When all non-daemon threads of a Java application terminate, the virtual machine instance will exit. 
-    -  If permitted by the security manager, the application can also cause its own demise by invoking the exit() method of class Runtime or System.
+    -  If permitted by the security manager, the **application can also cause its own demise by invoking the exit() method** of class Runtime or System.
   
 
 ###  The Architecture of the JVM
@@ -65,7 +65,8 @@
 
 !['jvm_arch'](jvm-arch.gif)
 
-Figure 5-1. The internal architecture of the JVM.
+!['jvm-indetail-arch'](JVM%20Architecture.png)
+- The internal architecture of the JVM.
 - The JVM organizes the memory it needs to execute a program into several runtime data areas.
 
 - Although the same runtime data areas exist in some form in every JVM implementation, their specification is quite abstract. 
@@ -141,56 +142,304 @@ The JVM computes by performing operations on certain types of data.
 4. The word size does not affect the behavior of a program. It is only an internal attribute of a virtual machine implementation.
 
 
-### day 3 
+# day 3 
 
-1. The Class Loader Subsystem
-The part of a Java virtual machine implementation that takes care of finding and loading types is the class loader subsystem. Chapter 1, "Introduction to Java's Architecture," gives an overview of this subsystem. Chapter 3, "Security," shows how the subsystem fits into Java's security model. This chapter describes the class loader subsystem in more detail and show how it relates to the other components of the virtual machine's internal architecture.
+### The Class Loader Subsystem
 
-As mentioned in Chapter 1, the Java virtual machine contains two kinds of class loaders: a bootstrap class loader and user-defined class loaders. The bootstrap class loader is a part of the virtual machine implementation, and user-defined class loaders are part of the running Java application. Classes loaded by different class loaders are placed into separate name spaces inside the Java virtual machine.
+1. The part of a Java virtual machine implementation that takes care of finding and loading types is the class loader subsystem. 
+- 1. The class loader subsystem is primarily responsible for 
+   +  locating and importing the binary data for classes.
+   +  verifying the correctness of imported classes,
+   +   allocate and initialize memory for class variables, 
+   +   and assist in the resolution of symbolic references.
+- 2.  The class loader subsystem involves 
+-  many other parts of the JVM and several classes from the java.lang library.
+-  For example,
+   1. user-defined class loaders are regular Java objects whose class descends from java.lang.ClassLoader.
+   2.   The methods of class ClassLoader allow Java applications to access the virtual machine's class loading machinery.
+   3.     Also, for every type a Java virtual machine loads, it creates an instance of class java.lang.Class to represent that type.
+-  Like all objects, 
+-  **user-defined class loaders and instances of class Class reside on the heap**
+-  **Data for loaded types resides in the method area**   
 
-The class loader subsystem involves many other parts of the Java virtual machine and several classes from the java.lang library. For example, user-defined class loaders are regular Java objects whose class descends from java.lang.ClassLoader. The methods of class ClassLoader allow Java applications to access the virtual machine's class loading machinery. Also, for every type a Java virtual machine loads, it creates an instance of class java.lang.Class to represent that type. Like all objects, user-defined class loaders and instances of class Class reside on the heap. Data for loaded types resides in the method area.
+2. the Java virtual machine contains **two kinds of class loaders**: 
+1. **a bootstrap class loader**  
+    1. it is a part of the virtual machine implementation, 
+    - Every JVM implementation has a bootstrap class loader,
+       -  knows how to load trusted classes, including the classes of the Java API.
+    -  The JVM specification doesn't define how the bootstrap loader should locate classes, its for  to implementation designers to decide.
+    2. Given a fully qualified type name, the bootstrap class loader must in some way attempt to produce the data that defines the type.
+    -  One common approach ffor this is 
+    1. This implementation searches a user-defined directory path stored in an environment variable named CLASSPATH. 
+    -   The bootstrap loader looks in each directory, given in the CLASSPATH, until it finds a file with the appropriate name: the type's simple name plus ".class".
+    -    Unless the type is part of the unnamed package, the bootstrap loader expects the file to be in a subdirectory of one the directories in the CLASSPATH. 
+    -    The path name of the subdirectory is built from the package name of the type.
+    -     For example, if the bootstrap class loader is searching for class java.lang.Object, it will look for Object.class in the java\lang subdirectory of each CLASSPATH directory.
+    3. the bootstrap class loader of Sun's Java 2 SDK only looks in the directory in which the system classes (the class files of the Java API) were installed. 
+     -  In Sun's Java 2 SDK virtual machine, searching the class path is the job of the system class loader, a user-defined class loader that is created automatically when the virtual machine starts up.
+2. **User-Defined Class Loaders**
+- it are part of the running Java application.
+-  Classes loaded by different class loaders are placed into separate Namespaces inside the Java virtual machine.
+- Although user-defined class loaders themselves are part of the Java application, 
+- 1.  four of the methods in class ClassLoader are gateways into the JVM:
+   -  methods declared in class java.lang.ClassLoader:
+    ```java
+    1. protected final Class defineClass(String name, byte data[],int offset, int length);
+    2. protected final Class defineClass(String name, byte data[], int offset, int length, ProtectionDomain     protectionDomain);
+    3. protected final Class findSystemClass(String name);
+    4. protected final void resolveClass(Class c);
+    ```
+    - Any Java virtual machine implementation must take care to connect these methods of class ClassLoader to the internal class loader subsystem.
 
-Loading, Linking and Initialization
-The class loader subsystem is responsible for more than just locating and importing the binary data for classes. It must also verify the correctness of imported classes, allocate and initialize memory for class variables, and assist in the resolution of symbolic references. These activities are performed in a strict order:
+- 1.  **defineClass()**
+-  Every Java virtual machine implementation must make sure the defineClass() method of class ClassLoader can cause a new type to be imported into the method area.
+-   When defineClass() returns a Class instance, the binary file for the type has definitely been located and imported into the method area, but not necessarily linked and initialized., so need resolveClass() method.
 
-Loading: finding and importing the binary data for a type
-Linking: performing verification, preparation, and (optionally) resolution
-Verification: ensuring the correctness of the imported type
-Preparation: allocating memory for class variables and initializing the memory to default values
-Resolution: transforming symbolic references from the type into direct references.
-Initialization: invoking Java code that initializes class variables to their proper starting values.
-The details of these processes are given Chapter 7, "The Lifetime of a Type."
-The Bootstrap Class Loader
-Java virtual machine implementations must be able to recognize and load classes and interfaces stored in binary files that conform to the Java class file format. An implementation is free to recognize other binary forms besides class files, but it must recognize class files.
+- 2. **findSystemClass()**
+-  Every Java virtual machine implementation must make sure the findSystemClass() method can invoke the bootstrap  or system class loader to load the requested type,
+-  If already loaded or successfully loads the type,
+    -   it returns a reference to the Class object representing the type. 
+    -   If it can't locate the binary data for the type, it throws ClassNotFoundException..
 
-Every Java virtual machine implementation has a bootstrap class loader, which knows how to load trusted classes, including the classes of the Java API. The Java virtual machine specification doesn't define how the bootstrap loader should locate classes. That is another decision the specification leaves to implementation designers.
+- 3. **resolveClass()**
+- The resolveClass() method accepts a reference to a Class instance.
+-  This method causes the type represented by the Class instance to be linked (if it hasn't already been linked).
+-  The defineClass() method,  only takes care of loading the type.  
+-   Java virtual machine implementations make sure the resolveClass() method of class ClassLoader can cause the class loader subsystem to perform linking.
 
-Given a fully qualified type name, the bootstrap class loader must in some way attempt to produce the data that defines the type. One common approach is demonstrated by the Java virtual machine implementation in Sun's 1.1 JDK on Windows98. This implementation searches a user-defined directory path stored in an environment variable named CLASSPATH. The bootstrap loader looks in each directory, in the order the directories appear in the CLASSPATH, until it finds a file with the appropriate name: the type's simple name plus ".class". Unless the type is part of the unnamed package, the bootstrap loader expects the file to be in a subdirectory of one the directories in the CLASSPATH. The path name of the subdirectory is built from the package name of the type. For example, if the bootstrap class loader is searching for class java.lang.Object, it will look for Object.class in the java\lang subdirectory of each CLASSPATH directory.
+###  how a Java virtual machine performs class loading, linking, and initialization, with user- defined class loaders is given in Chapter 8, "The Linking Model."
+  
+3. **Loading, Linking and Initialization**
 
-In 1.2, the bootstrap class loader of Sun's Java 2 SDK only looks in the directory in which the system classes (the class files of the Java API) were installed. The bootstrap class loader of the implementation of the Java virtual machine from Sun's Java 2 SDK does not look on the CLASSPATH. In Sun's Java 2 SDK virtual machine, searching the class path is the job of the system class loader, a user-defined class loader that is created automatically when the virtual machine starts up. More information on the class loading scheme of Sun's Java 2 SDK is given in Chapter 8, "The Linking Model."
+-    The activities here are performed in a strict order:
+1. **Loading** 
+- finding and importing the binary data for a type
+ 2. **Linking**
+-  performing verification, preparation, and (optionally) resolution
+- 1. Verification: 
+- ensuring the correctness of the imported type
+- 2. Preparation: 
+- allocating memory for class variables and initializing the memory to default values
+- 3. Resolution:
+-  transforming symbolic references from the type into direct references.
+3. **Initialization**
+-  invoking Java code that initializes class variables to their proper starting values.
 
-User-Defined Class Loaders
-Although user-defined class loaders themselves are part of the Java application, four of the methods in class ClassLoader are gateways into the Java virtual machine:
+4.  **Name Spaces**
+-   1.  each class loader maintains its own name space populated by the types it has loaded.
+    - Because each class loader has its own name space, a single Java application can load multiple types with the same fully qualified name.
+    - i.e A type's fully qualified name, therefore, is not always enough to uniquely identify it inside a Java virtual machine instance.
+    1.   If multiple types of that same name have been loaded into different name spaces, 
+    - the identity of the class loader that loaded the type (the identity of the name space it is in) will also be needed to uniquely identify that type.
+    1. Name spaces arise inside a JVM instance as a result of the process of resolution. 
+    - As part of the data for each loaded type, the JVM keeps track of the class loader that imported the type. When the virtual machine needs to resolve a symbolic reference from one class to another, it requests the referenced class from the same class loader that loaded the referencing class.
 
-// Four of the methods declared in class java.lang.ClassLoader:
-protected final Class defineClass(String name, byte data[],
-    int offset, int length);
-protected final Class defineClass(String name, byte data[],
-    int offset, int length, ProtectionDomain protectionDomain);
-protected final Class findSystemClass(String name);
-protected final void resolveClass(Class c);
-Any Java virtual machine implementation must take care to connect these methods of class ClassLoader to the internal class loader subsystem.
 
-The two overloaded defineClass() methods accept a byte array, data[], as input. Starting at position offset in the array and continuing for length bytes, class ClassLoader expects binary data conforming to the Java class file format--binary data that represents a new type for the running application -- with the fully qualified name specified in name. The type is assigned to either a default protection domain, if the first version of defineClass() is used, or to the protection domain object referenced by the protectionDomain parameter. Every Java virtual machine implementation must make sure the defineClass() method of class ClassLoader can cause a new type to be imported into the method area.
 
-The findSystemClass() method accepts a String representing a fully qualified name of a type. When a user-defined class loader invokes this method in version 1.0 and 1.1, it is requesting that the virtual machine attempt to load the named type via its bootstrap class loader. If the bootstrap class loader has already loaded or successfully loads the type, it returns a reference to the Class object representing the type. If it can't locate the binary data for the type, it throws ClassNotFoundException. In version 1.2, the findSystemClass() method attempts to load the requested type from the system class loader. Every Java virtual machine implementation must make sure the findSystemClass() method can invoke the bootstrap (if version 1.0 or 1.1) or system (if version 1.2 or later) class loader in this way.
+5. **The Method Area**
+- 1. Inside a JVM instance, information about loaded types is stored in a logical area of memory called the method area.
+-  When the JVM loads a type, it uses a class loader to locate the appropriate class file.
+-   The class loader reads in the class file, 
+  - as linear stream of binary data and passes it to the virtual machine. 
+  - The virtual machine extracts information about the type from the binary data and stores the information in the method area.
+- Memory for class (static) variables declared in the class is also taken from the method area.
 
-The resolveClass() method accepts a reference to a Class instance. This method causes the type represented by the Class instance to be linked (if it hasn't already been linked). The defineClass() method, described previous, only takes care of loading. (See the previous section, "Loading, Linking, and Initialization" for definitions of these terms.) When defineClass() returns a Class instance, the binary file for the type has definitely been located and imported into the method area, but not necessarily linked and initialized. Java virtual machine implementations make sure the resolveClass() method of class ClassLoader can cause the class loader subsystem to perform linking.
+- 2. The manner in which a JVM implementation represents type information internally is a decision of the implementation designer. 
+- For example, multi-byte quantities in class files are stored in big- endian (most significant byte first) order. When the data is imported into the method area.
 
-The details of how a Java virtual machine performs class loading, linking, and initialization, with user- defined class loaders is given in Chapter 8, "The Linking Model."
+- 3. All threads share the same method area, so access to the method area's data structures must be designed to be thread-safe. i.e only one thread should be allowed to load a class while the other one waits.
 
-Name Spaces
-As mentioned in Chapter 3, "Security," each class loader maintains its own name space populated by the types it has loaded. Because each class loader has its own name space, a single Java application can load multiple types with the same fully qualified name. A type's fully qualified name, therefore, is not always enough to uniquely identify it inside a Java virtual machine instance. If multiple types of that same name have been loaded into different name spaces, the identity of the class loader that loaded the type (the identity of the name space it is in) will also be needed to uniquely identify that type.
+- 4. The size of the method area need not be fixed. As the Java application runs, the virtual machine can expand and contract the method area to fit the application's needs. 
+- Also, the memory of the method area need not be contiguous. It could be allocated on a heap--even on the virtual machine's own heap.
 
-Name spaces arise inside a Java virtual machine instance as a result of the process of resolution. As part of the data for each loaded type, the Java virtual machine keeps track of the class loader that imported the type. When the virtual machine needs to resolve a symbolic reference from one class to another, it requests the referenced class from the same class loader that loaded the referencing class. This process is described in detail in Chapter 8, "The Linking Model." 
+- 5. The method area can also be garbage collected.
+-  Because Java programs can be dynamically extended via user-defined class loaders, classes can become "unreferenced" by the application.
+-   If a class becomes unreferenced, a JVM can unload the class (garbage collect it) to keep the memory occupied by the method area at a minimum. 
 
+
+6. **Type(class/interface) Information**
+- For each type it loads, a JVM must store the following kinds of information in the method area:
+1. The fully qualified name of the type
+2. "                                 " direct superclass unless ,
+  - the type is an interface or class java.lang.Object, neither of which have a superclass
+3. Whether or not the type is a class or an interface
+4. The type's modifiers ( some subset of` public, abstract, final)
+5. An ordered list of the fully qualified names of any direct superinterfaces
+Inside the Java class file and JVM, 
+- type names are always stored as fully qualified names. 
+    -  For example, the fully qualified name of class Object in package java.lang is java.lang.Object.
+    -  In class files, the dots are replaced by slashes, as in java/lang/Object. 
+-  In the method area, fully qualified names can be represented as designer chooses.
+
+- In addition to the basic type information listed previously, the virtual machine must also store for each loaded type:
+
+1. **The constant pool for the type**
+- A constant pool is an ordered set of constants used by the type, including literals (string, integer, and floating point constants) and symbolic references to types, fields, and methods.
+-  Because it holds symbolic references to all types, fields, and methods used by a type, the constant pool plays a central role in the dynamic linking of Java programs.
+7. **Field information**
+- For each field declared in the type, 
+- the following information must be stored in the method area. 
+    - The field's name
+    - The field's type
+    - The field's modifiers (some subset of public, private, protected, static, final, volatile, transient)
+- -  the order in which the fields are declared by the class or interface must also be recorded. 
+8. **Method information**
+- For each method declared in the type, the following information must be stored in the method area.
+    - The method's name
+    - The method's return type (or void)
+    - The number and types (in order) of the method's parameters
+    - The method's modifiers (some subset of public, private, protected, static, final, synchronized, native, abstract)
+    - the order in which the methods are declared by the class or interface must be recorded as well as the data.
+- following information must also be stored with each method that is not abstract or native:
+    - The method's bytecodes   
+    - The sizes of the operand stack and local variables sections of the method's stack frame  
+
+9. **All class (static) variables declared in the type, except constants**
+- Class variables are shared among all instances of a class and can be accessed even in the absence of any instance.
+-  These variables are associated with the class--not with instances of the class--so they are logically part of the class data in the method area.
+-   Constants (class variables declared final) are not treated in the same way as non-final class variables.
+    -  As part of the constant pool, final class variables are stored in the method area--just like non-final class variables.   
+
+10.  **A Reference to Class ClassLoader**
+- For each type it loads, a JVM must keep track of whether or not the type was loaded via the bootstrap class loader or a user-defined class loader.
+-  For those types loaded via a user-defined class loader,
+    -   **the virtual machine must store a reference to the user-defined class loader that loaded the type**.
+    -    This information is stored as part of the type's data in the method area.
+
+- The virtual machine uses this information during 
+- <abbr title="explanation of Dynamc linking"><b> dynamic linking </b></abbr>
+-  When one type refers to another type,
+    - the virtual machine requests the referenced type from the same class loader that loaded the referencing type.
+-  This process of dynamic linking is also central to the way the virtual machine forms separate name spaces.
+-   To be able to properly perform dynamic linking and maintain multiple name spaces, the virtual machine needs to know what class loader loaded each type in its method area.
+   
+11. A Reference to Class Class
+- An instance of class java.lang.Class is created by the JVM for every type it loads. 
+- The virtual machine must in some way associate a reference to the Class instance for a type with the type's data in the method area.
+- Your Java programs can obtain and use references to Class objects.
+1.  One static method in class Class, allows you to get a reference to the Class instance for any loaded class:
+- A method declared in class java.lang.Class:
+> public static Class forName(String className);
+-  You can use forName() to get a Class reference for any loaded type from any package, loaded into the current name space.
+
+2. An alternative way to get a Class reference is to invoke getClass() on any object reference. 
+- This method is inherited by every object from class Object itself:
+-  A method declared in class java.lang.Object:
+> public final Class getClass();
+If you have a reference to an object of class java.lang.Integer, 
+for example, get Class object for java.lang.Integer  by invoking getClass() on  reference to the Integer object.
+
+- If you look at these methods, you will quickly realize that class Class gives the running application access to the information stored in the method area. Here are some of the methods declared in class in java.lang.Class :
+> public String getName();
+> public Class getSuperClass();
+> public boolean isInterface();
+> public Class[] getInterfaces();
+> public ClassLoader getClassLoader();
+- These methods just return information about a loaded type. 
+-  All this information comes straight out of the method area.
+
+7. Method Tables
+- The type information stored in the method area must be organized to be quickly accessible, for this a data structure is used called
+>  a method table.
+-   **A method table is an array of direct references to all the instance methods that may be invoked on a class instance, including instance methods inherited from superclasses.** 
+-   For each non-abstract class a JVM loads,
+    -    it could generate a method table and include it as part of the class information it stores in the method area. 
+-   it i an example of data structures that speed up access to the raw data.
+-   A method table allows a virtual machine to quickly locate an instance method invoked on an object. 
+-   A method table isn't helpful in the case of abstract classes or interfaces, because the program will never instantiate these.
+
+
+8. The Heap
+- Whenever a class instance or array is created in a running Java application,
+-  the memory for the new object is allocated from a single heap. 
+-  As there is only one heap inside a JVM instance, all threads share it. 
+-  Because a Java application runs inside its "own" exclusive JVM instance, there is a separate heap for every individual running application. 
+-  There is no way two different Java applications could trample on each other's heap data. 
+-  Two different threads of the same application, however, could trample on each other's heap data. so need proper synchronization of multi-threaded access to objects (heap data) in your Java programs.
+
+- The JVM has an instruction that allocates memory on the heap for a new object, but has no instruction for freeing that memory.
+-  Just as you can't explicitly free an object in Java source code, you can't explicitly free an object in Java bytecodes. 
+-  The virtual machine itself is responsible for deciding whether and when to free memory occupied by objects that are no longer referenced by the running application.
+-   Usually, a JVM implementation uses a garbage collector to manage the heap.
+
+
+9. Garbage Collection
+- A garbage collector's primary function is
+    1. to automatically reclaim the memory used by objects that are no longer referenced by the running application. 
+    2. It may also move objects as the application runs to reduce heap fragmentation.
+
+- A garbage collector is not strictly required by the JVM specification.
+-  The specification only requires that an implementation manage its own heap in some manner.
+
+
+10. Object Representation
+- 1. The Java virtual machine specification is silent on how objects should be represented on the heap.   
+- 2. Object representation,an integral aspect of the overall design of the heap and garbage collector,is a decision of implementation designers
+
+- 3. The primary data that must in some way be represented for each object is
+    -  the instance variables declared in the object's class and all its superclasses. 
+- Given an object reference, 
+    - the virtual machine must be able to quickly locate the instance data for the object.
+    -  In addition, there must be some way to access an object's class data (stored in the method area) given a reference to the object. 
+    -  For this reason, the memory allocated for an object usually includes some kind of pointer into the method area.
+
+- 4. ways for object representation
+1. possible heap design divides the heap into two parts:
+   -  a handle pool and
+   -   an object pool. 
+   -   An object reference is a native pointer to a handle pool entry.
+- A handle pool entry has two components: 
+     - a pointer to instance data in the object pool and
+     -  a pointer to class data in the method area.
+- The advantage of this scheme is that
+    -  it makes it easy for the virtual machine to combat heap fragmentation. 
+-   The disadvantage of this approach is that 
+    - every access to an object's instance data requires dereferencing two pointers.
+-  This kind of heap is demonstrated interactively by the HeapOfFish applet
+
+!['obj-rep'](obj-rep-handle-obj-pool.gif)
+
+2. this design makes an object reference a native pointer to a bundle of data that contains the object's instance data and a pointer to the object's class data.
+-  This approach requires dereferencing only one pointer to access an object's instance data, but makes moving objects more complicated. 
+-  When the virtual machine moves an object to combat fragmentation of this kind of heap,
+    -   it must update every reference to that object anywhere in the runtime data areas. 
+
+!['obj-rep'](obj-rep-allDataInHEap.gif)  
+
+
+- No matter what object representation an implementation uses, 
+- it is likely that a method table is close at hand for each object.
+-  Method tables,
+   -   because they speed up the invocation of instance methods,
+- it can play an important role in achieving good overall performance for a virtual machine implementation.
+
+
+11. Array Representation
+1. In Java, arrays are full-fledged objects.
+  -  Like objects, arrays are always stored on the heap.
+  -  Also like objects, implementation designers can decide how they want to represent arrays on the heap.
+
+2. Arrays have a Class instance associated with their class, just like any other object. 
+- All arrays of the same dimension and type have the same class. 
+- The length of an array does not play any role in establishing the array's class. 
+
+3. Multi-dimensional arrays are represented as arrays of arrays.
+ - A two dimensional array of ints, for example, would be represented by a **one dimensional array of references to several one dimensional arrays of ints.** 
+
+ ![''array-rep](array-rep.gif)
+
+6. The data that must be kept on the heap for each array is 
+ - the array's length,
+ -  the array data,
+ -   and some kind of reference to the array's class data. 
+
+
+12.  **The Program Counter**
+- **Each thread of a running program has its own pc register, or program counter**, which is created when the thread is started.
+-  The pc register is one word in size,
+   -   so it can hold both 
+       - a native pointer and
+       -  a returnAddress.
+-  As a thread executes a Java method, the pc register contains the address of the current instruction being executed by the thread.
+-   An "address" can be a native pointer or an offset from the beginning of a method's bytecodes.
+-    If a thread is executing a native method, the value of the pc register is undefined.

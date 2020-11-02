@@ -1687,28 +1687,6 @@ public static void main1(String[] args) //NOT WORKING
 	}
 
 ```
-- how to 
-```java
-
-```
-
-- 11.
-```java
-
-```
-- how to 
-```java
-
-```
-- 11.
-```java
-
-```
-- how to 
-```java
-
-```
-
 
 ### Slides
 
@@ -1736,5 +1714,212 @@ public static void main1(String[] args) //NOT WORKING
 
 
 
-
 # Day6
+
+### to read
+1. Hierarchy
+2. assembly info.css file contains attribute on assembly level in .NET
+3. calling method on null object , gives  nullpointer exception
+4. classpath/runtime class path/build path
+### notes
+
+!['Day6.1'](day6.1.png)
+!['Day6.2'](day6.2.png)
+!['Day6.3'](day6.3.png)
+!['Day6.4'](day6.4.png)
+!['Day6.5'](day6.5.png)
+!['Day6.6'](day6.6.png)
+!['Day6.7'](day6.7.png)
+!['Day6.8'](day6.8.png)
+
+### myNotes
+
+
+1. Hierarchy
+- level of abstraction is called hierarchy
+- types of hierarchy:
+1. Is-a : Inheritence
+2. Has-a : Association
+3. Use - a : Dependency
+4. Creates-a  :  Instantiation
+- 
+
+2. Association 
+- if "has-a" relation between two class, then use Association 
+- here reference of class ,get memory in object instance 
+- asso: object part of another object
+   - physically only reference to associated object is there in objects instance, so it is 
+   - object outside object.
+   - so if we want to ignore the asso object ,set it as null
+- so,in java Instance can oontain object reference, but instance cannot contain another instance
+   
+
+
+3. Java ARchive (JAR)
+- to create  a lib
+
+4. inheritence(extends)
+- it is a process of acquiring properties and behaviour of super class by the sub class.
+- when to use inheritence 
+    1. without modifying implementation of existing class,if we want to extend meaning of that class then ,use
+- to extend the class we should use extends keyword.
+- using super statement  we can use members of superclass inside method of sub class.
+- Using super statement, we can call constructor of super class from constructor of sub class.
+- in java any class can extend only one class.
+- for every class is extended from Object
+- java do not support multi class inheritence
+- Except Constructor, all members of super class of any access modifier inherit into sub class.
+- super statement must be first statement inside constructor body
+- Example : Employee is a Person
+```java
+
+class Person extends Object{}
+class Employee extends Person{}
+
+```
+
+5. upcasting : process of converting of reference of sub class to reference of super class
+ - it helps us to reduce maintenance of system
+6. 
+
+### demo 
+
+1. How to declare dynamic arguments (to get multiple values as argument)
+```java
+public static void sum( int... arguments ) {
+		int result = 0;
+		for( int element : arguments )
+			result = result + element;
+		System.out.println("Result	:	"+result);
+	}
+	public static void main2(String[] args) {
+		Program.sum( );
+		Program.sum( 0 );
+		Program.sum( 10, 20 );
+		Program.sum( 10, 20, 30, 40, 50  );
+		Program.sum( 10, 20, 30, 40, 50, 60, 70, 80  );
+	}
+
+```
+2. Auto unboxing 
+```java
+public static void main(String[] args) {
+		Integer n1 = new Integer("125");
+		//int n2 = n1.intValue();	//UnBoxing
+	
+		int n3 = n1;	//Auto-UnBoxing
+		//int n3 = n1.intValue();		
+		System.out.println(n3);
+	}
+
+```
+3. Enum decalaration, calling method using Enum  name, enum object, use of name,ordinal,valueOF methods
+```java
+enum Color{
+	RED, GREEN, BLUE
+}
+
+static Scanner sc = new Scanner(System.in);
+
+// using scanner to print ordinal value 
+	public static void main(String[] args) {
+		System.out.print("Name	:	");
+		String str = sc.nextLine(); //RED,GREEN, BLUE
+		
+		Color color = Color.valueOf(str.toUpperCase());
+		String name = color.name();
+		int ordinal = color.ordinal();
+		
+		System.out.printf("%-10s%-5d\n", name, ordinal);
+	}
+	//using values method to instantiate enum array
+	public static void main5(String[] args) {
+		Color[] colors = Color.values();
+		for (Color color : colors) {
+			String name = color.name();
+			int ordinal = color.ordinal();
+			System.out.printf("%-10s%-5d\n", name, ordinal);	
+		}
+	}
+// using instance of enum to call name,ordinal method
+	public static void main4(String[] args) {
+		//Color color = Color.RED;
+		//Color color = Color.GREEN;
+		Color color = Color.BLUE;
+		String name = color.name();
+		int ordinal = color.ordinal();
+		System.out.printf("%-10s%-5d\n", name, ordinal);
+	}
+	
+	// using className to call name,ordinal method
+	public static void main1(String[] args) {
+		String name = Color.RED.name();
+		int ordinal = Color.RED.ordinal();
+		System.out.printf("%-10s%-5d\n", name, ordinal);
+	}
+
+
+```
+4. Enum constructor, getter,setter,toString 
+```java
+enum Day{
+	//SUN,MON,TUES; //OK
+	SUN(1,"Sunday"),MON(2,"Monday"),TUE(3,"Tuesday"); //Hint : consider these are objects like C++
+private int dayNumber;	
+private String dayName;
+
+	/* individual constructor
+	 * private Day(int dayNumber) { this.dayNumber = dayNumber; }
+	 *  private Day(String dayName) { this.dayName = dayName; }
+	 */
+private Day(int dayNumber,String DayName)
+{
+	this.dayNumber = dayNumber;
+	this.dayName = DayName;
+}
+
+public int getDayNumber() {return dayNumber;}
+
+public void setDayNumber(int dayNumber) {
+	this.dayNumber = dayNumber;
+}
+
+
+public String getDayName() {return dayName;}
+
+
+
+public void setDayName(String dayName) {this.dayName = dayName;}
+
+@Override
+public String toString()
+{
+	return String.format("%-10s%-5d", this.dayName,this.dayNumber);
+}
+
+}
+
+public static void main(String[] args) {
+		Day[] days = Day.values();
+		for (Day day : days) {
+			String name = day.name();
+			int ordinal = day.ordinal();
+			System.out.println(name+"	"+ordinal+"	"+day.toString());
+		}
+	}
+```
+
+5. using methods of java.util class 
+```java
+
+```
+
+6. creating jar file 
+```java
+
+```
+
+5. 
+```java
+
+```
