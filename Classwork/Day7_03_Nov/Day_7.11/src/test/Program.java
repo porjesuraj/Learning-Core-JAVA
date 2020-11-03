@@ -16,7 +16,7 @@ public class Program {
 	}
 	public static void main(String[] args) {
 		try {
-			Program.print("");
+			Program.print("DAC");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

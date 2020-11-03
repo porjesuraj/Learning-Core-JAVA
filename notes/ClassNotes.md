@@ -2725,14 +2725,87 @@ public class Stack {
 ```
 
 
-21. demo on
+21. demo on main program on stack implement using enum
 
 ```java
+public enum IOOperation {
+	EXIT, PUSH, POP
+}
+
+public class Program {
+	static Scanner sc = new Scanner(System.in);
+
+	public static void acceptRecord( int[] element ) {
+		if( element != null ) {
+			System.out.print("Enter element	:	");
+			element[ 0 ] = sc.nextInt();
+		}
+	}
+	public static void printRecord( int[] element ) {
+		if( element != null ) 
+			System.out.println("Popped element is "+element[0]);
+	}
+	public static IOOperation menuList() {
+		System.out.println("0.Exit");
+		System.out.println("1.Push");
+		System.out.println("2.Pop");
+		System.out.print("Enter choice	:	");
+		return IOOperation.values()[ sc.nextInt() ];
+	}
+	@SuppressWarnings("incomplete-switch")
+	public static void main(String[] args) {
+		IOOperation choice;
+		int[] element = new int[ 1 ];
+		Stack stk = new  Stack();
+		while ((choice = Program.menuList()) != IOOperation.EXIT) {
+			try {
+				switch (choice) {
+				case PUSH:
+					Program.acceptRecord( element );
+					stk.push(element[0]);
+					break;
+				case POP:
+					element[ 0 ] = stk.peek();
+					Program.printRecord(element);
+					stk.pop();
+					break;
+				}
+			} catch (StackOverflowException | StackUnderflowException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+}
+
 
 ```
-22. demo on
+22. demo on exception classes accepting sub classes of exception as throw object
 
 ```java
+
+class A extends Exception{	}
+class B extends Exception{	}
+class C extends Exception{	}
+public class Program {
+	//public void print( String str ) throws A, B, C {
+	public static void print( String str ) throws Exception {
+		if( str == null )
+			throw new A( );
+		if( str == " ")
+			throw new B( );
+		if( str == "empty")
+			throw new C( );
+		System.out.println(str);
+	}
+	public static void main(String[] args) {
+		try {
+			Program.print("DAC");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
 
 ```
 23. demo on
