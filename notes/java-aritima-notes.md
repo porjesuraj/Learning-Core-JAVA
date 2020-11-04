@@ -9,7 +9,7 @@
 1. The JVM is called "virtual" because it is an abstract computer defined by a specification.
    -  To run a Java program, you need a concrete implementation of the abstract specification. 
    - here we describe primarily the abstract specification of the JVM.
-   - The Java Virtual Machine is responsible for the memory safety, platform independence, and security features of the Java programming language.
+   - The JVM is responsible for the memory safety, platform independence, and security features of the Java programming language.
   
 
 2.  when you say **"JVM."** You may be speaking of:
@@ -313,7 +313,7 @@ Inside the Java class file and JVM,
 -  This process of dynamic linking is also central to the way the virtual machine forms separate name spaces.
 -   To be able to properly perform dynamic linking and maintain multiple name spaces, the virtual machine needs to know what class loader loaded each type in its method area.
    
-11. A Reference to Class Class
+11. **A Reference to Class Class**
 - An instance of class java.lang.Class is created by the JVM for every type it loads. 
 - The virtual machine must in some way associate a reference to the Class instance for a type with the type's data in the method area.
 - Your Java programs can obtain and use references to Class objects.
@@ -338,7 +338,7 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 - These methods just return information about a loaded type. 
 -  All this information comes straight out of the method area.
 
-7. Method Tables
+7. **Method Tables**
 - The type information stored in the method area must be organized to be quickly accessible, for this a data structure is used called
 >  a method table.
 -   **A method table is an array of direct references to all the instance methods that may be invoked on a class instance, including instance methods inherited from superclasses.** 
@@ -349,7 +349,7 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 -   A method table isn't helpful in the case of abstract classes or interfaces, because the program will never instantiate these.
 
 
-8. The Heap
+8. **The Heap**
 - Whenever a class instance or array is created in a running Java application,
 -  the memory for the new object is allocated from a single heap. 
 -  As there is only one heap inside a JVM instance, all threads share it. 
@@ -363,7 +363,7 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 -   Usually, a JVM implementation uses a garbage collector to manage the heap.
 
 
-9. Garbage Collection
+9. **Garbage Collection**
 - A garbage collector's primary function is
     1. to automatically reclaim the memory used by objects that are no longer referenced by the running application. 
     2. It may also move objects as the application runs to reduce heap fragmentation.
@@ -372,7 +372,7 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 -  The specification only requires that an implementation manage its own heap in some manner.
 
 
-10. Object Representation
+10.**Object Representation**
 - 1. The Java virtual machine specification is silent on how objects should be represented on the heap.   
 - 2. Object representation,an integral aspect of the overall design of the heap and garbage collector,is a decision of implementation designers
 
@@ -414,7 +414,7 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 - it can play an important role in achieving good overall performance for a virtual machine implementation.
 
 
-11. Array Representation
+11. **Array Representation**
 1. In Java, arrays are full-fledged objects.
   -  Like objects, arrays are always stored on the heap.
   -  Also like objects, implementation designers can decide how they want to represent arrays on the heap.
@@ -443,3 +443,122 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 -  As a thread executes a Java method, the pc register contains the address of the current instruction being executed by the thread.
 -   An "address" can be a native pointer or an offset from the beginning of a method's bytecodes.
 -    If a thread is executing a native method, the value of the pc register is undefined.
+
+
+### page 8
+
+13. **The Java Stack**
+1. a Java stack stores a thread's state in discrete frames.
+-   When a new thread is launched, the Java virtual machine creates a new Java stack for the thread.
+-   The JVM only performs two operations directly on Java Stacks:
+   - 1. it pushes frames 
+   - 2.  pops frames.
+2. As JVM executes a method, the it keeps track of the current class(method class) and current constant pool(current class constant pool). 
+-   When the virtual machine encounters instructions that operate on data stored in the stack frame, it performs those operations on the current frame.
+  
+3. When a thread invokes a Java method,
+     -  the virtual machine creates and pushes a new frame onto the thread's Java stack.
+     -   This new frame then becomes the current frame. 
+     -   As the method executes, it uses the frame to store parameters, local variables, intermediate computations, and other data.
+4.  A method can complete in either of two ways. 
+     - If a method completes by returning, it is said to have **normal completion**.
+     -  If it completes by throwing an exception, it is said to have **abrupt completion**.
+-   When a method completes,either way, the JVM pops and discards the method's stack frame.
+-    The frame for the previous method then becomes the current frame.       
+
+5. **why in java no need to worrry about multi threaded access?** 
+- All the data on a thread's Java stack is private to that thread.
+-  There is no way for a thread to access or alter the Java stack of another thread.
+-   Because of this, 
+      -   you need never worry about synchronizing multi- threaded access to local variables in your Java programs.
+-    When a thread invokes a method, 
+      - the method's local variables are stored in a frame on the invoking thread's Java stack.
+      -  Only one thread can ever access those local variables:
+      -  i.e the thread that invoked the method.
+
+
+14. **The Stack Frame**
+1. The stack frame has three parts:
+- 1. **local variables**
+  - The local variables section of the Java stack frame is organized as a zero-based array of words.
+     - -  the local variables,  are accessed via array indices 
+  - The local variables section contains a method's parameters and local variables.
+  -  Compilers place the parameters into the local variable array first, in the order in which they are declared.
+  
+- 2.   **operand stack**
+  - Like the local variables, the operand stack is organized as an array of words.
+  -   the operand stack is accessed by pushing and popping values. 
+-   If an instruction pushes a value onto the operand stack, a later instruction can pop and use that value.
+- The virtual machine stores the same data types in the operand stack that it stores in the local variables
+- 3.   **frame data.**
+- In addition to the local variables and operand stack, 
+- the Java stack frame includes data to support 
+- 1.  constant pool resolution
+- Whenever the Java virtual machine encounters any of the instructions that refer to 
+  - an entry in the constant pool, 
+  - it uses the frame data's pointer to the constant pool to access that information.
+- 2.  normal method return
+  -  the frame data must assist the virtual machine in processing a normal or abrupt method completion. 
+- 3.   exception dispatch.
+  - The frame data must also contain some kind of reference to the method's exception table,
+  - which the virtual machine uses to process any exceptions thrown during the course of execution of the method. 
+-   This data is stored in the frame data portion of the Java stack frame.
+
+  
+2. **sizes** 
+-   local variables and operand stack sizes which are measured in words, are determined at compile time and included in the class file data for each method.
+-    The size of the frame data is implementation dependent.
+
+3.  **When the Java virtual machine invokes a Java method,**
+     -  it checks the class data to determine the number of words required by the method in the local variables and operand stack.
+     -   It creates a stack frame of the proper size for the method and pushes it onto the Java stack.
+
+
+4. **why is JVM stack based?**
+- Other than the program counter, which can't be directly accessed by instructions, the Java virtual machine has no registers.
+-  The Java virtual machine is stack-based rather than register-based because
+- 1.  its instructions take their operands from the operand stack rather than from registers.
+- 2.  Instructions can also take operands from other places, such as immediately following the opcode (the byte representing the instruction) in the bytecode stream, or from the constant pool. 
+- 3.  The Java virtual machine instruction set's main focus of attention, however, is the operand stack.
+- 4. The Java virtual machine uses the operand stack as a work space.
+- 5.  Many instructions pop values from the operand stack, operate on them, and push the result.
+- 6.  For example, the iadd instruction adds two integers by popping two ints off the top of the operand stack, adding them, and pushing the int result.
+
+
+
+15. **Native Method Stacks**
+1. In addition to all the runtime data areas defined by the JVM specification , 
+   - a running Java application may use other data areas created by or for native methods.
+2.  When a thread invokes a native method, 
+   - here the structures and security restrictions of the JVM no longer hamper its freedom.
+   -   A native method can likely access the runtime data areas of the virtual machine 
+   -   It may use registers inside the native processor, allocate memory on any number of native heaps, or use any kind of stack.
+
+3. Native methods are inherently implementation dependent.
+
+4.  Any native method interface will use some kind of native method stack. 
+ - 1.  When a thread invokes a Java method, 
+     - the virtual machine creates a new frame and pushes it onto the Java stack.
+- 2.  When a thread invokes a native method, however,
+      -   that thread leaves the Java stack behind. 
+      -   Instead of pushing a new frame onto the thread's Java stack,
+      -    the JVM will simply dynamically link to and directly invoke the native method. 
+      -    It is as if the JVM implementation is just calling another (dynamically linked) method within itself, at the behest of the running Java program.
+
+5. If an implementation's native method interface uses a C-linkage model,
+     -  then the native method stacks are C stacks.
+     -   When a C program invokes a C function, the stack operates in a certain way.
+     -    The arguments to the function are pushed onto the stack in a certain order. 
+     -    The return value is passed back to the invoking function in a certain way. 
+     -    This would be the behavior of the of native method stacks in that implementation.
+
+
+!['native-'](native-method-stack.gif)
+6. it shows a graphical depiction of a thread that invokes a native method that calls back into the virtual machine to invoke another Java method. 
+- it  shows the full picture of what a thread can expect inside the JVM.
+-  A thread may spend its entire lifetime executing Java methods, working with frames on its Java stack. Or,
+-   it may jump back and forth between the Java stack and native method stacks.
+- it shows  The stack for a thread that invokes Java and native methods.
+
+7. As with the other runtime memory areas, the memory they occupied by native method stacks need not be of a fixed size. It can expand and contract as needed by the running application.
+
