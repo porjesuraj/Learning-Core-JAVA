@@ -3661,7 +3661,7 @@ public class Program{
 
 ```
 - 5. if we want to put restriction on data type that can be used as a type argument, then , 
-  - we should specify Bounded Type Parameter.
+  - we should specify **Bounded Type Parameter.**
 - to put restriction on type argument ,
 - need to put restriction on type parameter, need to use bounded type parameter
 - Specifying bounded type parameter is job of class implementor 
@@ -3688,23 +3688,30 @@ public static void main(String[] args) {
 		
 	}
 ```
-- 6. |
+
+# Day9
+
+### demo
+1. |
 ```java
 
 
 ```
-- 7. |
+2. |
 ```java
 
 
 ```
-- 8. |
+3. |
 ```java
 
 
 ```
-- 9. |
+4. |
 ```java
 
 
 ```
+
+
+
