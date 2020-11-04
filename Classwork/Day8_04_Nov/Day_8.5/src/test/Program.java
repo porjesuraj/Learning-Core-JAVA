@@ -103,6 +103,28 @@ class Circle extends Shape{
 }
 
 
+class ShapeFactory
+{
+	public static Shape getInstance(int choice)
+	{
+		Shape shape = null;
+		
+		switch (choice) {
+		case 1:
+			
+			return new Rectangle();
+			
+		case 2:
+			
+			return new Circle(); 
+		}
+		
+		return null;
+	}
+	
+}
+
+
 public class Program{
 	static Scanner  sc = new Scanner(System.in);
 	
@@ -130,7 +152,7 @@ public class Program{
 			
 			Circle c = (Circle) shape;
 			
-			System.out.println("readius : ");
+			System.out.println("radius : ");
 			c.setRadius(sc.nextDouble());
 			
 			
@@ -160,24 +182,9 @@ public class Program{
 		
 		while((choice = Program.menuList()) != 0)
 		{
-			Shape shape = null;
 			
-			switch (choice) {
-			case 1:
-				
-				shape = new Rectangle();
-				
-				
-				
-				break;
-			case 2:
-				
-				shape = new Circle(); 
-				break;
-
-			default:
-				break;
-			}
+			Shape shape = ShapeFactory.getInstance(choice);
+			
 			
 			if(shape != null)
 			{
