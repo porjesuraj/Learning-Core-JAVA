@@ -31,7 +31,7 @@ public class Program {
 		
 		A a = new B(); // upcasting 
 		
-		a.print(1);
+		a.print(1); // print B.print // i.e overriding is done 
 
 	}
 
