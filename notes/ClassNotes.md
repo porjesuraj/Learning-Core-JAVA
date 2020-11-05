@@ -3855,16 +3855,97 @@ private static void printList(ArrayList<? super Integer> list)
 
 ```
 
-3. |
+3. demo on linked list
+```java
+class Node{
+	int data;
+	Node next; //null
+	
+	public Node(int data) {
+		this.data = data; 
+	}
+}
+public class LinkedList {
+
+	Node head;
+	Node tail;
+	
+	public boolean empty() {
+		
+		return this.head == null; 
+	}
+	
+	public void addLast(int element)
+	{
+		Node newNode = new Node(element);
+		if(this.empty())
+		 this.head = newNode;
+	  else
+	this.tail.next = newNode;
+this.tail = newNode; 
+	}	
+	public void printList() {
+		Node trav = this.head;
+		while(trav != null)
+		{
+			System.out.println(trav.data + " ");
+			trav = trav.next;
+		}
+		System.out.println();
+	}	
+}
+
+public static void main(String[] args) {
+	LinkedList list = new LinkedList();
+	    list.addLast(10);
+		list.addLast(20);
+		list.addLast(30);	
+		list.printList();	
+	}
+
+
+```
+4. methods for comparing primitive type in java
+- cannot invoke equals method on primitive data type
+```java
+int num1 = 10;
+	int num2 = 10; 
+	
+	if(num1 == num2)
+	System.out.println("equal");
+
+	else
+	System.out.println("not equal");
+	
+	// output: equal 
+		
+
+
+```
+5. |
 ```java
 
 
 ```
-4. |
+6. |
 ```java
 
 
 ```
+7. |
+```java
 
+
+```
+8. |
+```java
+
+
+```
+9. |
+```java
+
+
+```
 
 
