@@ -3690,6 +3690,63 @@ public static void main(String[] args) {
 ```
 
 # Day9
+### to read
+
+1. https://unicode-table.com/en/#basic-latin
+- read about unicode
+2. rules to define immutable class in java
+3. Regular expression (how to validate)
+- what is regualar expression for validation of
+- 1.  email, 
+- 2. pincode,
+- 3. full name, 
+- 4. ten digit phone number
+4. restriction on generics 
+
+
+### slides
+
+!['Day9.1'](day9.1.png)
+!['Day9.2'](day9.2.png)
+!['Day9.3'](day9.3.png)
+!['Day9.4'](day9.4.png)
+!['Day9.5'](day9.5.png)
+!['Day9.6'](day9.6.png)
+!['Day9.7'](day9.7.png)
+!['Day9.8'](day9.8.png)
+!['Day9.9'](day9.9.png)
+!['Day9.10'](day9.10.png)
+!['Day9.11'](day9.11.png)
+!['Day9.12'](day9.12.png)
+!['Day9.13'](day9.13.png)
+!['Day9.14'](day9.14.png)
+
+### notes 
+
+
+1. in java, c, c++, string is not built in datatype , so it gets memory on heap
+2. Serializable is an interface in java.io package , it
+ - is empty interface ,given to generate meta data, it is called marking interface 
+3. java.lang.string/stringBuffer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### demo
 1. |
