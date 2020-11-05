@@ -4144,18 +4144,79 @@ public static void main(String[] args) {
 		System.out.println(str);	//OK
 	}
 ```
-13. 
+13. comparison in case on constant Strings, i.e
+    - value assigned at compile time itself
+```java
+public static void main8(String[] args) {
+		String s1 = "SunBeam";
+		String s2 = "Sun"+"Beam";	//"SunBeam"
+		if( s1.equals(s2) )
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output : Equal
+	}
+	
+	public static void main7(String[] args) {
+		String s1 = "SunBeam";
+		String s2 = "Sun"+"Beam";	//"SunBeam"
+		if( s1 == s2 )
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output : Equal
+	}
+
+```
+14. comparison in case on non constant Strings i.e,
+  - - value assigned at run time 
+  - in this case using equals method, checkes state gies equal if both string are same
 ```java
 
 ```
-14. 
+15.  in case of Intern() method, on non constant string , reference comparison , gives equal 
+- 1. public String intern()
+  - A pool of strings, initially empty, is maintained privately by the class String.
+  - When the intern method is invoked, 
+1. if the pool already contains a string equal to this String object as determined by the equals(Object) method, then the string from the pool is returned.
+2.  Otherwise, this String object is added to the pool and a reference to this String object is returned.
+- here same refernce for s1 and s3 
+```java
+public static void main11(String[] args) {
+		String s1 = "SunBeam";
+		String s2 = "Sun";
+		String s3 = ( s2 + "Beam" ).intern();
+		if( s1 == s3 ) 
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output : Equal
+	}
+```
+
+
+16. 
+
 ```java
 
 ```
-15. 
+
+17. 
+
 ```java
 
 ```
+18. 
+
+```java
+
+```
+19. 
+
+```java
+
+```
+
 
 
 
