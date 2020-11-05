@@ -3922,9 +3922,20 @@ int num1 = 10;
 
 
 ```
-5. |
+5. coming state of reference type object
 ```java
+Employee emp1 = new Employee("suraj", 1, 100);
+		
+		Employee emp2 = new Employee("suraj", 1, 100);
+		
+		if(emp1 == emp2)//OK : Compares state of references 
+			System.out.println("Equal");
+		else
+		System.out.println("not equal");
 
+		//output : not equal
+		
+	}
 
 ```
 6. |
