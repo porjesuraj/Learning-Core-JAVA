@@ -3801,10 +3801,59 @@ private static void printList(ArrayList<?> list) {
 ```
 - 2. Upper bounded wild card <? extends className>
 ```java
+private static void printList(ArrayList<? extends Number> list) {
+		if( list != null ) {
+			for( Object element : list )
+				System.out.println(element);
+		}
+	}
+	public static void main(String[] args) {
+		ArrayList<Integer> intList = Program.getIntegerList();
+		Program.printList( intList );	//OK
+		
+		ArrayList<Double> doubleList = Program.getDoubleList();
+		Program.printList( doubleList );	//OK
+		
+		ArrayList<String> stringList = Program.getStringList( );
+		//Program.printList( stringList );	//Not OK
+	}
 
 ```
 
 - 3. Lower Bounded wild card <? super className>
+
+```java
+private static void printList(ArrayList<? super Integer> list)
+{
+	if(list != null)
+	{
+		
+		for(Object element : list)
+		{
+			System.out.println(element);
+		}
+	}
+}
+
+
+
+	public static void main(String[] args) {
+		
+		ArrayList<Integer> list = Program.getIntegerList();
+		
+		Program.printList(list); // ok 
+		
+		ArrayList<Double> list2 = Program.getDoubleList();
+		
+		//Program.printList(list2); // not ok 
+
+		ArrayList<String> list3 = Program.getStringList();
+	//	Program.printList(list3); not ok 
+			
+	}
+}
+
+```
 
 3. |
 ```java
