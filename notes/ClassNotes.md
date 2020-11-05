@@ -4278,12 +4278,74 @@ public static void main(String[] args) {
 	}
 
 ```
-19. 
+19. StringTokenizer class demo 
 
 ```java
+{  // multiple delimeter 
+		String str = "1a+2b*3c-4d/5e";
+		String delim = "+*-/";
+		StringTokenizer stk = new StringTokenizer(str,delim, true);
+		//System.out.println(stk.countTokens());
+		//StringTokenizer stk = new StringTokenizer(str,delim, false);
+		//StringTokenizer stk = new StringTokenizer(str,delim);
+		String token = null;
+		while( stk.hasMoreTokens()) {
+			token = stk.nextToken();
+			System.out.println(token);
+		}
+	}
+
+	{//split operation 
+		String str = "www.sunbeaminfo.com";
+		String delim = ".";
+		StringTokenizer stk = new StringTokenizer(str,delim);
+		//StringTokenizer stk = new StringTokenizer(str,delim,true);
+		String token = null;
+		while( stk.hasMoreTokens()) {
+			token = stk.nextToken();
+			System.out.println(token);
+		}
+	}
+	
+
+	
+	 { // using token class
+		String str = "SunBeam Institute of Information Technology";
+		StringTokenizer stk = new StringTokenizer(str);
+		String token = null;
+		while( stk.hasMoreTokens()) {
+			token = stk.nextToken();
+			System.out.println(token);
+		}
+	}
+	
+	
+	 {// using enumeration class
+
+		String str = "Sun Beam INfo Tech";
+		
+		StringTokenizer stk = new StringTokenizer(str);
+		
+		String token = null;
+		
+		while(stk.hasMoreElements())
+		{
+			token = (String) stk.nextElement();
+			System.out.println(token);
+		}
+			
+	} 
+
+	{
+		String str = "Sun Beam INfo Tech"	
+		StringTokenizer stk = new StringTokenizer(str)
+		System.out.println("count : " + stk.countTokens());
+	}
+	
+	
 
 ```
 
-
+20. 
 
 
