@@ -4235,9 +4235,47 @@ public class Program {
 ```java
 
 ```
-18. 
+18. demo on performing operation on String
+-  reversing  a number
+- as String is immutalbe ,
+  -  we need to convert it to mutable type to perform operation 
+ - so convert it into StringBuffer/StringBuilder
 
 ```java
+public static void main(String[] args) {
+
+		try(Scanner sc = new Scanner(System.in))
+		{
+			System.out.println("Number : ");
+			int number = sc.nextInt();
+			
+			String strNumber = String.valueOf(number);
+			
+			StringBuilder sb = new StringBuilder(strNumber);
+			
+		//	StringBuffer sb = new StringBuffer(strNumber);
+			sb.reverse();
+			
+			strNumber = sb.toString();
+			
+			number = Integer.parseInt(strNumber);
+			System.out.println("Number : " + number);
+			
+		}
+	
+	}
+
+	--- method 2
+	public static void main(String[] args) {
+
+		try(Scanner sc = new Scanner(System.in))
+		{
+			System.out.println("Number : ");
+			
+			System.out.println("Number : " + Integer.parseInt(new StringBuilder(String.valueOf(sc.nextInt())).reverse().toString()));
+		}
+	
+	}
 
 ```
 19. 
