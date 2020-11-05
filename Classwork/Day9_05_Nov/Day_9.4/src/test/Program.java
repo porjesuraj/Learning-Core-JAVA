@@ -42,7 +42,7 @@ private static ArrayList<String> getStringList(){
 
 
 
-private static void printList(ArrayList<? extends Number> list)
+private static void printList(ArrayList<? super Integer> list)
 {
 	if(list != null)
 	{
@@ -64,7 +64,7 @@ private static void printList(ArrayList<? extends Number> list)
 		
 		ArrayList<Double> list2 = Program.getDoubleList();
 		
-		Program.printList(list2); // ok 
+		//Program.printList(list2); // not ok 
 
 		ArrayList<String> list3 = Program.getStringList();
 	//	Program.printList(list3); not ok 
