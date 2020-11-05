@@ -4225,7 +4225,12 @@ public class Program {
 	}
 ```
 
-17. 
+17.  in string types 
+ - 1. String reference  with  same instance-- get same hashcode
+ - 2. StringBuffer reference with  same instance-- get different hashcode
+ - it get memory on heap, so comparison gives unequal 
+ - 3. StringBuilder reference with  same instance-- get different hashcode
+ -  - it get memory on heap, so comparison gives unequal 
 
 ```java
 
