@@ -24,7 +24,7 @@ public class Program {
 		
 		Employee emp2 = new Employee("suraj", 1, 100);
 		
-		if(emp1.equals(emp2))//OK : Compares state of references 
+		if(emp1 == emp2)//OK : Compares state of references 
 			System.out.println("Equal");
 		else
 		System.out.println("not equal");

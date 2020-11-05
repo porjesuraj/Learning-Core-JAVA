@@ -3922,7 +3922,8 @@ int num1 = 10;
 
 
 ```
-5. coming state of reference type object
+5. comparing references(emp1,emp2) of reference type object
+- as refernce are on java stack, at different location, comparing them gives they are unequal.
 ```java
 Employee emp1 = new Employee("suraj", 1, 100);
 		
@@ -3938,7 +3939,7 @@ Employee emp1 = new Employee("suraj", 1, 100);
 	}
 
 ```
-6. |
+6. comparing states of instance  of reference type object
 ```java
 
 
