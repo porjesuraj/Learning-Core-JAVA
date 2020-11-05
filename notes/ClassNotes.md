@@ -3941,15 +3941,50 @@ Employee emp1 = new Employee("suraj", 1, 100);
 ```
 6. comparing states of instance  of reference type object
 ```java
-
+Employee emp1 = new Employee("Sandeep", 33, 45000);
+		Employee emp2 = new Employee("Sandeep", 33, 45000);
+		
+		if( emp1.equals(emp2) )	//OK : Compares state of references 
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output : Not Equal
 
 ```
-7. |
+7. to compare state of instance of reference type, 
+-  we need to overide equals method, and write compare code here
+-  now we can compare states of instance of object
 ```java
+// Employee this = emp1;
+	//Object obj = emp2 ; //upcasting
+	@Override
+	public boolean equals(Object obj) {
+		if(obj != null)
+		{
+			Employee other = (Employee) obj; //downcasting		
+			if(this.empid == other.empid)
+				return true;	
+		}
+		return false;		
+	}
 
+	public static void main(String[] args) {
+
+		Employee emp1 = new Employee("suraj", 1, 100);
+		
+		Employee emp2 = new Employee("suraj", 1, 100);
+		
+		if(emp1.equals(emp2))//OK : Compares state of references 
+			System.out.println("Equal");
+		else
+		System.out.println("not equal");
+
+		//output :  equal
+		
+	}
 
 ```
-8. |
+1. |
 ```java
 
 
