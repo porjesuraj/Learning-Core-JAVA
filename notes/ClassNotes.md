@@ -3749,16 +3749,63 @@ public static void main(String[] args) {
 
 
 ### demo
-1. |
+1. Demo on generics declaration , solving no reference type for method argument issue in java
 ```java
+public class Program {
+	private static ArrayList< Integer > getIntegerList( ){
+		ArrayList<Integer> list = new ArrayList<>();
+		list.add( 10 );
+		list.add( 20 );
+		list.add( 30 );
+		return list;
+	}
+	
+	private static void showList(ArrayList<Integer> list) {
+		if( list != null ) {
+			for( Integer element : list )
+				System.out.println(element);
+		}
+	}
+	
+	public static void main(String[] args) {
+		ArrayList<Integer> intList = Program.getIntegerList();
+		Program.showList( intList );
+	
+	}
+	public static void main1(String[] args) {
+		ArrayList<Integer> list = new ArrayList<>();
+		list.add( 10 );
+		list.add( 20 );
+		list.add( 30 ); // input
+		
+		for( Integer element : list )
+			System.out.println(element); //output
+	}
+}
 
 
 ```
-2. |
+2. demo on using wild card 
+- 1. Unbounded wild card <?>
+- can accept anytype of element in generics 
+- need to downcast for use 
 ```java
+private static void printList(ArrayList<?> list) {
+		if( list != null ) {
+			for( Object element : list )
+				System.out.println(element);
+		}
+	}
 
 
 ```
+- 2. Upper bounded wild card <? extends className>
+```java
+
+```
+
+- 3. Lower Bounded wild card <? super className>
+
 3. |
 ```java
 

@@ -42,7 +42,7 @@ private static ArrayList<String> getStringList(){
 
 
 
-private static void printList(ArrayList<?> list)
+private static void printList(ArrayList<? extends Number> list)
 {
 	if(list != null)
 	{
@@ -56,46 +56,22 @@ private static void printList(ArrayList<?> list)
 
 
 
-
-
-
-
-
 	public static void main(String[] args) {
 		
 		ArrayList<Integer> list = Program.getIntegerList();
 		
-		Program.printList(list);
+		Program.printList(list); // ok 
 		
 		ArrayList<Double> list2 = Program.getDoubleList();
 		
-		Program.printList(list2);
+		Program.printList(list2); // ok 
 
 		ArrayList<String> list3 = Program.getStringList();
-		Program.printList(list3);
+	//	Program.printList(list3); not ok 
 		
 		
 		
-	}
-	public static void main2(String[] args) {
-		
-		Number number = new Integer(0); // ok 
-		ArrayList<Integer> list = new ArrayList<>();
-		ArrayList<Number> list2 = new ArrayList<>();
-		
-		//ArrayList<Number> list3 = new ArrayList<Integer>();
-	   // type conversion error 
-	
 	}
 	
-	public static void main1(String[] args) {
-		ArrayList<Integer> list = new ArrayList<>();
-		list.add( 10 );
-		list.add( 20 );
-		list.add( 30 );
-		
-		for( Integer element : list )
-			System.out.println(element);
-	}
 
 }
