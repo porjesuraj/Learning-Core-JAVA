@@ -3984,15 +3984,94 @@ Employee emp1 = new Employee("Sandeep", 33, 45000);
 	}
 
 ```
-1. |
-```java
 
+8. String  constructors 
+- 1. string decalaration using new opertor
+    -  String in java, doesnt end with null 
+
+```java
+public static void main(String[] args) {
+		//public String()
+		String s1 = new String( );
+		//String s1;	//Object reference: Java Stack
+		//new String( );	//String instance : Heap
+		System.out.println(s1.isEmpty()+"	"+s1.length());
+			
+		}
 
 ```
-9. |
-```java
 
+- 2. string declaration without new operator
+- converting string to byte 
+```java
+public static void main(String[] args) {
+		//public String()
+	String s1 = "ABC";
+	
+	byte[] bs = s1.getBytes();
+	
+	//byte : 1 byte : -128 to 127
+	System.out.println(Arrays.toString(bs));
+	// [65, 66, 67]
+
+			
+		}
+	
 
 ```
+- 3. using String(byte[]) constructor
+```java
+public static void main(String[] args) {
+	byte[] bs = new byte[] {65,66,67};
+	String str = new String(bs); 
+	//byte : 1 byte : -128 to 127
+	System.out.println(str);
+	// [65, 66, 67]
+		
+		}
+	
+
+```
+- 4.  using String(char[]) constructor
+```java
+public static void main(String[] args) {
+		//public String(char[] value)
+		char[] data = new char[ ] {'D','A','C'};
+		String str = new String( data );
+		System.out.println(str);
+	}
+
+```
+- 5. using public String(String original) constructor
+```java
+public static void main6(String[] args) {
+		//public String(String original)
+		String str1 = new String("SunBeam");
+		String str2 = new String( str1 );
+	}
+
+```
+- 6. using public String(StringBuffer buffer)constructor
+```java
+	public static void main7(String[] args) {
+		//public String(StringBuffer buffer)
+		StringBuffer sb = new StringBuffer("SunBeam");
+		String str = new String(sb);
+	}
+
+```
+- 7. using public String(StringBuilder builder) constructor
+```java
+	public static void main(String[] args) {
+		//public String(StringBuilder builder)
+		StringBuilder sb = new StringBuilder("SunBeam");
+		String str = new String(sb);
+	}
+```
+- 3. 
+```java
+
+```
+
 
 

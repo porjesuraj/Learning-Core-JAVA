@@ -46,7 +46,7 @@ public class Program {
 		else
 		System.out.println("not equal");
 
-		//output : not equal
+		//output :  equal
 		
 	}
 	
