@@ -4068,7 +4068,63 @@ public static void main6(String[] args) {
 		String str = new String(sb);
 	}
 ```
-- 3. 
+9. String memory allocated based on type of decalration  
+- String Instanced : Heap 
+- String constant / Literal : String Constant/Literal Pool area (in heap )
+```java
+public static void main1(String[] args) {
+		String s1 = new String("SunBeam"); //new String("SunBeam"); : String Instance
+		//String Instanced : Heap 
+		
+		String s2 = "SunBeam";	//"SunBeam" : String constant / Literal
+		//String constant / Literal : String Constant/Literal Pool
+	}
+
+```
+
+
+10. equals methods works/(compares states of instance) when 
+ - 1. both string are string literal/constant 
+ - also reference method works ,as literal area store all same object ,as single reference, 
+    - so both string has same reference
+```java
+public static void main(String[] args) {
+		String s1 = "SunBeam";
+		String s2 = "SunBeam";
+		if( s1 == s2)
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output : Equal
+	}
+	
+	public static void main5(String[] args) {
+		String s1 = "SunBeam";
+		String s2 = "SunBeam";
+		if( s1.equals(s2))
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output : Equal
+	}
+```
+1.  
+```java
+
+```
+12. 
+```java
+
+```
+13. 
+```java
+
+```
+14. 
+```java
+
+```
+15. 
 ```java
 
 ```
