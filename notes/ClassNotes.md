@@ -4083,9 +4083,10 @@ public static void main1(String[] args) {
 ```
 
 
-10. equals methods works/(compares states of instance) when 
- - 1. both string are string literal/constant 
- - also reference method works ,as literal area store all same object ,as single reference, 
+10. String comparison in case of String constant/literal 
+ - 1. equals methods works 
+ - 2.  also comparing  reference of string method works ,
+  - as literal area store all same object ,as single reference, managed by jvm by hash table
     - so both string has same reference
 ```java
 public static void main(String[] args) {
@@ -4108,13 +4109,40 @@ public static void main(String[] args) {
 		//Output : Equal
 	}
 ```
-1.  
+11.  as concat creates new instance of string, so new reference is created, so boh string have different reference
+- with concat, only string objects/constants can be added ,and new string is created
 ```java
-
+public static void main(String[] args) {
+		String s1 = "Sun";
+		System.out.println(s1);	//Sun
+		
+		String s2 = s1.concat("Beam");
+		System.out.println(s2);	//SunBeam
+		
+		if( s1 == s2 )
+			System.out.println("Equal");
+		else
+			System.out.println("Not Equal");
+		//Output :  Not Equal
+	}
 ```
-12. 
+12.  string (+) concetination operator can be used to add any object to string
 ```java
-
+public static void main(String[] args) {
+		String str = "Pune-";
+		str = str + new Date();
+		System.out.println(str);	//OK
+	}
+	public static void main3(String[] args) {
+		String str = "Pune-";
+		str = str + "India";
+		System.out.println(str);	//OK
+	}
+	public static void main2(String[] args) {
+		String str = "Pune-";
+		str = str + 411056;
+		System.out.println(str);	//OK
+	}
 ```
 13. 
 ```java
