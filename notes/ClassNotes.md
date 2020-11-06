@@ -4475,7 +4475,8 @@ public class Program {
 2. when to  use abstract class and when to use Interface class
 3. difference etween comparable (in lang,same type instance ) and comparator (in util, different type instance) interface in java?
 
-
+4. jvm architecture
+ > https://medium.com/platform-engineer/understanding-jvm-architecture-22c0ddf09722
 
 ### slides
 
