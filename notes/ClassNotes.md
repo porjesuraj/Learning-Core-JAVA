@@ -5126,16 +5126,16 @@ public static void main(String[] args) {
 	}
 ```
 
-- 2. to create shallow copy of  new instance from existing instance use clone method , object class
- - clone method of object class is  not accessible  outside date class, so we need to override clone method for use  in implementing/ Program class
+- 2. shallow copy of instances 
+- copy object itself , not only its content, references of fields and method too, so having same references.
+- 
+-  to create shallow copy of  new instance from existing instance use clone method , object class
+- clone method of object class is  not accessible  outside date class, so we need to override clone method for use  in implementing/ Program class
 ```java
 protected Object clone()
                 throws CloneNotSupportedException
 ```
-
-
-
-- 3. overriding clone method in java
+- overriding clone method in java
 
 ```java
 class Date implements Cloneable{
@@ -5177,6 +5177,23 @@ public class Program { //Program.class
 	}
 
 ```
+
+- to create new instance of object employeee using clone method
+- editing values of other employee(emp2)
+```java
+      public Employee clone( ) throws CloneNotSupportedException {
+		Employee other = (Employee) super.clone();
+		other.name = new String( this.name);
+		other.joindate = this.joindate.clone();
+		return other;
+
+		main()
+		{
+			Employee emp2 = emp1.clone();	//Shallow Copy of references;
+
+		}
+	}
+```
 - 4. which are  marker/tagging interface :
      - an interface which do not contain any member  
      - generate  metadata fo JVM 
@@ -5188,22 +5205,135 @@ public class Program { //Program.class
    - util.Remote interface
    - io.Serializable
 
-- 5. shallow copy of instances 
-- copy object itself , not only its content, references of fields and method too, so having same references.
+- 5. Deep copy 
+  - copy object itself , not only its content, but creating new references of fields and method too .
 
+
+- 6. use Array operation like sort on Object Array.
+-  **Using Comparable interface**
+- in case of array
 ```java
+public static void main1(String[] args) {
+		int[] arr = { 5,1,4,2,3};
+		Arrays.sort( arr );
+		System.out.println(Arrays.toString(arr));
+	}
+```
+
+ - need to implement Comparable interface on Object class, to override compareTo method
+ - comparable interface is for comparing same kind of object
+
+ - demo : on comparable interference  needed to override  compareto method to sort array of object
+```java
+class Employee implements Comparable<Employee>{
+	private String name;
+	private int empid;
+	private float salary;
+	//Employee this;
+	//Employee other
+	@Override // option 1
+	public int compareTo(Employee other) {
+		return this.name.compareTo(other.name);
+	}
+	@Override // option 2 
+	public int compareTo(Employee other) {
+		return (int) (this.salary - other.salary);
+	}	
+}
+public class Program {	
+	public static Employee[] getEmployees( ) {
+		Employee[] arr = new Employee[ 5 ];
+		arr[ 0 ] = new Employee("Prashant", 13, 50000);
+		arr[ 1 ] = new Employee("Amol", 11, 40000);
+		arr[ 2 ] = new Employee("Rupesh", 15, 30000);
+		arr[ 3 ] = new Employee("Umesh", 14, 20000);
+		arr[ 4 ] = new Employee("Mukesh", 12, 10000);
+		return arr;
+	}
+	private static void print(Employee[] arr) {
+		if( arr != null ) {
+			for( Employee emp : arr )
+				System.out.println(emp.toString());
+			System.out.println();
+		}
+	}
+	public static void main(String[] args) {
+		Employee[] arr = Program.getEmployees();
+		Program.print( arr );
+		
+		Arrays.sort( arr );
+		Program.print( arr );
+	}
+	
+	
+}
+
 
 ```
 
-- 6. Deep copy 
-  - copy object itself , not only its content, but creating references of fields and method too .
-
+- 8. use Array operation like sort on Object Array
+- for same and different kind of object
+- **Using Comparator interface**
 
 ```java
+class SortByName implements Comparator<Employee>
+{
+	@Override
+	public int compare(Employee emp1, Employee emp2) {
+		return emp1.getName().compareTo(emp2.getName());
+	}	
+	
+}
+
+class SortById implements Comparator<Employee>
+{
+
+	@Override
+	public int compare(Employee o1, Employee o2) {
+		// TODO Auto-generated method stub
+		return o1.getEmpid() - o2.getEmpid();
+	}
+	
+}
+
+
+
+
+public class Program { // Program.class
+	
+	public static Employee[] getEMployees() {
+		return arr;
+	}
+	
+	public static void print(Employee[] arr)
+	{
+	}
+	
+	public static void main(String[] args) {
+		
+		Employee[] arr = Program.getEMployees();
+		
+		Program.print(arr);
+
+		Comparator<Employee> comparator = null;
+		comparator = new SortByName();
+		
+		Arrays.sort(arr, comparator);
+		System.out.println("using comparator, by name");
+		Program.print(arr);
+		
+		comparator = new SortById();
+		Arrays.sort(arr, comparator);
+		System.out.println("using comparator, byid");
+		Program.print(arr);
+	}
+
 
 ```
 
-- 7. difference etween comparable and comparator?
+
+
+- . difference etween comparable and comparator?
 ```java
 
 ```
