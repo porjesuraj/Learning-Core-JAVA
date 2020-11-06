@@ -4828,7 +4828,7 @@ public static void main(String[] args) {
 - 2. JVM specification implementation (interface implementation)
 - 3. JVM runtime instance (instance of specification implementation )
 - interface helps to build trust, reduce vendor maintainability
-- 
+ 
 - 1. in java inteface can contain 
    -  1. nested type
    -  2. fields
@@ -5057,7 +5057,7 @@ public class Program { //Program.class
   - we cannot declare field , i.e except final static
 
 
-- 7. INTERFACE 
+- 7. **INTERFACE** 
      - interface can extend one pr more than one interface 
      - insterface method are by default abstract
      -  we cannot define constructor inside interface
@@ -5092,7 +5092,7 @@ arr[2] = new Triangle ();
 
 
 
-4. commonly used interfaces in java
+4. **commonly used interfaces in java**
 - java.lang
     - interface Cloneable
     - Interface Iterable
@@ -5104,7 +5104,7 @@ arr[2] = new Triangle ();
 - java.util
 
 
-5. Shallow copy is process of copying content of object into another object as it is 
+5. **Shallow copy** is process of copying content of object into another object as it is 
 -  also called bitwise copy
 
 - 1. shalow copy of references 
@@ -5194,7 +5194,7 @@ public class Program { //Program.class
 		}
 	}
 ```
-- 4. which are  marker/tagging interface :
+6. which are  marker/tagging interface :
      - an interface which do not contain any member  
      - generate  metadata fo JVM 
 - Example : 
@@ -5205,12 +5205,12 @@ public class Program { //Program.class
    - util.Remote interface
    - io.Serializable
 
-- 5. Deep copy 
+7. Deep copy 
   - copy object itself , not only its content, but creating new references of fields and method too .
 
 
-- 6. use Array operation like sort on Object Array.
--  **Using Comparable interface**
+8. use Array operation like sort on Object Array.
+- 1.   **Using Comparable interface**
 - in case of array
 ```java
 public static void main1(String[] args) {
@@ -5271,10 +5271,10 @@ public class Program {
 
 ```
 
-- 8. use Array operation like sort on Object Array
+-  use Array operation like sort on Object Array
 - for same and different kind of object
-- **Using Comparator interface**
-
+- 2.  **Using Comparator interface**
+     1. comparator on employee class to sort of employee array
 ```java
 class SortByName implements Comparator<Employee>
 {
@@ -5284,7 +5284,6 @@ class SortByName implements Comparator<Employee>
 	}	
 	
 }
-
 class SortById implements Comparator<Employee>
 {
 
@@ -5295,9 +5294,6 @@ class SortById implements Comparator<Employee>
 	}
 	
 }
-
-
-
 
 public class Program { // Program.class
 	
@@ -5330,6 +5326,43 @@ public class Program { // Program.class
 
 
 ```
+
+      2. improving  code  in print method
+
+```java
+public static void print(Employee[] arr,Comparator<Employee> comparator)
+	{	
+		if(arr != null)
+		{
+			Arrays.sort(arr, comparator);
+			
+			for(Employee emp : arr)
+			{
+				System.out.println(emp.toString());
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Employee[] arr = Program.getEMployees();
+		
+	System.out.println();
+	
+	System.out.println("comparator by name");
+	Program.print(arr, new SortByName());
+	System.out.println("comparator by id");
+	Program.print(arr, new SortById());
+	System.out.println("comparator by salary");
+	Program.print(arr, new SortBySalary());
+		
+		
+		
+	}
+
+```
+
 
 
 
