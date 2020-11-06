@@ -8,7 +8,7 @@ public class Program { // Program.class
 //Object obj;	//obj => reference
 //new Object();	//new Object(); => Anonymous Instance
 //Object obj = new Object( );	//Instance with reference
-		
+		// Program$1.class
 		Object obj = new Object() {
 			
 			private String message = "Inside anonymous class";
