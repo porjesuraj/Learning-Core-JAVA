@@ -565,7 +565,7 @@ for example, get Class object for java.lang.Integer  by invoking getClass() on  
 ]
 
 
-### Execution Engine
+### 16.  Execution Engine
 1. At the core of any JVM implementation is its execution engine.
 2.  In the JVM specification, the behavior of the execution engine is defined in terms of an instruction set.
  -  For each instruction, the specification describes in detail what an implementation should do when it encounters the instruction as it executes bytecodes, 
@@ -612,3 +612,57 @@ The verification capability is needed as part of Java's security framework.
 - 6.  The instruction set's stack-centered approach, was chosen over a register-centered approach to facilitate efficient implementation on architectures with few or irregular registers, such as the Intel 80X86. 
 -  This feature of the instruction set--the stack-centered design--make it easier to implement the Java virtual machine on a wide variety of host architectures.
 
+
+
+### 17. Execution Techniques
+1. Various execution techniques that may be used by an implementation--
+- 1. interpreting, 
+- 2. just-in-time compiling,
+- 3.  adaptive optimization, 
+- 4. native execution in silicon
+-  The main point to remember about execution techniques is that an implementation can use any technique to execute bytecodes so long as it adheres to the semantics of the Java virtual machine instruction set.
+
+2. One of the most interesting and speedy execution techniques is adaptive optimization.
+-  The **adaptive optimization technique**, which is used by several existing Java virtual machine implementations, including Sun's Hotspot virtual machine, 
+- IT borrows from techniques used by earlier virtual machine implementations. 
+-  The original JVMs interpreted bytecodes one at a time.
+-   Second-generation JVMs added a JIT compiler, which compiles each method to native code upon first execution, then executes the native code.
+-    Thereafter, whenever the method is called, the native code is executed. 
+-    Adaptive optimizers, taking advantage of information available only at run-time, attempt to combine bytecode interpretation and compilation to native in the way that will yield optimum performance.
+
+3. An adaptive optimizing virtual machine begins by interpreting all code, but it monitors the execution of that code.
+- Most programs spend 80 to 90 percent of their time executing 10 to 20 percent of the code. 
+- By monitoring the program execution, the virtual machine can figure out which methods represent the program's "hot spot" -- the 10 to 20 percent of the code that is executed 80 to 90 percent of the time.
+- 
+- And like a good programmer, the adaptive optimizing virtual machine just focuses its optimization efforts on that time-critical code.
+
+4. One advantage adaptive optimization has over static compilation is that,
+   -  because it is happening at runtime, it can use information not available to a static compiler.
+       - For example, even though there may be 30 possible implementations that may get called for a particular method invocation, at run-time perhaps only two of them are ever called.
+-  The adaptive optimization approach enables only those two to be inlined, thereby minimizing the size of the optimized code.
+
+### 18. Threads
+1. The Java virtual machine specification defines a threading model that aims to facilitate implementation on a wide variety of architectures. 
+ - One goal of the Java threading model is to enable implementation designers, where possible and appropriate, to use native threads. 
+ - Alternatively, designers can implement a thread mechanism as part of their virtual machine implementation.
+ -  One advantage to using native threads on a multi-processor host is that different threads of a Java application could run simultaneously on different processors.
+
+2. One tradeoff of Java's threading model is that the specification of priorities is lowest-common- denominator.
+-  A Java thread can run at any one of ten priorities. 
+    - Priority one is the lowest, and
+    -  priority ten is the highest. 
+-  The Java virtual machine specification defines the behavior of threads at different priorities only by saying that all threads at the highest priority will get some CPU time.
+-   Threads at lower priorities are guaranteed to get CPU time only when all higher priority threads are blocked. Lower priority threads may get some CPU time when higher priority threads aren't blocked, but there are no guarantees.
+
+3.  you must not rely on time-slicing for program correctness. You should use thread priorities only to give the Java virtual machine hints at what it should spend more time on. 
+- To coordinate the activities of multiple threads, you should use synchronization.
+
+3. The thread implementation of any Java virtual machine must support two aspects of synchronization: 
+ - 1. object locking 
+    -  it helps keep threads from interfering with one another while working independently on shared data.  
+ - 2.  thread wait and notify. 
+    - it helps threads to cooperate with one another while working together toward some common goal.
+    -   Running applications access the Java virtual machine's locking capabilities via the instruction set, and its wait and notify capabilities via the wait(), notify(), and notifyAll() methods of class Object.
+
+5. In the Java virtual machine Specification, the behavior of Java threads is defined in terms of variables, a main memory, and working memories. 
+  

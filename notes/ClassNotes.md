@@ -3694,14 +3694,48 @@ public static void main(String[] args) {
 
 1. https://unicode-table.com/en/#basic-latin
 - read about unicode
+
+
 2. rules to define immutable class in java
+> https://www.journaldev.com/129/how-to-create-immutable-class-in-java
+- 1.  What is an immutable class in Java?
+Immutable objects are instances whose state doesn’t change after it has been initialized. 
+For example, String is an immutable class and once instantiated its value never changes.
+
+- 2. Benefits of Immutable Class in Java
+- An immutable class is good for caching purposes because you don’t have to worry about the value changes.
+- Another benefit of immutable class is that it is inherently thread-safe, so you don’t have to worry about thread safety in case of multi-threaded environment.
+
+- 3. how to create immutable class in java.
+- To create an immutable class in Java, you have to do the following steps.
+
+1. Declare the class as final so it can’t be extended.
+2. Make all fields private so that direct access is not allowed.
+3. Don’t provide setter methods for variables.
+4. Make all mutable fields final so that its value can be assigned only once.
+5. Initialize all the fields via a constructor performing deep copy.
+6. Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+
+
 3. Regular expression (how to validate)
 - what is regualar expression for validation of
 - 1.  email, 
 - 2. pincode,
 - 3. full name, 
 - 4. ten digit phone number
+
 4. restriction on generics 
+- To use Java generics effectively, you must consider the following restrictions:
+
+1.  Cannot Instantiate Generic Types with Primitive Types
+2.  Cannot Create Instances of Type Parameters
+3.  Cannot Declare Static Fields Whose Types are Type Parameters
+4.  Cannot Use Casts or instanceof With Parameterized Types
+5.  Cannot Create Arrays of Parameterized Types
+6.  Cannot Create, Catch, or Throw Objects of Parameterized Types
+7.  Cannot Overload a Method Where the Formal Parameter Types of Each Overload Erase to the Same Raw Type
+   
+
 
 
 ### slides
@@ -4431,3 +4465,744 @@ public class Program {
 ```
 
 # Day10
+
+
+### read
+1. Specification 
+- set of rules is called specification 
+- specification is also called Standard
+
+2. when to  use abstract class and when to use Interface class
+3. difference etween comparable (in lang,same type instance ) and comparator (in util, different type instance) interface in java?
+
+
+
+### slides
+
+!['Day10.1'](day10.1.png)
+!['Day10.2'](day10.2.png)
+!['Day10.3'](day10.3.png)
+!['Day10.4'](day10.4.png)
+!['Day10.5'](day10.5.png)
+!['Day10.6'](day10.6.png)
+!['Day10.7'](day10.7.png)
+!['Day10.8'](day10.8.png)
+!['Day10.9'](day10.9.png)
+!['Day10.10'](day10.10.png)
+!['Day10.11'](day10.11.png)
+!['Day10.12'](day10.12.png)
+!['Day10.13'](day10.13.png)
+!['Day10.14'](day10.14.png)
+
+
+### demo
+
+1. **Nested class**
+
+```java
+//Top Level Class
+class Outer{	//Outer.class
+	//Nested Class
+	class Inner{	//Outer$Inner.class
+		
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		Outer.Inner in = new Outer().new Inner();
+	}
+	public static void main1(String[] args) {
+		Outer out = new Outer();
+		
+		Outer.Inner in  = out.new Inner( ) ;
+		
+	}
+}
+```
+
+- 1. Inner class 
+- accessing in outer class
+```java
+//Top Level class
+class Outer{
+	private int num1 = 10;	//OK
+	private static int num2 = 20;	//OK
+	
+	//Non static nested class / Inner class
+	class Inner{
+		private int num3 = 30;	//OK
+		private static final int num4 = 40;	//OK
+	}
+	
+	public void print( ) {
+		System.out.println("Num1	:	"+this.num1);
+		System.out.println("Num2	:	"+Outer.num2);
+		
+		//System.out.println("Num3	:	"+num3); //NOT OK
+		//System.out.println("Num4	:	"+num4); //NOT OK
+		
+		Inner in = new Inner();
+		System.out.println("Num3	:	"+in.num3);
+		System.out.println("Num4	:	"+Inner.num4);
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		Outer out = new Outer();
+		out.print();
+	}
+}
+
+```
+- accessing in inner class
+```java
+
+//Top Level class
+class Outer{
+	private int num1 = 10;	//OK
+	private static int num2 = 20;	//OK
+	
+	//Non static nested class / Inner class
+	class Inner{
+		private int num3 = 30;	//OK
+		private static final int num4 = 40;	//OK
+		
+		public void print( ) {
+			System.out.println("Num1	:	"+num1);	//OK
+			System.out.println("Num2	:	"+num2);	//Ok
+			
+			System.out.println("Num3	:	"+this.num3);
+			System.out.println("Num4	:	"+Inner.num4);
+		}
+	}	
+}
+public class Program {
+	public static void main(String[] args) {
+		Outer.Inner in = new Outer().new Inner();
+		in.print( );
+	}
+}
+
+```
+- accessing outer class by method in inner class
+```java
+class Outer{
+	private int num1 = 10;
+	public class Inner{
+		
+		private int num1 = 20;
+		
+		public void print() {
+			
+			int num1 = 30;
+			
+			System.out.println("Num1 : "  + Outer.this.num1);
+			System.out.println("Num1 : "  + this.num1);
+			System.out.println("Num1 : "  + num1);
+		}
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		Outer.Inner in = new Outer().new Inner();
+		in.print();
+	}
+
+}
+
+```
+
+
+
+- 2. Static Inner Class
+```java
+class Outer{ // Puter.class
+	//static nested class
+	
+	
+	static class Inner{ // 
+		
+	
+		
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		
+		Outer out = new Outer();
+		
+		Outer.Inner in = new Outer.Inner();
+		
+		
+	}
+
+}
+
+```
+
+-  accessing static inner class member in outer class
+```java
+//Top level class
+class Outer{
+	private int num1 = 10;
+	private static int num2 = 20;
+	
+	static class Inner{
+		private int num3 = 30;//ok
+		private static int num4 = 40; //ok
+	}
+	
+	
+	
+	public void print() {
+		System.out.println("Num1 : " + this.num1);
+		System.out.println("NUm2 : " + Outer.num2);
+		
+		Inner in = new Inner(); // ok
+		System.out.println("NUm3  :" + in.num3);
+		System.out.println("NUm4  :" + Inner.num4);
+	}
+	
+}
+
+```
+
+- accessing by inner class method
+```java
+//Top level class
+class Outer{
+	private int num1 = 10;
+	private static int num2 = 20;
+	
+	static class Inner{
+		private int num3 = 30;//ok
+		private static int num4 = 40; //ok
+	
+		public void print() {
+			Outer o = new Outer();
+			
+			System.out.println("Num1 : " + o.num1);
+			System.out.println("NUm2 : " + Outer.num2);
+			
+			Inner in = new Inner(); // ok
+			System.out.println("NUm3  :" + in.num3);
+			System.out.println("NUm4  :" + Inner.num4);
+		}
+	
+	}	
+}
+public class Program {
+	public static void main(String[] args) {
+		
+		Outer.Inner in = new Outer.Inner();
+		
+		in.print();
+	}
+
+}
+```
+
+2.**Local Class**
+```java
+public static void main(String[] args) {
+		// method local inner class 
+		// method local anonymous inner class 
+		//Method Local Inner Class
+		// it is non static
+		// outlisde methodw e cannot use Local class
+		 class MethodInnerClass
+		 {
+
+		  }
+		 
+		 MethodInnerClass c1 = new MethodInnerClass();
+		 System.out.println(c1.toString());
+		
+	}
+
+```
+
+- 1. Method Local Inner Class
+```java
+public static void main(String[] args) {
+		// method local inner class 
+		// method local anonymous inner class 
+		//Method Local Inner Class
+		// it is non static
+		// outlisde methodw e cannot use Local class
+		 class Complex{  // Program$1Complex file name for class
+			 
+			private int real;
+			private int imag;
+			public Complex(int real, int imag) {
+				super();
+				this.real = real;
+				this.imag = imag;
+			}
+			
+			public Complex() {
+				this(0,0);
+			}
+
+			@Override
+			public String toString() {
+				return "Complex [real=" + real + ", imag=" + imag + "]";
+			}
+			
+		}
+		 
+		 Complex c1 = new Complex(10, 20);
+		 System.out.println(c1.toString());
+		
+	}
+
+```
+
+
+- 2. Method ANonymous Inner Class
+```java
+public static void main(String[] args) {
+               
+		//Object obj; // obj => reference
+		//new Object(); // => instance w/o refernce => Anonymous Instance 
+		// Object obj = new Object(); // Instance with reference
+		
+		//Method Local Anonymous Inner Class
+		// only inside method ,we can declare this
+		
+		Object obj = new Object() {
+			
+			private String msg = "Inside anonymous inner class";
+			
+			@Override
+			public String toString() {
+				
+				return this.msg;
+			}
+			
+		}; //Program$1.class // anonymous inner class 
+		
+		
+		
+		String msg = obj.toString();
+		
+		System.out.println(msg);
+		
+		
+		
+	}
+
+```
+
+- example of anonymous local method class
+```java
+	public static void main1(String[] args) {
+            // anonymous class doesnt have a constructor, even impilict   
+		Shape sh = new Shape() {
+			
+			private float radius = 10;
+			
+			@Override
+			public void calculateArea() {
+				this.area = (float) (Math.PI * Math.pow(radius, 2));
+				
+			}
+		};
+		
+		sh.calculateArea();
+		System.out.println("Area : " + sh.getArea());
+	
+		
+		
+	}
+
+```
+
+
+3.  **Interface**
+- set of rules are called specification 
+- specification is also called standard /(i.e interface , which can be implemented)
+- example : 
+- 1. JVM Specification (i.e interface)
+- 2. JVM specification implementation (interface implementation)
+- 3. JVM runtime instance (instance of specification implementation )
+- interface helps to build trust, reduce vendor maintainability
+- 
+- 1. in java inteface can contain 
+   -  1. nested type
+   -  2. fields
+   -  3. static method 
+   - 4. abstract method
+   - 5. default method
+
+- 2. Demo :  Interface basic 
+  - by deault fields in interface are : public static final int num; 
+  - by deault methods in interface are public abstract void point();
+  - in Interface implementation inheritence 
+		-  it is mandetory to override abstract method of interface , or class becomes abstract
+  - we cannot create instance of abstract class and interface, but can create reference for it  
+```java
+//Standard : ISI
+interface A{
+	int num = 1; 
+	//by deault fields in interface are : public static final int num; 
+	
+	void point();
+	//by deault methods in interface are public abstract void point();
+	
+}
+
+//Service Provider
+class B implements A
+{
+	//Interface implementation inheritence 
+		 // it is mandetory to override abstract method of interface , or class becomes abstract
+
+	@Override
+	public void point() {
+		System.out.println("Number : " + A.num);		
+	} 	
+}
+
+// Service Consumer
+public class Program { //Program.class
+	public static void main(String[] args) {
+	    
+		System.out.println(A.num);
+		
+		A a = new B(); //upcasting : rules of A are followed by B 		
+	}
+	public static void main2(String[] args) {
+	    
+		System.out.println(A.num);
+		
+		B b = new B(); //upcasting : rules of A are followed by B 
+	
+	}
+	public static void main1(String[] args) {
+    
+		System.out.println(A.num);
+		
+		//A a = new A(); 
+		// we cannot create instance of abstract class and interface, but can create reference for it 
+		
+		A a = null;
+	}
+	}
+```
+- 3.  different combination of implements and extends keyword on Class and Interface 
+  > I1,I2,I3 => interface
+  > C1,C2,C3 => Classes
+
+  - 1. I2 implements I1 // not ok
+  - 2. I2 extends I1 //ok
+  - 3. I3 extends I1,I2 // ok : Multiple interface inheri
+  - 4. I1 extedns C1 // not ok
+  - 5. C1 extends I1 // not ok
+  - 6. C1 impleemnts I1 // ok
+  - 7. C1 implements I1,I2 // ojk : mutiple interface implementation inheritence(shown by dotted lines)
+  - 8. C2 implemnts C1 // not ok
+  - 9. C2 extends C1 ; // ok
+  - 10. C3 extends C1,C2 ; //not ok 
+  - 11. C2 implements I1 extends C12 ; // not ok
+  - 12. C2 extends C1 Implements I1; //ok
+
+- 4. demo on accessing member from interface  
+```java
+//Standard : ISI
+interface A{
+
+	int num1 = 10;
+	int num4 = 40;
+	int num5 = 70;
+}
+
+interface B 
+{
+	int num2 = 20;
+	int num4 = 50;
+	int num5 = 80;
+} 
+	
+	
+interface C extends A, B{
+	int num3 = 30;
+	int num4 = 60;
+}
+	
+
+public class Program { //Program.class
+	public static void main(String[] args) {
+	    
+		System.out.println("num1 : " + A.num1);
+		System.out.println("num1 : " + C.num1);
+		System.out.println("num2 : " + B.num2);
+		System.out.println("num2 : " + C.num2);
+		
+		System.out.println("num3 : " + C.num3);
+		
+		System.out.println("num4 : " + A.num4); // 40
+		System.out.println("num4 : " + B.num4);// 50 
+		
+		System.out.println("num4 : " + C.num4); // 60 
+	
+		
+		System.out.println("num5 : " + A.num5); 
+		
+		System.out.println("num5 : " + B.num5);
+	//	System.out.println("num5 : " + C.num5); // ambiguity error // if same variable in multiple interfaces, implemented  
+	}
+	
+	}
+
+```
+- 5. interface method can be 
+- 1. method same name 
+- here if method name is same, we can override it  only once in sub class
+- 2. method different name 
+- we need to override each method name once
+```java
+//Standard : ISI
+interface A{
+
+	void f1();
+	void print();
+}
+
+interface B 
+{
+	void f2();
+	void print();
+} 
+	
+
+abstract class C{
+	abstract void f3();
+  public abstract void print();
+}
+	
+class D extends C implements A,B{
+
+	@Override
+	public void f2() {
+		System.out.println("D.B.f2");
+		
+	}
+
+	@Override
+	public void f1() {
+		
+		System.out.println("D.A.f1");
+	}
+
+	@Override
+	void f3() {
+		System.out.println("D.C.f3");
+		
+	}
+
+	@Override
+	public
+	void print() {
+		System.out.println("Inside print");
+		
+	}
+	
+	
+}
+
+public class Program { //Program.class
+	public static void main1(String[] args) {
+	  
+		A a = new D();
+		
+		a.f1();
+		a.print();
+		
+		B b = new D();
+		
+		b.f2();
+		
+		b.print();
+		C c = new D();
+		
+		c.f3();
+		
+		c.print();
+		
+	}
+	public static void main(String[] args) {
+		  
+		D d = new D();
+		
+		// if method name same, we can over ride only once 
+		
+	}
+	
+	}
+
+
+```
+
+- 6. when to use  Abstract class and interface ? 
+- 1. when state is involved between super and sub classes,  super type must be abstract
+   - as we can declare field 
+   - if there is( is - a) relationship , declare class abstract
+   - ex . shape involve area, in rect, circle
+- 2.  when state is not involved between classes 
+   - and same method design  must be implemented in all sub classes
+     - then (can - do) relationship  exist between classes, so make  a interface  where method is declared , and use interface implementation inheritence 
+	 >  C implements I 
+  - we cannot declare field , i.e except final static
+
+
+- 7. INTERFACE 
+     - interface can extend one pr more than one interface 
+     - insterface method are by default abstract
+     -  we cannot define constructor inside interface
+     -  if state is not involved in Super type it should be interface
+     -  its name end with able, generally it is a interface,as it is used to implement some compulsory logic
+     
+     - demo : using interface we can group object of unrelated classes together
+```java
+Printable[] arr = new Printable[3];
+
+arr[0] = new Date ();
+arr[1] = new Stack ();
+arr[2] = new String ();
+```
+
+     - 8. Abstract class
+     - Abstract class  can extend only one abstract/concrete class
+     - abstract class may/may not contain abstract method
+     - we can define constructor inside abstract class
+     
+     - demo :  using abstract we can group object of related classes together
+```java
+
+
+Shape[] arr = new Shape[3];
+
+arr[0] = new Rectangle ();
+arr[1] = new Circle ();
+arr[2] = new Triangle ();
+```
+
+
+
+
+4. commonly used interfaces in java
+- java.lang
+    - interface Cloneable
+    - Interface Iterable
+    - Interface Comparable
+
+- java.io
+   - Interface Serializable
+
+- java.util
+
+
+5. Shallow copy is process of copying content of object into another object as it is 
+-  also called bitwise copy
+
+- 1. shalow copy of references 
+
+```java
+public static void main(String[] args) {
+	  
+	Date dt1 = new Date(6,11,2020);
+	
+	Date dt2 = dt1; // Shallow copy of references 
+	dt1.setDay(1);
+	System.out.println(dt1.toString());
+	
+	
+	
+	System.out.println(dt2.toString());
+		
+		
+	}
+```
+
+- 2. to create shallow copy of  new instance from existing instance use clone method , object class
+ - clone method of object class is  not accessible  outside date class, so we need to override clone method for use  in implementing/ Program class
+```java
+protected Object clone()
+                throws CloneNotSupportedException
+```
+
+
+
+- 3. overriding clone method in java
+
+```java
+class Date implements Cloneable{
+	
+	@Override
+	public String toString() {
+		return "Date [day=" + day + ", month=" + month + ", year=" + year + "]";
+	}
+	
+	public Date clone() throws CloneNotSupportedException {
+		
+		 Date other = (Date) super.clone(); // creating new instance from existing instance 
+		return other;
+	}
+		
+}
+// co-varient : same or sub type 
+
+
+public class Program { //Program.class
+	public static void main(String[] args) {
+		  
+		Date dt1 = new Date(6,11,2020);
+		
+		Date dt2;
+		try {
+			dt2 = dt1.clone();
+			if(dt1 == dt2)
+			{
+				System.out.println("equal");
+			}else
+			{
+				System.out.println(" not equal");
+			}
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		} 
+	
+	}
+
+```
+- 4. which are  marker/tagging interface :
+     - an interface which do not contain any member  
+     - generate  metadata fo JVM 
+- Example : 
+   - lang.clonable 
+   - util.RandomAccess in
+   - util.EventListener
+   - rmi.RMI interface
+   - util.Remote interface
+   - io.Serializable
+
+- 5. shallow copy of instances 
+- copy object itself , not only its content, references of fields and method too, so having same references.
+
+```java
+
+```
+
+- 6. Deep copy 
+  - copy object itself , not only its content, but creating references of fields and method too .
+
+
+```java
+
+```
+
+- 7. difference etween comparable and comparator?
+```java
+
+```
