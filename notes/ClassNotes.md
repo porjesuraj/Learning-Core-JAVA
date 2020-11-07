@@ -679,13 +679,13 @@ public class Program {
 
 !['day3.4'](day3.4.png)
 
-!['day3.5-class'](day3.5.png)
+!['day3.5'](day3.5.png)
 
-  !['day3.6'](day3.6.png)
+!['day3.6'](day3.6.png)
 
- !['day3.7'](day3.7.png)
+!['day3.7'](day3.7.png)
 
- !['day3.8'](day3.8.png)
+!['day3.8'](day3.8.png)
 
  ### extra points
 1. in java has no structure and union 
@@ -694,7 +694,7 @@ public class Program {
 # Day4
 
 !['day4.1'](day4.1.png)
-
+!['day4.2'](day4.2.png)
 !['day4.3'](day4.3.png)
 !['day4.4'](day4.4.png)
 !['day4.5'](day4.5.png)
@@ -1702,6 +1702,7 @@ public static void main1(String[] args) //NOT WORKING
 !['Day5.7'](day5.7.png)
 !['Day5.8'](day5.8.png)
 !['Day5.9'](day5.9.png)
+!['Day5.10'](day5.10.png)
 
 ### READ
 
@@ -3764,24 +3765,6 @@ For example, String is an immutable class and once instantiated its value never 
 3. java.lang.string/stringBuffer
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### demo
 1. Demo on generics declaration , solving no reference type for method argument issue in java
 ```java
@@ -4468,12 +4451,52 @@ public class Program {
 
 
 ### read
-1. Specification 
+1. Specification /Interface
 - set of rules is called specification 
 - specification is also called Standard
 
-2. when to  use abstract class and when to use Interface class
-3. difference etween comparable (in lang,same type instance ) and comparator (in util, different type instance) interface in java?
+2. when to  use abstract class and when to use Interface class?
+- 1. **Abstract class**
+     - Abstract class  can extend only one abstract/concrete class
+     - abstract class may/may not contain abstract method
+     - we can define constructor inside abstract class
+  -   **use abstract class**
+    - 1. when state is involved between super and sub classes,  super type must be abstract
+      - as we can declare field 
+      - if there is( is - a) relationship , declare class abstract
+      - ex . shape involve area, in rect, circle
+
+- 2. **INTERFACE** 
+     - interface can extend one or more than one interface 
+     - insterface method are by default abstract
+     -  we cannot define constructor inside interface
+     -  if state is not involved in Super type it should be interface
+     -  its name end with able, generally it is a interface,as it is used to implement some compulsory logic   
+     -  
+  -   **use Interface** 
+     -  when state is not involved between classes 
+     - and same method design  must be implemented in all sub classes
+     - then (can - do) relationship  exist between classes, so make  a interface  where method is declared , and use interface implementation inheritence 
+	 >  C implements I 
+     - we cannot declare field , i.e except final static
+
+
+
+
+
+3. difference between comparable (in java.lang,same type instance ) and comparator (in java.util, different type instance) interface in java?
+- Comparable vs Comparator
+
+1.  Comparable interface can be used to provide single way of sorting
+-  whereas Comparator interface is used to provide different ways of sorting.
+2. For using Comparable, Class needs to implement it 
+- whereas for using Comparator we don’t need to make any change in the class.
+3.    Comparable interface is in java.lang package
+-  whereas Comparator interface is present in java.util package.
+4. We don’t need to make any code changes at client side for using Comparable, Arrays.sort() or Collection.sort() methods automatically uses the compareTo() method of the class.
+-  For Comparator, client needs to provide the Comparator class to use in compare() method.
+
+!['interface-Compar-able-vs-tor'](interface-Comparable-vs-Comparator.jpg)
 
 4. jvm architecture
  > https://medium.com/platform-engineer/understanding-jvm-architecture-22c0ddf09722
@@ -4494,7 +4517,18 @@ public class Program {
 !['Day10.12'](day10.12.png)
 !['Day10.13'](day10.13.png)
 !['Day10.14'](day10.14.png)
-
+!['Day10.15'](day10.15.png)
+!['Day10.16'](day10.16.png)
+!['Day10.17'](day10.17.png)
+!['Day10.18'](day10.18.png)
+!['Day10.19'](day10.19.png)
+!['Day10.20'](day10.20.png)
+!['Day10.21'](day10.21.png)
+!['Day10.22'](day10.22.png)
+!['Day10.23'](day10.23.png)
+!['Day10.24'](day10.24.png)
+!['Day10.25'](day10.25.png)
+!['Day10.26'](day10.26.png)
 
 ### demo
 
@@ -4891,10 +4925,11 @@ public class Program { //Program.class
 	}
 	}
 ```
-- 3.  different combination of implements and extends keyword on Class and Interface 
+- 3.  **different combination of implements and extends keyword on Class and Interface **
+--- 
   > I1,I2,I3 => interface
   > C1,C2,C3 => Classes
-
+ 
   - 1. I2 implements I1 // not ok
   - 2. I2 extends I1 //ok
   - 3. I3 extends I1,I2 // ok : Multiple interface inheri
@@ -4907,7 +4942,7 @@ public class Program { //Program.class
   - 10. C3 extends C1,C2 ; //not ok 
   - 11. C2 implements I1 extends C12 ; // not ok
   - 12. C2 extends C1 Implements I1; //ok
-
+---
 - 4. demo on accessing member from interface  
 ```java
 //Standard : ISI
@@ -5058,7 +5093,7 @@ public class Program { //Program.class
 
 
 - 7. **INTERFACE** 
-     - interface can extend one pr more than one interface 
+     - interface can extend one or more than one interface 
      - insterface method are by default abstract
      -  we cannot define constructor inside interface
      -  if state is not involved in Super type it should be interface
@@ -5209,9 +5244,9 @@ public class Program { //Program.class
   - copy object itself , not only its content, but creating new references of fields and method too .
 
 
-8. use Array operation like sort on Object Array.
-- 1.   **Using Comparable interface**
-- in case of array
+8. **Using Comparable interface** 
+- 1. to perform  array operation   
+-  for reference, in case of array
 ```java
 public static void main1(String[] args) {
 		int[] arr = { 5,1,4,2,3};
@@ -5219,7 +5254,7 @@ public static void main1(String[] args) {
 		System.out.println(Arrays.toString(arr));
 	}
 ```
-
+ - 2.  **use Array operation like sort on Object Array.**
  - need to implement Comparable interface on Object class, to override compareTo method
  - comparable interface is for comparing same kind of object
 
@@ -5273,7 +5308,7 @@ public class Program {
 
 -  use Array operation like sort on Object Array
 - for same and different kind of object
-- 2.  **Using Comparator interface**
+9.  **Using Comparator interface**
      1. comparator on employee class to sort of employee array
 ```java
 class SortByName implements Comparator<Employee>
@@ -5324,10 +5359,9 @@ public class Program { // Program.class
 		Program.print(arr);
 	}
 
-
 ```
 
-      2. improving  code  in print method
+   2. improving  code  in print method
 
 ```java
 public static void print(Employee[] arr,Comparator<Employee> comparator)
@@ -5363,10 +5397,111 @@ public static void print(Employee[] arr,Comparator<Employee> comparator)
 
 ```
 
+  3. 'demo on comparator interface, to compare sub classes of Person class, i.e diffrent class Objects
 
-
-
-- . difference etween comparable and comparator?
 ```java
+  class Person{
+	
+	private String name;
+     }
 
-```
+class Employee extends Person{
+	
+	private int empid;
+}
+
+class Student extends Person{	
+	private int rollNumber;
+}
+
+class SortByName implements Comparator<Person>
+{
+	@Override
+	public int compare(Person p1, Person p2) {
+		
+		return p1.getName().compareTo(p2.getName());
+	}
+}
+
+class SortById implements Comparator<Person>
+{
+	@Override
+	public int compare(Person p1, Person p2) {
+	
+		if(p1 instanceof Employee && p2 instanceof Employee)
+		{
+			Employee emp1 = (Employee) p1;
+			Employee emp2 = (Employee) p2; 
+			
+			return emp1.getEmpid() - emp2.getEmpid();
+		} else if(p1 instanceof Student && p2 instanceof Student)
+		{
+			Student s1 = (Student) p1;
+			Student s2 = (Student) p2; 
+			
+			return  s1.getRollNumber() - s2.getRollNumber();
+		} else if(p1 instanceof Student && p2 instanceof Employee)
+		{
+			Student s1 = (Student) p1;
+			Employee emp2 = (Employee) p2; 
+			
+			return s1.getRollNumber() - emp2.getEmpid();
+		} else {
+			
+			Student s2 = (Student) p2;
+			Employee emp1 = (Employee) p1; 
+			
+			return emp1.getEmpid() - s2.getRollNumber(); 
+		}		
+	}
+}
+
+public class Program { // Program.class	
+	
+	public static Person[] getPerson() {
+		Person[] arr = new Person[5];
+		arr[ 0 ] = new Employee("Prashant", 13);
+		arr[ 1 ] = new Student("Amol", 11);
+		arr[ 2 ] = new Employee("Rupesh", 15);
+		arr[ 3 ] = new Employee("Umesh", 14);
+		arr[ 4 ] = new Student("Mukesh", 12);
+		return arr;
+	}	
+	public static void print(Person[] arr)
+	{	
+		if(arr != null)
+		{
+			for(Person p : arr)
+			{
+				System.out.println(p.toString());
+			}
+			System.out.println();
+		}
+	}	
+	public static void main(String[] args) {
+		
+		Person[] arr = Program.getPerson();	
+	System.out.println();
+	
+	System.out.println("comparator by name");
+	Arrays.sort(arr,new SortByName());
+	
+	Program.print(arr);
+	System.out.println("comparator by id");	
+    Arrays.sort(arr, new SortById());
+     Program.print(arr);	
+	}	
+}
+
+  ```
+
+
+
+
+
+
+
+
+
+
+

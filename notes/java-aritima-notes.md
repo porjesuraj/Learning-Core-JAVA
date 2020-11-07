@@ -666,3 +666,56 @@ The verification capability is needed as part of Java's security framework.
 
 5. In the Java virtual machine Specification, the behavior of Java threads is defined in terms of variables, a main memory, and working memories. 
   
+
+### Native Method Interface
+
+
+1. Java virtual machine implementations aren't required to support any particular native method interface. 
+
+2. Sun's Java Native Interface, or JNI, is geared towards portability.
+-  JNI is designed so it can be supported by any implementation of the Java virtual machine, no matter what garbage collection technique or object representation the implementation uses.
+- This in turn enables developers to link the same (JNI compatible) native method binaries to any JNI-supporting virtual machine implementation on a particular host platform.
+
+3. To achieve its portability, 
+- the JNI uses a lot of indirection through pointers to pointers and pointers to functions.
+ To obtain the ultimate in performance, designers of an implementation may decide to offer their own low-level native method interface that is tied closely to the structure of their particular implementation. 
+
+4. To do useful work,
+-  a native method must be able to interact to some degree with the internal state of the Java virtual machine instance. 
+-  For example, a native method interface may allow native methods to do some or all of the following:
+1. Pass and return data
+
+2. Access class variables or invoke class methods
+3. Accessing arrays
+
+4. Load new classes
+
+5. As you can see, native method interfaces are very intertwined with the inner workings of a Java virtual machine.
+
+
+### The Real Machine
+1. As mentioned at the beginning of this chapter, all the subsystems, runtime data areas, and internal behaviors defined by the Java virtual machine specification are abstract. 
+2. Designers aren't required to organize their implementations around "real" components that map closely to the abstract components of the specification.
+3.  The abstract internal components and behaviors are merely a vocabulary with which the specification defines the required external behavior of any Java virtual machine implementation.
+
+4. In other words, an implementation can be anything on the inside, so long as it behaves like a Java virtual machine on the outside. 
+5. Implementations must be able to recognize Java class files and must adhere to the semantics of the Java code the class files contain. 
+6. But otherwise, anything goes. 
+- 1.  How bytecodes are executed,
+- 2. how the runtime data areas are organized, 
+- 3. how garbage collection is accomplished, 
+- 4. how threads are implemented,
+- 5.  how the bootstrap class loader finds classes,
+- 6. what native method interfaces are supported-- 
+- these are some of the many decisions left to implementation designers.
+
+
+7.  By clearly marking the line between the external behavior and the internal implementation of a Java virtual machine, 
+- the specification preserves compatibility among all implementations while promoting innovation.
+
+
+<hr>
+
+# jvm simplified
+
+
