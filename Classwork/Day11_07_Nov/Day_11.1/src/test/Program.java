@@ -13,7 +13,7 @@ public class Program {
 	
 		Class<?> c = Class.forName(className);
 		System.out.println(c.toString());
-		System.out.println(c.getFields());
+	
 			
 		} catch (Exception e) {
 			// TODO: handle exception
