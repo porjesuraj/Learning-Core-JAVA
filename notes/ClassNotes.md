@@ -5500,6 +5500,57 @@ public class Program { // Program.class
 
 
 
+# Day 11
+
+
+## to read
+
+
+## slides
+
+!['Day11.1'](day11.1.png)
+!['Day11.2'](day11.2.png)
+!['Day11.3'](day11.3.png)
+!['Day11.4'](day11.4.png)
+!['Day11.5'](day11.5.png)
+!['Day11.6'](day11.6.png)
+!['Day11.7'](day11.7.png)
+!['Day11.8'](day11.8.png)
+!['Day11.9'](day11.9.png)
+!['Day11.10'](day11.10.png)
+!['Day11.11'](day11.11.png)
+!['Day11.12'](day11.12.png)
+
+
+
+
+### demo 
+
+1. Meta data
+- data which describes other data, is metadata
+- use of Meta data :
+- 1. to implement show help/intellisense 
+- 2. clone method uses, CLonable marker interface ,which creates meta data ,
+  - so meta data helps jvm to
+      -  create clone of instance 
+- 3.  marshalling (uses Marshall interface ) 
+	  1. taking a java object converting it into binary data , to send to a network
+      -  non marshalling
+	  1. taking a marshallled binary data of java object, converting it back to java object
+
+- 4. garbage collector takes help of meta data, to get to the resource to be removed , with zero reference 
+- 5. Serializing 
+
+
+2. Reflection 
+
+
+1. using reflection we can explore meta data , demos 
+
+```java
+
+```
+
 
 
 
