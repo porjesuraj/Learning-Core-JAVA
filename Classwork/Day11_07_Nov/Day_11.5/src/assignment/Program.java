@@ -13,7 +13,7 @@ public class Program {
 		Class<?> c = obj.getClass();
 		
 		 Method[] methods =  c.getDeclaredMethods();
-		 System.out.println("public " + c.toString() + "   {");
+		 System.out.println("public " + c.toString() + "   { \n");
 		 for(Method method : methods)
 		 {
 			    Class[] parameters =  method.getParameterTypes();
@@ -50,7 +50,7 @@ public class Program {
 		 }
 		 
 		 
-		 System.out.println("  }");
+		 System.out.println(" \n  }");
 		
 		
 		
