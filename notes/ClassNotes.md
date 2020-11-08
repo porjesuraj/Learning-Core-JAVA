@@ -5516,10 +5516,6 @@ public class Program { // Program.class
 !['Day11.6'](day11.6.png)
 !['Day11.7'](day11.7.png)
 !['Day11.8'](day11.8.png)
-!['Day11.9'](day11.9.png)
-!['Day11.10'](day11.10.png)
-!['Day11.11'](day11.11.png)
-!['Day11.12'](day11.12.png)
 
 
 
