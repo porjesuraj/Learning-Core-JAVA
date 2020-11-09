@@ -5550,5 +5550,160 @@ public class Program { // Program.class
 
 
 
+# Day12
+
+## to read
+
+1. what is iterable and iterator
+
+2. can we declare static memeber function as virtual and ?  
+
+3. Effective java book 
+
+4.  4 kind of copy:  defensive copy, lazy copy,shallow copy, deep copy
+
+5. assignment on pojo 
+
+6. > https://docs.oracle.com/javase/8/docs/api/
+
+7. 4 classes vector, sub clas stack, hash table and sub class property, are by default synchronised for multi threading 
+8. difference between vectore and arraylist, 
+ - arraylist is asyncronised, capacity increase by half
+     - not a legacy class
+- vector is synchronised , capicity doubles, 
+     - we can iterate vector , using itteator,list itertor, and enumerator
+	 - enumerator is used to traverse collection in forward direction, 
+	   - in which we cant add, or remove elements , use iterator for add and remove in preference of Enumerator. 
+ - vector is a legacy class
+## slides
+
+1.  predicate,supplier,consumer function , unaryOperator interface ,in java.util.function 
+
+!['Day12.1'](day12.1.png)
+!['Day12.2'](day12.2.png)
+!['Day12.3'](day12.3.png)
+!['Day12.4'](day12.4.png)
+!['Day12.5'](day12.5.png)
+!['Day12.6'](day12.6.png)
+!['Day12.7'](day12.7.png)
+!['Day12.8'](day12.8.png)
+!['Day12.9'](day12.9.png)
+!['Day12.10'](day12.10.png)
+
+## demo 
 
 
+1. iterator , iterable 
+- 1. 
+
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+2. default , static in Interface
+- 1. 
+
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+3. Annotation type 
+> java.lang
+> lava.lang.annotation
+
+- 1. 
+
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+4. Collection framework 
+
+- 1. 
+
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
