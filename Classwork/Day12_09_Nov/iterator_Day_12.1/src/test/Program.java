@@ -14,7 +14,7 @@ public class Program {
 
 		list.addLast(30);
 		list.addLast(40);
-		
+	
 		for(Integer element : list)
 		{
 			System.out.println(element);
