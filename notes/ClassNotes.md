@@ -5575,6 +5575,15 @@ public class Program { // Program.class
 	 - enumerator is used to traverse collection in forward direction, 
 	   - in which we cant add, or remove elements , use iterator for add and remove in preference of Enumerator. 
  - vector is a legacy class
+
+ 9. Dynamic Proxy (for hibernate interface)
+ - invocationHandler
+
+ 10. what is difference between list( allow dublicate element) and set(do not allow dublicate element)?
+- for set coll need to used iterator only not listiterator 
+
+11. hashcode is logical integer number, created by processing state of object . 
+
 ## slides
 
 1.  predicate,supplier,consumer function , unaryOperator interface ,in java.util.function 
@@ -5597,87 +5606,291 @@ public class Program { // Program.class
 - 1. 
 
 ```java
+public static void main(String[] args) {
+		LinkedList<Integer> list = new LinkedList<>();
+		list.addLast(10);
+		list.addLast(20);
+		list.addLast(30);
+		
+		Integer element = null;
+		Iterator<Integer> itr = list.iterator();
+		while( itr.hasNext()) {
+			element = itr.next();
+			System.out.println(element);
+		}
+	}
+	public static void main1(String[] args) {
+		LinkedList<Integer> list = new LinkedList<>();
+		list.addLast(10);
+		list.addLast(20);
+		list.addLast(30);
+		
+		for( Integer element : list )
+			System.out.println(element);
+	}
 
 ```
 
-- 2. 
+- 2. demo of using Iterable interface ,for using forech loop 
 
 ```java
-
+class Node{
+	int element;
+	Node next;
+	public Node( int element ) {
+		this.element = element;
+	}
+}
+class LinkedList implements Iterable<Integer>{
+	private Node head;
+	private Node tail;
+	public boolean empty( ) {
+		return this.head == null;
+	}
+	public void addLast( int element ) {
+		Node newNode = new Node( element );
+		if( this.empty( ) ) 
+			this.head = newNode;
+		else
+			this.tail.next = newNode;
+		this.tail = newNode;
+	}
+	@Override
+	public Iterator<Integer> iterator() {
+		Iterator<Integer> itr = new LinkedListIterator( this.head );	//Upcasting
+		return itr;
+	}
+}
+class LinkedListIterator implements Iterator<Integer> {
+	private Node trav;	//null
+	public LinkedListIterator(Node head) {
+		this.trav = head;
+	}
+	@Override
+	public boolean hasNext() {
+		if( this.trav != null )
+			return true;
+		return false;
+	}
+	@Override
+	public Integer next() {
+		Integer element = this.trav.element;
+		trav = trav.next;
+		return element;
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		LinkedList list =  new LinkedList();
+		list.addLast(10);
+		list.addLast(20);
+		list.addLast(30);
+	
+		for( int element : list )
+			System.out.println(element);
+		
+		/*Integer element = null;
+		Iterator<Integer> itr = list.iterator();
+		while( itr.hasNext( ) ) {
+			element = itr.next();
+			System.out.println(element);
+		}*/
+	}
+}
 ```
-- 3. 
 
-```java
-
-```
-- 4. 
-
-```java
-
-```
-- 5. 
-
-```java
-
-```
 
 2. default , static in Interface
-- 1. 
+- 1. default method  with same name in different interfaces, implemented in a class, needed to be overrided once in that class
 
 ```java
+interface A{
+	default void f1( ) {
+		System.out.println("A.f1");
+	}
+	default void f3( ) {
+		System.out.println("A.f3");
+	}
+}
+interface B{
+	default void f2( ) {
+		System.out.println("A.f2");
+	}
+	default void f3( ) {
+		System.out.println("B.f3");
+	}
+}
+class C implements A, B{
+	@Override
+	public void f3() {
+		//A.super.f3();
+		//B.super.f3();
+		System.out.println("C.f3");
+	}
+}
+```
+
+- 2.  functional interface , i.e onyl one abtract mehod, any  one or more default and static metho allowed.
+- can use annotation @FunctionalInterface, to check if declard it properly 
+
+```java
+@FunctionalInterface
+interface A{	//Functional Interface / Single(S) Abstract(A) Method(M) Interface / SAM Interface	
+	void f1( );	//Functional method / method descriptor	
+}
+
+@FunctionalInterface
+interface B{
+	void f1( );
+	static void f2( ) {
+	}
+	static void f3( ) {
+	}
+	default void f4( ) {
+	}
+	default void f5( ) {
+	}
+}
+@FunctionalInterface
+interface B{	//Error
+	void f1( );	
+	void f2( );	
+}
+
+```
+- 3. default and static method use
+
+```java
+interface Collection{
+	void acceptRecord( );
+	void printRecord( ); // abstract method
+	int[] toArray( );
+	static void swap( int[] arr ) {	// static : helper/utility method
+		int temp = arr[ 0 ];
+		arr[ 0 ] = arr[ 1 ];
+		arr[ 1 ] = temp;
+	}
+	default void sort( )  // default :added afterwards to the type
+	{
+		int[] arr =  this.toArray();
+		for( int i = 0; i < arr.length - 1; ++ i ) {
+			for( int j = 0; j < arr.length - 1 - i; ++ j ) {
+				if( arr[ j ] > arr[ j + 1 ] ) {
+					int[] temp = { arr[ j ], arr[ j + 1 ] };
+					Collection.swap(temp);
+					arr[ j ] = temp[ 0 ]; arr[ j + 1 ] = temp[ 1 ];
+				}
+			}
+		}
+	}
+}
+class Array implements Collection{
+	private int[] arr;
+	public Array() {
+		this( 5 );
+	}
+	public Array( int length ) {
+		this.arr = new int[ length ];
+	}
+	@Override
+	public void acceptRecord() {}
+	@Override
+	public void printRecord() {}
+	@Override
+	public int[] toArray() {
+		//return Arrays.copyOf(this.arr, this.arr.length); //Defensive Copy
+		return this.arr;
+	}	
+}
+public class Program {
+	public static void main(String[] args) {
+		Collection c = new Array(5);
+		c.acceptRecord();
+		c.printRecord();
+		c.sort();
+		c.printRecord();
+	}
+}
 
 ```
 
-- 2. 
-
-```java
-
-```
-- 3. 
-
-```java
-
-```
-- 4. 
-
-```java
-
-```
-- 5. 
-
-```java
-
-```
 3. Annotation type 
 > java.lang
 > lava.lang.annotation
 
-- 1. 
+- 1. demo on declaring a Annotation interface and use it on class 
+- target : specifies on which type (method,field,class) it is to be used
+- retention : specifies till what time keep annotation, runtime,compile time , etc
 
 ```java
+@Documented
+@Inherited
+@Retention( value = RetentionPolicy.RUNTIME)
+@Target( value = ElementType.TYPE )
+@interface Author{
+	String name( );	//Annotation Type Element declaration
+}
+
+@Author(name="ABC")	//@Author : Annotation Type, name : element type
+class Book{
+	//TODO
+}
+public class Program {
+	public static void main(String[] args) {
+		Class<?> c = Book.class;
+		Annotation[] annotations = c.getDeclaredAnnotations();
+		for (Annotation annotation : annotations) {
+			if( annotation instanceof Author ) {
+				Author author = (Author) annotation;
+				System.out.println(author.name());
+			}
+		}
+	}
+}
+
 
 ```
 
-- 2. 
+- 2. demo on making a repeatable annotation , and get it info by reflection 
 
 ```java
 
+@Retention( value = RetentionPolicy.RUNTIME)
+@Target( value = ElementType.TYPE )
+@Repeatable( value = Authors.class )
+@interface Author{
+	String name( );	//Annotation Type Element declaration
+	String date( );	//Annotation Type Element declaration
+}
+@Retention( value = RetentionPolicy.RUNTIME)
+@Target( value = ElementType.TYPE )
+@interface Authors{
+	Author[] value();
+}
+
+@Author(name="ABC", date="09/11/2020")
+@Author(name="XYZ", date="09/11/2020")		
+class Book{
+	//TODO
+}
+public class Program {
+	public static void main(String[] args) {
+		Class<?> c = Book.class;
+		Annotation[] annotations = c.getDeclaredAnnotations();
+		for (Annotation annotation : annotations) {
+			if( annotation instanceof Authors ) {
+				Authors authors = (Authors) annotation;
+				for (Author author : authors.value()) {
+					System.out.println(author.name()+"	"+author.date());
+				}
+			}
+		}
+	}
+}
+
+
 ```
-- 3. 
 
-```java
-
-```
-- 4. 
-
-```java
-
-```
-- 5. 
-
-```java
-
-```
 
 4. Collection framework 
 
@@ -5707,3 +5920,8 @@ public class Program { // Program.class
 ```java
 
 ```
+
+### part2
+
+
+1. fail fast & fail safe iterator 
