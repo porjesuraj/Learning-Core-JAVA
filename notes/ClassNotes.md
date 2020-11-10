@@ -5588,16 +5588,51 @@ public class Program { // Program.class
 
 1.  predicate,supplier,consumer function , unaryOperator interface ,in java.util.function 
 
-!['Day12.1'](day12.1.png)
-!['Day12.2'](day12.2.png)
-!['Day12.3'](day12.3.png)
-!['Day12.4'](day12.4.png)
-!['Day12.5'](day12.5.png)
-!['Day12.6'](day12.6.png)
-!['Day12.7'](day12.7.png)
-!['Day12.8'](day12.8.png)
-!['Day12.9'](day12.9.png)
-!['Day12.10'](day12.10.png)
+!['Day12.1'](day_12.1.png)
+!['Day12.2'](day_12.2.png)
+!['Day12.3'](day_12.3.png)
+!['Day12.4'](day_12.4.png)
+!['Day12.5'](day_12.5.png)
+!['Day12.6'](day_12.6.png)
+!['Day12.7'](day_12.7.png)
+!['Day12.8'](Collection_12.8.png)
+!['Day12.9'](Collection_12.9.png)
+!['Day12.10'](Collection_12.10.png)
+!['Day12.11'](Collection_12.11.png)
+!['Day12.12'](Collection_12.12.png)
+!['Day12.13'](Collection_12.13.png)
+!['Day12.14'](Collection_12.14.png)
+!['Day12.15'](Collection_12.15.png)
+!['Day12.16'](Collection_12.16.png)
+!['Day12.17'](Collection_12.17.png)
+!['Day12.18'](Collection_12.18.png)
+!['Day12.19'](Collection_12.19.png)
+!['Day12.20'](Collection_12.20.png)
+!['Day12.21'](Collection_12.21.png)
+!['Day12.22'](Collection_12.22.png)
+!['Day12.23'](Collection_12.23.png)
+!['Day12.24'](Collection_12.24.png)
+!['Day12.25'](Collection_12.25.png)
+!['Day12.26'](Collection_12.26.png)
+!['Day12.17'](Collection_12.27.png)
+!['Day12.18'](Collection_12.28.png)
+!['Day12.19'](Collection_12.29.png)
+!['Day12.20'](Collection_12.30.png)
+!['Day12.21'](Collection_12.31.png)
+!['Day12.22'](Collection_12.32.png)
+!['Day12.23'](Collection_12.33.png)
+!['Day12.24'](Collection_12.34.png)
+!['Day12.25'](Collection_12.35.png)
+!['Day12.26'](Collection_12.36.png)
+!['Day12.17'](Collection_12.37.png)
+!['Day12.18'](Collection_12.38.png)
+!['Day12.19'](Collection_12.39.png)
+!['Day12.20'](Collection_12.40.png)
+!['Day12.21'](Collection_12.41.png)
+!['Day12.22'](Collection_12.42.png)
+!['Day12.23'](Collection_12.43.png)
+!['Day12.24'](Collection_12.44.png)
+
 
 ## demo 
 
@@ -5924,4 +5959,97 @@ public class Program {
 ### part2
 
 
-1. fail fast & fail safe iterator 
+1. fail fast & fail safe iterator
+
+# Day 13
+
+## to read
+
+1. 
+
+
+
+## slides
+
+### collection
+!['Day13_Collection.1'](Collection_13.1.png)
+!['Day13_Collection.2'](Collection_13.2.png)
+!['Day13_Collection.3'](Collection_13.3.png)
+!['Day13_Collection.4'](Collection_13.4.png)
+!['Day13_Collection.5'](Collection_13.5.png)
+!['Day13_Collection.6'](Collection_13.6.png)
+!['Day13_Collection.7'](Collection_13.7.png)
+!['Day13_Collection.8'](Collection_13.8.png)
+
+###  JDBC  
+
+
+!['Day13_JDBC.2'](JDBC_13.2.png)
+!['Day13_JDBC.3'](JDBC_13.3.png)
+!['Day13_JDBC.4'](JDBC_13.4.png)
+!['Day13_JDBC.5'](JDBC_13.5.png)
+!['Day13_JDBC.6'](JDBC_13.6.png)
+!['Day13_JDBC.7'](JDBC_13.7.png)
+!['Day13_JDBC.8'](JDBC_13.8.png)
+
+
+## demos
+
+
+1. Collection framework 
+
+- 1. 
+
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+2. JDBC (Java DataBase Connectivity)
+
+- 1. 
+h
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
