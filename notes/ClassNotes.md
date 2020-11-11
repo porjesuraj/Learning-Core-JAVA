@@ -6629,6 +6629,13 @@ class SumArray{
 ```
 - 5. 
 
+
+6. thread Syncronization using Object class method
+- wait()
+- wait(int timeout)
+- notify()
+- notifyAll()
+
 ```java
 
 ```
