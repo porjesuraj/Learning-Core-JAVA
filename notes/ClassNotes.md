@@ -6141,22 +6141,79 @@ A thread that has not yet started is in this state.
 ### demo 
 
 
-1. demo on 
+1. demo on method of  Thread class 
 
-- 1. 
+- 1.  
 h
 ```java
+Thread thread = Thread.currentThread();
+
+String name = thread.getName();
+		
+int priority = thread.getPriority();
+
+String groupName = thread.getThreadGroup().getName();
+String state = thread.getState().name();
+	
+boolean type = thread.isDaemon();
+System.out.println("Type		:	"+( type ? "Daemon" : "User"));
+		
+boolean status = thread.isAlive();
+System.out.println("Status		:	"+( status ? "Alive" : "Dead"));
 
 ```
 
-- 2. 
+- 2. using garbage collector to overide finalize method 
+- but gc cames periodically , so finalize method not used in each program execution 
 
 ```java
-
+class Test{
+	public Test() {
+		System.out.println("Inside constructor");
+	}
+	public void print( ) {
+		System.out.println("Inside print");
+	}
+	@Override
+	public void finalize(){
+		System.out.println("Inside finalize");
+		
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		Test t = new Test( );	//Inside constructor
+		t.print( );		//Inside print
+		t = null;
+		System.gc();//Inside finalize
+	}
+}
 ```
-- 3. 
-
+- 3. blocking call methods 
+- Blocking Calls :
+1.  sleep(), 
+2.  suspend(), 
+3.  join(),
+4.   wait(), 
+5.   io call
 ```java
+public class Program {
+	
+	//Blocking Calls : sleep(), suspend(), join(), wait(), io call
+	public static void main(String[] args) {
+	
+		try {
+			for (int count = 0; count <= 10; count++) {
+				System.out.println(count);
+				
+				Thread.sleep(250);
+				
+			}	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}	
+	}
+}
 
 ```
 - 4. 
@@ -6170,7 +6227,7 @@ h
 
 ```
 
-2. demo on 
+1. demo on 
 
 - 1. 
 h
