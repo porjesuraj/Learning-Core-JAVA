@@ -6400,7 +6400,9 @@ System.out.println("inside while" + thread.getName() + " : " + thread.getState()
 ```
 
 - 3. thread toString() demo
-- thread priority is same for super and sub class 
+-  when a new thread is created in run() , 
+- its priority is same as the thread of start() method thread , which caused jvm to call run() method
+-  super thread and sub thread have same priority
 
 ```java
 class Task implements Runnable{
@@ -6421,22 +6423,34 @@ public class Program {
 	}
 }
 ```
-- 4. 
 
-```java
+4. demo on  thread priority 
 
-```
-- 5. 
-
-```java
-
-```
-
-4. demo on 
-
-- 1. 
+- 1.  get ,set ,and exception on priority
 h
 ```java
+public class Program {
+	public static void main4(String[] args) {
+		Thread thread = Thread.currentThread();
+		//thread.setPriority(Thread.NORM_PRIORITY + 6 );	//IllegalArgumentException
+		//thread.setPriority(Thread.NORM_PRIORITY - 6 );	//IllegalArgumentException
+	}
+	public static void main3(String[] args) {
+		Thread thread = Thread.currentThread();
+		//thread.setPriority(thread.getPriority() + 3 );
+		thread.setPriority(Thread.NORM_PRIORITY + 3 );
+		System.out.println(thread.getPriority());
+	}
+	public static void main2(String[] args) {
+		Thread thread = Thread.currentThread();
+		System.out.println(thread.getPriority());
+	}
+	public static void main1(String[] args) {
+		System.out.println(Thread.MIN_PRIORITY);	//1
+		System.out.println(Thread.NORM_PRIORITY);	//5
+		System.out.println(Thread.MAX_PRIORITY);	//10
+	}
+}
 
 ```
 
