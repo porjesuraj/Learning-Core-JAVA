@@ -6143,7 +6143,7 @@ A thread that has not yet started is in this state.
 
 1. demo on method of  Thread class 
 
-- 1.  
+- 1.  getting the current running thread using currentThread() method. 
 h
 ```java
 Thread thread = Thread.currentThread();
@@ -6216,9 +6216,36 @@ public class Program {
 }
 
 ```
-- 4. 
-
+- 4. creating a new thread using java.lang.Thread class Object , 
+1. assigning a java.lang.thread class instance mapped to  a OS thread, to thread object using  
+- start () :
+     - use to assign thread instance to the object, and making thread state NEW 
+2. now jvm on start() method assigging the thread instance, calls the run () method ,to execute the logic  	 
+- run() 
+     -  it is called by jvm, when it maps a OS thread to thread class instance and assign it to start() object ,and calls the run() method 
+    - it contains  the business logic 
 ```java
+class Task implements Runnable{
+
+	@Override
+	public void run() {
+		
+		System.out.println(Thread.currentThread().getName() + " : " + Thread.currentThread().getState());//New
+		System.out.println("Inside business logic method");
+	}
+
+}
+
+public class Program {
+	
+public static void main(String[] args) {
+	
+	Runnable target = new Task(); // upcasting
+	Thread th1 = new Thread(target, "User-Thread-1");
+	th1.start();	  //RUNNABLE
+}
+	
+	
 
 ```
 - 5. 
