@@ -6244,33 +6244,85 @@ public static void main(String[] args) {
 	Thread th1 = new Thread(target, "User-Thread-1");
 	th1.start();	  //RUNNABLE
 }
+
+```
+
+2. demo on method to use threading 
+
+- 1. method 1 : using  Runnable interface
+- one thread using start() method twice  gives exception IllegalThreadStateException
 	
+
+```java
+
+	th.start();	  //RUNNABLE
+		th.start();	 //IllegalThreadStateException	
+```
+
+
+- 2. using a CThread class, to make code reusable 
+
+```java
+class Task implements Runnable{
+	@Override
+	public void run() {
+		
+		System.out.println("Inside business logic method");
+	}	
+}
+
+class CThread{
 	
-
+	private Thread thread;
+	
+	public CThread(String name) {
+		Runnable target = new Task();
+		
+		this.thread = new Thread(target, name);
+		
+		this.thread.start();
+	}
+}
+public class Program {
+	
+public static void main(String[] args) {
+	CThread th1 = new CThread("A");
+	CThread th2 = new CThread("B");
+	CThread th3 = new CThread("C");
+	
+}
 ```
-- 5. 
+- 3. implementing Runnable interface on Cthread class, where 
+- Runnable implements : gives target for thread 
+- 
+
 
 ```java
-
-```
-
-1. demo on 
-
-- 1. 
-h
-```java
-
-```
-
-- 2. 
-
-```java
-
-```
-- 3. 
-
-```java
-
+class CThread implements Runnable{
+	
+	private Thread thread;
+	
+	public CThread(String name) {
+		
+		this.thread = new Thread(this, name);
+		
+		this.thread.start();
+	}
+	
+	@Override
+	public void run() {
+		
+		System.out.println("Inside business logic method");
+	}	
+}
+public class Program {
+	
+public static void main(String[] args) {
+	CThread th1 = new CThread("A");
+	CThread th2 = new CThread("B");
+	CThread th3 = new CThread("C");
+	
+}
 ```
 - 4. 
 
