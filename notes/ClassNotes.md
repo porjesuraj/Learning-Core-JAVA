@@ -6635,7 +6635,94 @@ class SumArray{
 - wait(int timeout)
 - notify()
 - notifyAll()
+- 1. demo on tick tock code using thread syncronizing  
+```java
+package test;
+
+class TickTock {
+	public void tick() throws InterruptedException {
+		synchronized (this) {
+			System.out.print("Tick	");
+			this.notify();
+			//this.wait();
+			this.wait(1000);
+		}
+	}
+
+	public void tock() throws InterruptedException {
+		synchronized (this) {
+			System.out.println("	Tock");
+			this.notify();
+			//this.wait();
+			this.wait(1000);
+		}
+	}
+}
+
+class CThread implements Runnable {
+	private Thread thread;
+
+	public CThread(String name) {
+		this.thread = new Thread(this, name);
+		this.thread.start();
+	}
+
+	private static TickTock tt = new TickTock();
+
+	@Override
+	public void run() throws RuntimeException {
+		try {
+			if (Thread.currentThread().getName().equals("TickThread")) {
+				for (int count = 1; count <= 5; ++count) {
+					tt.tick();
+					Thread.sleep(250);
+				}
+			} else {
+				for (int count = 1; count <= 5; ++count) {
+					tt.tock();
+					Thread.sleep(250);
+				}
+			}
+		} catch (InterruptedException cause) {
+			throw new RuntimeException(cause);
+		}
+	}
+}
+
+public class Program {
+	public static void main(String[] args) {
+		CThread th2 = new CThread("TockThread");
+		CThread th1 = new CThread("TickThread");
+	}
+}
+
+```
+
+- 2. class/variable which are syncronised will only get OBject class method ,
+- wait()
+- wait(int timeout)
+- notify()
+- notifyAll()
+- otherwise  exception is thrown 
+> java.lang.IllegalMonitorStateException
 
 ```java
+public class Program {
+	private static String str = "Hello";
+	public void print() throws InterruptedException {
+		
+		synchronized (str) {
+System.out.println(str);
+//this.wait(1000); //IllegalMonitorStateException
+str.wait(1000); //OK
+	//System.out.println(str);
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		Program p = new Program();
+		p.print();
+	}
+}
 
 ```
