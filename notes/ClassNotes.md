@@ -6483,7 +6483,7 @@ System.out.println(thread.getName()+"	"+thread.getPriority());
 ```
 
 
-5. demo on 
+5. demo on  locking thread in java
 
 - 1. locking of thread using join() method
 
@@ -6592,14 +6592,39 @@ public class Program {
 
 
 ```
-- 3. 
+- 3. locking method to be used by thread , for locking the threads
 
 ```java
-
+class SumArray{
+	public synchronized int sum( int[] arr ) throws InterruptedException {
+		int result = 0;
+		for( int element : arr ) {
+			result = result + element;
+			System.out.println("Running total for "+Thread.currentThread().getName()+" is "+result);
+			Thread.sleep(300);
+		}
+		return result;
+	}
+}
 ```
-- 4. 
+- 4. locking block of code to using synchronized keyword, where 
+- this represent the class of method
 
 ```java
+class SumArray{
+	public int sum( int[] arr ) throws InterruptedException {
+		int result = 0;
+		synchronized (this) {
+			for( int element : arr ) {
+				result = result + element;
+				System.out.println("Running total for "+Thread.currentThread().getName()+" is "+result);
+				Thread.sleep(300);
+			}
+			return result;
+		}
+		
+	}
+}
 
 ```
 - 5. 
