@@ -6352,15 +6352,74 @@ public static void main(String[] args) {
 
 ```
 
-- 2. 
+- 2. getting thread state while executing application
 
 ```java
+class CThread extends Thread{
+	
+	public CThread(String name) {
 
+	super(name); //using thread class constructor
+
+System.out.println(this.getName()+"	:	"+this.getState());
+this.start();
+	}
+	
+	@Override
+	public void run() {
+		System.out.println(this.getName()+"	:	"+this.getState());
+	try {
+	for( int count = 1; count <= 10; ++ count ) {
+System.out.println(this.getName()+"	:	"+count);
+				Thread.sleep(500);
+			}
+		} catch (InterruptedException cause) {
+			throw new RuntimeException(cause);
+		}			
+	}
+}
+
+public class Program {
+	
+public static void main(String[] args) {
+	
+	try {
+		Thread thread = new CThread("User Thread");
+		
+		while(thread.isAlive())	
+		{
+			
+System.out.println("inside while" + thread.getName() + " : " + thread.getState());
+	Thread.sleep(100);
+	}
+	System.out.println("after while" + thread.getName() + " : " + thread.getState());
+
+	} catch (Exception e) {}
+   }
+}
 ```
-- 3. 
+
+- 3. thread toString() demo
+- thread priority is same for super and sub class 
 
 ```java
-
+class Task implements Runnable{
+	@Override
+	public void run() {
+		Thread thread = Thread.currentThread();
+		//System.out.println(thread.toString());
+		//System.out.println("Inside run()");
+	}
+}
+public class Program {
+	public static void main(String[] args) {
+		Thread thread = Thread.currentThread();
+		System.out.println(thread.toString());
+		
+		Runnable target = new Task();
+		target.run();
+	}
+}
 ```
 - 4. 
 
