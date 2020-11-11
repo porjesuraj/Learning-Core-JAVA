@@ -6454,9 +6454,31 @@ public class Program {
 
 ```
 
-- 2. 
+- 2. priority of main thread and default thread of thread class is same , 
+- here main in super thread and class Cthread thread is sub/default 
 
 ```java
+class CThread extends Thread{
+	
+	public CThread() {
+	this.start();
+	}
+	@Override
+	public void run() {
+//this.setPriority(NORM_PRIORITY + 3 ); 
+System.out.println(this.getName()+"	"+this.getPriority());
+	}
+}
+public class Program {
+
+public static void main(String[] args) {
+	Thread thread = Thread.currentThread();
+	
+thread.setPriority(Thread.NORM_PRIORITY);
+System.out.println(thread.getName()+"	"+thread.getPriority());	
+	CThread cthread = new CThread(); 	
+}
+}
 
 ```
 - 3. 

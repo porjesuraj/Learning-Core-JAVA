@@ -16,7 +16,7 @@ public class Program {
 		Thread thread = Thread.currentThread();
 		System.out.println(thread.getPriority());
 	}
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		System.out.println(Thread.MIN_PRIORITY);	//1
 		System.out.println(Thread.NORM_PRIORITY);	//5
 		System.out.println(Thread.MAX_PRIORITY);	//10
