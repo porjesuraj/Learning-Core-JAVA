@@ -6524,9 +6524,72 @@ public class Program {
 
 ```
 
-- 2. 
+- 2. thread locking using synchronized block in run()
 
 ```java
+class SumArray{
+	
+	public int sum(int[] arr) throws InterruptedException 
+	{
+		int result = 0;
+		for(int element : arr)
+		{
+			result = result + element; 
+System.out.println("Running total for "+Thread.currentThread().getName()+" is "+result);
+	Thread.sleep(300);
+}
+		return result;
+	}
+}
+
+class CThread implements Runnable{
+	
+	private int[] arr;
+	private Thread thread;
+	
+	public CThread(String name,int[] arr) {
+		this.arr = arr;
+		this.thread = new Thread(this, name);
+		this.thread.start();	
+	}
+
+	private static SumArray sa = new SumArray();
+	@Override
+	public void run()// no locking , ramdom thread access sum function 
+	{
+		
+		try {
+			// thread locking 
+			synchronized (sa)  {
+				
+				   int result = sa.sum(arr);
+					System.out.println("Result : " + result);
+			}
+	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	// no locking , ramdom thread access sum function 
+	public void run()
+	{ }
+	
+	
+}
+
+public class Program {
+	public static void main(String[] args) {
+		
+		int[] arr1 = { 1,2,3,4,5,6,7,8,9,10 };
+		CThread th1 = new CThread("Th1",arr1);
+		
+		int[] arr2 = { 11,12,13,14,15,16,17,18,19,20 };
+		CThread th2 = new CThread("Th2",arr2);
+	}
+}
+
 
 ```
 - 3. 
