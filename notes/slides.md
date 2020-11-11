@@ -133,6 +133,9 @@
 
 
 # day 12
+
+## Collection 
+
 !['Day12.1'](day_12.1.png)
 !['Day12.2'](day_12.2.png)
 !['Day12.3'](day_12.3.png)
@@ -181,6 +184,8 @@
 
 # day 13
 
+## Collection 
+
 !['Day13_Collection.1'](Collection_13.1.png)
 !['Day13_Collection.2'](Collection_13.2.png)
 !['Day13_Collection.3'](Collection_13.3.png)
@@ -199,5 +204,8 @@
 !['Day13_JDBC.5'](JDBC_13.5.png)
 !['Day13_JDBC.6'](JDBC_13.6.png)
 !['Day13_JDBC.7'](JDBC_13.7.png)
-!['Day13_JDBC.8'](JDBC_13.8.png)
+
+
+
+
 

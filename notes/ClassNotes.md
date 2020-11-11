@@ -6053,3 +6053,235 @@ h
 ```java
 
 ```
+
+
+# Day 14
+
+## to read
+
+1. why process based multi tasking is heavy weight process and thread based is light weight multitasking?
+- 1. in process, context switching is heavy 
+- 2. in thread, as reource shared in same process of thread , so no context switching  
+
+2. types of thread in 
+- C# for ground and background thread
+- java, user thread and daemon thread
+
+3. difference between deamon and user thread? 
+
+4. to read 
+> pdf java certification khalid mughal
+
+5. what is relation between run() and start() method? 
+
+6. when to use extends thread and when to implement Runnable?
+
+
+
+7. difference between Runnbable I/F and Thread class? 
+
+8. thread priority makes java application platform dependent, as different priority ranges are there for windows,java, unix , so behaviour is diff on diff platform 
+9.  difference between locking and syncronizing thread /resource  
+
+10. how to achieve synchronisation in java? 
+- using wait , notify(), notifyall() on threads , in synchronised  block only or monitored is asssigned to them . 
+
+
+
+## slides
+
+
+
+### demo
+
+1. > public static enum Thread.State
+  > xtends Enum<Thread.State>
+- A thread state. A thread can be in one of the following states:
+1. NEW
+A thread that has not yet started is in this state.
+2. RUNNABLE
+
+3. BLOCKED
+
+4. WAITING
+
+5. TIMED_WAITING
+
+6. TERMINATED
+
+- A thread can be in only one state at a given point in time. 
+- These states are virtual machine states which do not reflect any operating system thread states.
+
+2. thread priority
+
+-  Constant Field- 	Value
+
+1. 	MAX_PRIORITY - 	10   
+
+2. 	MIN_PRIORITY- 	1    
+
+3.   NORM_PRIORITY  - 	5    
+
+
+
+
+- 
+3. garbage collector is low proprity background thread , 
+ - as it runs periodically
+
+4.  blocking call : sleep(),suspend(),join(),wait(),IO call
+
+5. locking thread resources  
+- synchronised keyword
+  - monitor object get asigned to the block , and it locks thread 
+
+6. difference between locking and syncronizing thread /resource    
+
+
+### demo 
+
+
+1. demo on 
+
+- 1. 
+h
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+2. demo on 
+
+- 1. 
+h
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+3. demo on 
+
+- 1. 
+h
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+4. demo on 
+
+- 1. 
+h
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
+
+5. demo on 
+
+- 1. 
+h
+```java
+
+```
+
+- 2. 
+
+```java
+
+```
+- 3. 
+
+```java
+
+```
+- 4. 
+
+```java
+
+```
+- 5. 
+
+```java
+
+```
