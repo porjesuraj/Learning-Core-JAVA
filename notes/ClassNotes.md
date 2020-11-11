@@ -6247,12 +6247,11 @@ public static void main(String[] args) {
 
 ```
 
-2. demo on method to use threading 
-
-- 1. method 1 : using  Runnable interface
+2. demo on method  to create thread,
+- method 1 :  implementing Runnable interface
+Runnable implements : gives target for thread (class for run() method )
+- 1.  using  Runnable interface
 - one thread using start() method twice  gives exception IllegalThreadStateException
-	
-
 ```java
 
 	th.start();	  //RUNNABLE
@@ -6294,9 +6293,6 @@ public static void main(String[] args) {
 ```
 - 3. implementing Runnable interface on Cthread class, where 
 - Runnable implements : gives target for thread 
-- 
-
-
 ```java
 class CThread implements Runnable{
 	
@@ -6324,22 +6320,35 @@ public static void main(String[] args) {
 	
 }
 ```
-- 4. 
+
+3.  demo on method  to create thread,
+- method 2 : extending Thread class 
+
+- 1. extending java.lang.Thread class 
 
 ```java
+class CThread extends Thread{
+	
+	public CThread(String name) {
+		super(name); 
+		this.start();
+	}
+	
+	@Override
+	public void run() {
+		System.out.println("Inside Business Logic Method");
+	}
+}
+public class Program {
+	
+public static void main(String[] args) {
+	
+	Thread t1 = new CThread("A"); 
+	Thread t2 = new CThread("B");
+	Thread t3 = new CThread("C");
+   }	
+}
 
-```
-- 5. 
-
-```java
-
-```
-
-3. demo on 
-
-- 1. 
-h
-```java
 
 ```
 
