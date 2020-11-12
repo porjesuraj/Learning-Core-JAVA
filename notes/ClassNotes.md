@@ -7103,7 +7103,46 @@ Program.readRecord(pathName,searchString);
  }
 }
 ```
-1. demo non Serializable 
+
+
+8. demo on java.io class
+
+```java
+ public class InetAddress
+extends Object
+implements Serializable
+```
+- This class represents an Internet Protocol (IP) address.
+- An IP address is either a 32-bit or 128-bit unsigned number used by IP,a lower-level protocol on which protocols like UDP and TCP are built.
+
+```java
+public final class Inet4Address
+extends InetAddress
+```
+- This class represents an Internet Protocol version 4 (IPv4) address. 
+
+- 1. 
+```java
+  InetAddress localhost = Inet4Address.getLocalHost();
+	   String hostname = localhost.getHostName();
+	   String hostAddress = localhost.getHostAddress(); 
+	   
+	   System.out.println(hostname);
+	   System.out.println(hostAddress);
+			
+```
+
+- 2. 
+```java
+
+```
+- 3. 
+
+```java
+
+```
+
+1. demo 
 
 
 - 1. transient 
