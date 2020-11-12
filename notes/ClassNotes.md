@@ -7132,38 +7132,193 @@ extends InetAddress
 			
 ```
 
-- 2. 
+9. demo on Socket Programming  for creating messaging between server and client
+
+
+- 1. Server side
 ```java
+package server;
+public class SProgram {
+	public static final int port = 5465;
+
+public static void main(String[] args) {
+ServerSocket serverSocket = null;
+	DataOutputStream outputStream = null;
+	DataInputStream inputStream = null;
+	Scanner sc = null;
+try {
+	serverSocket = new ServerSocket(port);
+	System.out.println("Server is ready....");
+	Socket socket = serverSocket.accept();
+
+inputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
+outputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+sc = new Scanner(System.in);
+
+	String message = "";
+do {
+	System.out.print("S:Server	:	");
+				message = sc.nextLine();
+	outputStream.writeUTF(message); // Send message to client
+	outputStream.flush();
+    message = inputStream.readUTF();
+	System.out.println("S:Client	:	" + message); // Read message of client
+	} while (!message.equalsIgnoreCase("end"));
+
+	} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				sc.close();
+				inputStream.close();
+				outputStream.close();
+				serverSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
 
 ```
-- 3. 
 
+- 2. on client side 
 ```java
+package client;
+
+public class Program {
+	public static String host = "localhost";
+	public static final int port = 5465;
+
+public static void main(String[] args) {
+Socket socket = null;
+DataOutputStream outputStream = null;
+DataInputStream inputStream = null;
+Scanner sc = null;
+try {
+	socket = new Socket(host, port);
+
+inputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
+outputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+
+sc = new Scanner(System.in);
+
+String message = "";
+do {
+message = inputStream.readUTF(); // Read message of server
+System.out.println("C:Server	:	" + message);
+
+System.out.print("C:Client	:	");
+message = sc.nextLine();
+outputStream.writeUTF(message); // Send message to server
+outputStream.flush();
+} while (!message.equalsIgnoreCase("end"));
+
+} catch (Exception ex) {
+			ex.printStackTrace();
+	} finally {
+try {
+				sc.close();
+				inputStream.close();
+				outputStream.close();
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
 
 ```
-
-1. demo 
-
-
-- 1. transient 
-```java
-
-```
-
-- 2. 
-```java
-
-```
-5. demo on socket 
+5. demo on socket using threading for increasing performance 
 - port no : is a logical number assigned to each application process on machine/server machine 
 
-- 1. transient 
+- 1. Communication handler 
 ```java
+package utils;
 
+public class CommunicationHandler implements Runnable{
+private Socket socket;
+private Thread thread;
+	
+public CommunicationHandler(Socket socket) {
+	this.socket = socket;
+	this.thread = new Thread(this);
+	this.thread.start();
+	}
+@Override
+public void run() {
+		
+DataOutputStream outputStream = null;
+DataInputStream inputStream = null;
+Scanner sc = null;
+try {
+inputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
+outputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+	sc = new Scanner(System.in);
+
+	String message = "";
+do {
+System.out.print("S:Server	:	");
+	message = sc.nextLine();
+outputStream.writeUTF(message); // Send message to client
+outputStream.flush();
+message = inputStream.readUTF();
+
+System.out.println("S:Client	:	" + message); // Read message of client
+} while (!message.equalsIgnoreCase("end"));
+
+	} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				sc.close();
+				inputStream.close();
+				outputStream.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
 ```
 
-- 2. 
+- 2. changes on server side, Client side remains same
 ```java
+
+package server;
+
+import utils.CommunicationHandler;
+public class SProgram {
+public static final int port = 5465;
+
+public static void main(String[] args) {
+ServerSocket serverSocket = null;
+		
+try {
+serverSocket = new ServerSocket(port);
+System.out.println("Server is ready....");
+			
+while(true)
+{
+Socket socket = serverSocket.accept();
+ Runnable target = new CommunicationHandler(socket);
+}
+} catch (Exception ex) {
+			ex.printStackTrace();
+	} finally {
+	try {
+		serverSocket.close();
+		} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
 
 ```
 

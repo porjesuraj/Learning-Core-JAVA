@@ -1,5 +1,4 @@
-
-package server;
+package utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -10,19 +9,26 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class SProgram {
-	public static final int port = 5465;
+public class CommunicationHandler implements Runnable{
 
-	public static void main(String[] args) {
-		ServerSocket serverSocket = null;
+	private Socket socket;
+	private Thread thread;
+	
+	public CommunicationHandler(Socket socket) {
+		this.socket = socket;
+	   this.thread = new Thread(this);
+	   this.thread.start();
+	}
+	
+	
+	
+	@Override
+	public void run() {
+		
 		DataOutputStream outputStream = null;
 		DataInputStream inputStream = null;
 		Scanner sc = null;
 		try {
-			serverSocket = new ServerSocket(port);
-			System.out.println("Server is ready....");
-			Socket socket = serverSocket.accept();
-
 			inputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 			outputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			sc = new Scanner(System.in);
@@ -45,10 +51,12 @@ public class SProgram {
 				sc.close();
 				inputStream.close();
 				outputStream.close();
-				serverSocket.close();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-}
+		
+	}
+
