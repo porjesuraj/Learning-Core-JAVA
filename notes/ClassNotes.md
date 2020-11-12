@@ -6812,8 +6812,24 @@ System.out.println(f.getName());
 }
 ```
 
-2. demo on File stream  classes(input and output)
+2. **demo on File stream  classes(input and output)**
+-  need for permission for each byte to read/write .
 
+```java
+public class FileInputStream
+extends InputStream
+```
+- A FileInputStream obtains input bytes from a file in a file system. 
+- FileInputStream is meant for reading streams of raw bytes such as image data. 
+- For reading streams of characters, consider using FileReader.
+
+  
+```java
+public class FilterOutputStream
+extends OutputStream
+```
+- This class is the superclass of all classes that filter output streams. 
+- The class FilterOutputStream itself simply overrides all methods of OutputStream 
 
 - 1. demo java.io.File(Output/Input)Stream
 - reading or writing one byte at a time 
@@ -6852,8 +6868,113 @@ try(FileOutputStream outputStream = new FileOutputStream(new File(pathname)); )
   } catch (Exception e) {	}	
 }
 ```
+3. **demo on Buffer(Input/Output)Stream**
+- here String of input is taken at a time ,no need for permission for each byte .
 
-3. demo Serializable 
+```java
+public class BufferedInputStream
+extends FilterInputStream
+```
+- A BufferedInputStream adds functionality to another input stream-namely, 
+     - the ability to buffer the input and to support the mark and reset methods.
+-  When the BufferedInputStream is created, an internal buffer array is created. 
+
+```java
+public class BufferedOutputStream
+extends FilterOutputStream
+```
+- The class implements a buffered output stream. 
+- By this, an application can write bytes to the underlying output stream 
+   - without necessarily causing a call to the underlying system for each byte written.
+
+- 1. 
+```java
+private static void readRecord(String pathname) {
+try(BufferedInputStream inputStream = new BufferedInputStream (new FileInputStream(new File(pathname))); ) {
+ int data;
+while((data = inputStream.read()) != -1)
+{
+	System.out.print( (char)data + " ");
+}
+System.out.println();
+} catch (Exception e) {}
+}
+
+private static void writeRecord(String pathname) {	try(BufferedOutputStream outputStream =  new BufferedOutputStream(new FileOutputStream(new File(pathname))); ) {
+	for(char ch = 'A'; ch <= 'Z'; ++ ch)
+			outputStream.write(ch);	
+		} catch (Exception e) {	
+	}	
+}
+```
+
+
+4. **demo on Data(Input/Output )Stream**
+
+```java
+public class DataInputStream
+extends FilterInputStream
+implements DataInput
+```
+- A data input stream lets an application read primitive Java data types from an underlying input stream in a machine-independent way. 
+- DataInputStream is not necessarily safe for multithreaded access.
+
+```java
+public class DataOutputStream
+extends FilterOutputStream
+implements DataOutput
+```
+- A data output stream lets an application write primitive Java data types to an output stream in a portable way. 
+
+```java
+private static void readRecord(String pathname) {
+try(DataInputStream inputStream = new DataInputStream(new BufferedInputStream (new FileInputStream(new File(pathname)))); ) {
+	
+String name = inputStream.readUTF();
+int num = inputStream.readInt();
+float salary = inputStream.readFloat(); 
+	  
+ System.out.println(name + " : " +  num  + " : "+ salary);
+} catch (Exception e) {}
+}
+private static void writeRecord(String pathname) {
+		
+try(DataOutputStream outputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(pathname)))); ) {
+	
+	outputStream.writeUTF("suraj");
+	outputStream.writeInt(33);
+	outputStream.writeFloat(3000);
+	
+		} catch (Exception e) {	
+	}	
+}
+```
+
+
+5. 
+
+- 1. 
+```java
+
+```
+- 2. 
+
+```java
+
+```
+
+6. demo on Buffer(Input/Output)Stream
+
+- 1. 
+```java
+
+```
+- 2. 
+
+```java
+
+```
+1. demo Serializable 
 
 
 - 1. 
