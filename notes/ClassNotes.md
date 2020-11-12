@@ -7328,14 +7328,266 @@ Socket socket = serverSocket.accept();
 
 11. demo on UDM protocol, for socket programming  
 
-- 1. 
+- 1. client side 
 ```java
+package client;
+public class Program {
+	public static int port = 4576;
+
+	public static void main(String[] args) {
+	DatagramSocket socket = null;
+		Scanner sc = null;
+		try {
+			socket = new DatagramSocket(); // Client Socket
+			sc = new Scanner(System.in);
+			String message = "";
+			byte[] buffer = null;
+
+			while (true) {
+				System.out.print("C:Client	:	");
+				message = sc.nextLine();
+				buffer = message.getBytes();
+				DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
+						InetAddress.getByName("localhost"), port);
+				socket.send(sendPacket);
+
+				buffer = new byte[1024];
+				DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
+				socket.receive(receivePacket);
+				message = new String(receivePacket.getData());
+				System.out.println("S:Client	:	" + message);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			sc.close();
+			socket.close();
+		}
+	}
+}
 
 ```
 
-- 2. 
+- 2. server side
 
 ```java
+package server;
 
+public class Program {
+	public static int port = 4576;
 
+	public static void main(String[] args) {
+		DatagramSocket socket = null;
+		Scanner sc = null;
+		try {
+			socket = new DatagramSocket(port); // Server Socket
+			sc = new Scanner(System.in);
+			String message = "";
+			byte[] buffer = new byte[1024];
+
+			while (true) {
+				DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
+				socket.receive(receivePacket);
+				message = new String(receivePacket.getData());
+				System.out.println("S:Client	:	" + message);
+
+				System.out.print("S:Server	:	");
+				message = sc.nextLine();
+				buffer = message.getBytes();
+				DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, receivePacket.getAddress(),
+						receivePacket.getPort());
+				socket.send(sendPacket);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			sc.close();
+			socket.close();
+		}
+	}
+}
+
+```
+
+11. Functional Programming using lambada expresison 
+- 1. method 1 to implement functional interface
+- using class implement F/I
+```java
+@FunctionalInterface
+interface Printable{
+	void print( );
+}
+class Test implements Printable{
+	@Override
+	public void print() {
+		System.out.println("Inside print");
+	}
+}
+public class Program {
+	
+	public static void main(String[] args) {
+	Printable p = new Test();
+	p.print();
+  }
+```
+- 2. method 2 to implement functional interface
+- using anonymous inner type
+```java
+@FunctionalInterface
+interface Printable{
+	void print( );
+}
+public static void main(String[] args) {
+		Printable p = new Printable() {
+			
+			@Override
+			public void print() {
+				System.out.println("Inside print");
+				
+			}
+		};
+	}
+  
+```
+
+- 3. method 3 to implement functional interface
+- using lambada expression
+```java
+@FunctionalInterface
+interface Printable{
+	void print( );
+}
+public class Program {
+public static void main(String[] args) 
+{
+Printable p = ()-> System.out.println("hello lambada expression");
+	p.print();
+  }
+} 
+```
+
+- 4. F/I with parameter
+```java
+//Printable p = ( String str )-> System.out.println(str);
+//Printable p = ( String message )-> System.out.println(message);
+//Printable p = ( str )-> System.out.println(str);
+ Printable p = str -> System.out.println("hello " + str);
+p.print("raj");
+```
+
+- 5. F/I parameter
+```java
+@FunctionalInterface
+interface Calci{void sum(int num1,int num2);}
+public class Program {
+public static void main(String[] args) {
+Calci c = (int num1,int num2)->System.out.println("result : "+ (num1 + num2));
+c.sum(20, 30);
+  }
+} 
+```
+
+- 6. F/I parameter
+
+```java
+@FunctionalInterface
+interface Calci{int sum(int num1,int num2);}
+public class Program {
+public static void main(String[] args) {
+//Calci c = (int num1,int num2)->System.out.println("result : "+ (num1 + num2));
+Calci c = 	( int num1, int num2 )-> num1 + num2;
+	int result = c.sum(20, 30);
+	System.out.println(result);
+	}
+} 
+```
+
+- 7. F/I by multi line lambada expression using curly braces {}
+```java
+@FunctionalInterface
+interface Calculator{
+	int factorial( int number );
+}
+public class Program {
+	public static void main(String[] args) {
+		Calculator c = number-> {
+			int result = 1;
+			for( int count = 1; count <= number; ++ count )
+				result = result * count;
+			return result;
+		};
+		int result = c.factorial(5);
+		System.out.println(result);
+	}
+}
+
+```
+- 8. using lambada Expression in List
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+public class Program {
+	public static void main(String[] args) {
+		List<Integer> list = new ArrayList<>( );
+		list.add(10);
+		list.add(20);
+		list.add(30);
+//void accept(T t)
+//Consumer<Integer> action = ( Integer number )-> System.out.println(number);
+//Consumer<Integer> action = ( number )-> System.out.println(number);
+//Consumer<Integer> action = number -> System.out.println(number);
+//list.forEach(action);
+		
+		list.forEach(number->System.out.println(number));
+	}
+}
+
+```
+
+- 9. using :: operator
+
+```java
+public class Program {
+	public void displayRecord( ) {
+		System.out.println("Inside print");
+	}
+	public static void main(String[] args) {
+		Program prog = new Program();
+		Printable p = prog::displayRecord;
+		p.print();
+	}
+	public static void showRecord( ) {
+		System.out.println("Inside print");
+	}
+	public static void main4(String[] args) {
+		Printable p = Program::showRecord;
+		p.print();
+	}
+}
+```
+
+- 10. using list forEach method using lambada expression 
+
+```java
+public class Program {
+	public static void print( Integer number ) {
+		System.out.println(number);
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		List<Integer> list = new ArrayList<>();
+		list.add(10);
+		list.add(20);
+		list.add(30);
+		
+		//list.forEach(Number->System.out.println(Number));
+	   //	list.forEach(Program::print);		
+	 list.forEach(System.out::println);
+	}
+}
 ```
