@@ -7037,20 +7037,44 @@ System.out.println( (char)data + " ");
 }
 ```
 
-1. demo Serializable 
+7. demo Buffered(Reader/Writer) class 
 
-
-- 1. 
+- 1. BufferedWriter class 
 ```java
+public class BufferedWriter
+extends Writer
+```
+- Writes text to a character-output stream, buffering characters so as to provide for the efficient writing of single characters, arrays, and strings.
+- 2. BufferedReader class
+```java
+public class BufferedReader
+extends Reader
+```
+- Reads text from a character-input stream, buffering characters so as to provide for the efficient reading of characters, arrays, and lines.
 
+- 3. demo on Buffer classes
+
+```java
+public static void writeRecord( String pathname ) throws Exception{
+	try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(pathname))))
+	{
+	for(char ch = 'A'; ch <= 'Z';++ch)
+		writer.write(ch);
+	}
+}
+
+public static void readRecord( String pathname ) throws Exception{
+try(BufferedReader reader = new BufferedReader(new FileReader(new File(pathname))))
+{
+	int data;
+while((data = reader.read())!= -1)
+{System.out.println( (char)data + " ");}
+	} 
+}
 ```
 
-- 2. 
-```java
 
-```
-
-4. demo non Serializable 
+1. demo non Serializable 
 
 
 - 1. transient 
