@@ -6743,37 +6743,94 @@ str.wait(1000); //OK
 1. demo  File
 
 
-- 1. 
+- 1. to create a new file 
 ```java
+public static void main(String[] args) {		
+	String pathName = "file.txt";
+	File file = new File(pathName);
+	boolean status	= file.createNewFile();
+	System.out.println(status ? "file is created" : "file not created");
+}
 
 ```
 
-- 2. 
+- 2. delete a file 
 ```java
-
+public static void main(String[] args) {
+	String pathName = "file.txt"; 
+	File file = new File(pathName);
+    boolean status = file.delete();
+System.out.println(status ? "file deleted" : "file not deleted");		
+	}
 ```
 
-- 3. 
+- 3. create a folder 
 ```java
-
+	public static void main(String[] args) {
+		String pathName ="myFolder";
+		
+		File file = new File(pathName);
+		
+		boolean status = file.mkdir();
+		
+		System.out.println(status ? "folder created": "folder not created");
+	}
 ```
 
-- 4. 
+- 4. delete a folder
 ```java
-
+public static void main(String[] args) {
+	String pathName ="myFolder";
+	File file = new File(pathName);
+	System.out.println(file.getAbsolutePath());
+	if(file.isDirectory())
+		{
+			boolean status = file.delete();
+			System.out.println(status ? "folder deleted": "folder not deleted");
+		}	
+	}
 ```
 
-- 5. 
+- 5. file and folder info 
 ```java
-
+private static void FileInfo(File file) {
+	if(file.exists())
+	{
+System.out.println("Name " + file.getName());
+System.out.println(" parent" + file.getParent());
+System.out.println("length " + file.length());
+System.out.println(" " + new SimpleDateFormat("dd/mm/yyyy").format(new Date(file.lastModified())) );
+}	
+}
+private static void DirectoryInfo(File file) {
+File[] files = file.listFiles(); 
+for(File f : files)
+{
+if(!f.isHidden())
+System.out.println(f.getName());
+}
+}
 ```
 
-2. demo File stream (input and output)
+2. demo on File stream  classes(input and output)
 
 
-- 1. 
+- 1. demo java.io.File(Output/Input)Stream
 ```java
 
+private static void readRecord(String pathname) {
+	FileInputStream inputStream = null;
+	inputStream = new FileInputStream(new File(pathname)); 	
+	char data = (char) inputStream.read();
+    System.out.println(data);	
+	}
+	
+ private static void writeRecord(String pathname) {
+	FileOutputStream outputStream = null;
+	outputStream = new FileOutputStream(new File(pathname));
+	outputStream.write('A');	
+	}
+}
 ```
 
 - 2. 

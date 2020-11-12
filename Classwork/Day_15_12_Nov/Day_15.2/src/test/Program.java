@@ -1,74 +1,66 @@
 package test;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Program {
-
+	
+	
+	
+	
+	
+//home/sunbeam/dac/Core Java/java_module_classwork/Classwork/Day_15_12_Nov/Day_15.1/src/test/Program.java
 	public static void main(String[] args) {
-		String pathName ="myFolder";
 		
-		File file = new File(pathName);
+		//String pathname = "/home/sunbeam/dac";
+		String pathname = "/home/sunbeam/dac/Core Java/java_module_classwork/Classwork/Day_15_12_Nov/Day_15.1.0/src/test/Program.java";
+		File file = new File(pathname);
 		
-		
-		if(file.isDirectory())
+		if(file.exists())
 		{
-			boolean status = file.delete();
-			
-			System.out.println(status ? "folder deleted": "folder not deleted");
-		}
-	
-	}
-	
-	public static void main3(String[] args) {
-		String pathName ="myFolder";
+			if(file.isDirectory())
+			Program.DirectoryInfo(file);	
+			else
+			Program.FileInfo(file); 
+		}else
+		System.out.println(pathname + "does not exist");
 		
-		File file = new File(pathName);
-		
-		boolean status = file.mkdir();
-		
-		System.out.println(status ? "folder created": "folder not created");
-	}
-	
-	
-	
-	public static void main2(String[] args) {
-		
-		try {
-			
-			String pathName = "file.txt"; 
-			
-			File file = new File(pathName);
-			
-			boolean status = file.delete();
-			
-		System.out.println(status ? "file deleted" : "file not deleted");	
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main1(String[] args) {
-		
-		try {
-			
-			String pathName = "file.txt";
-			
-			File file = new File(pathName);
-			
-		boolean status	= file.createNewFile();
-			
-		System.out.println(status ? "file is created" : "file not created");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 
+private static void FileInfo(File file) {
+	
+	if(file.exists())
+	{
+		System.out.println("Name " + file.getName());
+		System.out.println(" parent" + file.getParent());
+		System.out.println("length " + file.length());
+		System.out.println(" " + new SimpleDateFormat("dd/mm/yyyy").format(new Date(file.lastModified())) );
+		
+	}
+	
 }
+
+private static void DirectoryInfo(File file) {
+	
+	File[] files = file.listFiles(); 
+	
+	for(File f : files)
+	{
+		if(!f.isHidden())
+		System.out.println(f.getName());
+		
+	}
+}
+}
+
+
+
+
+
+
+
+
+
+
+
