@@ -6816,6 +6816,8 @@ System.out.println(f.getName());
 
 
 - 1. demo java.io.File(Output/Input)Stream
+- reading or writing one byte at a time 
+
 ```java
 
 private static void readRecord(String pathname) {
@@ -6824,7 +6826,7 @@ private static void readRecord(String pathname) {
 	char data = (char) inputStream.read();
     System.out.println(data);	
 	}
-	
+
  private static void writeRecord(String pathname) {
 	FileOutputStream outputStream = null;
 	outputStream = new FileOutputStream(new File(pathname));
@@ -6833,9 +6835,22 @@ private static void readRecord(String pathname) {
 }
 ```
 
-- 2. 
+- 2. write and read byte string 
 ```java
-
+private static void readRecord(String pathname) {
+try(FileInputStream  inputStream = new FileInputStream(new File(pathname)); ) {
+	  int data;
+	  while((data = inputStream.read()) != -1)
+	   System.out.print( (char)data + " ");	
+		} catch (Exception e) {}	
+	}
+private static void writeRecord(String pathname) {
+try(FileOutputStream outputStream = new FileOutputStream(new File(pathname)); ) 
+  {
+   for(char ch = 'A'; ch <= 'Z'; ++ ch)
+	outputStream.write(ch);	
+  } catch (Exception e) {	}	
+}
 ```
 
 3. demo Serializable 
