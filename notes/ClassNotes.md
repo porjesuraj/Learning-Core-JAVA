@@ -6951,16 +6951,41 @@ try(DataOutputStream outputStream = new DataOutputStream(new BufferedOutputStrea
 ```
 
 
-5. 
+5. **demo Object(Input/Output) Stream** 
 
-- 1. 
+- 1. An ObjectOutputStream writes primitive data types and graphs of Java objects to an OutputStream.
+-  The objects can be read (reconstituted) using an ObjectInputStream.
+-   Persistent storage of objects can be accomplished by using a file for the stream. 
+
 ```java
+public class ObjectOutputStream
+extends OutputStream
+implements ObjectOutput, ObjectStreamConstants
+```
+- 2. An ObjectInputStream deserializes primitive data and objects previously written using an ObjectOutputStream.
+```java
+public class ObjectInputStream
+extends InputStream
+implements ObjectInput, ObjectStreamConstants
 
 ```
-- 2. 
+- 3. demo on on Object Stream
 
 ```java
-
+public static void writeRecord( String pathname ) throws Exception{
+try(ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream( new FileOutputStream(new File(pathname))));)
+{
+Employee emp = new Employee("Sandeep", 33, 15000.50f);
+outputStream.writeObject(emp);
+		}
+	}
+public static void readRecord( String pathname ) throws Exception{
+try(ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(pathname)))))
+{
+Employee emp = (Employee) inputStream.readObject();
+	System.out.println(emp.toString());
+		} 
+	}	
 ```
 
 6. demo on Buffer(Input/Output)Stream
