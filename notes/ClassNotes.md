@@ -5851,6 +5851,7 @@ public class Program {
 
 3. Annotation type 
 > java.lang
+> 
 > lava.lang.annotation
 
 - 1. demo on declaring a Annotation interface and use it on class 
@@ -6726,3 +6727,96 @@ str.wait(1000); //OK
 }
 
 ```
+
+# Day 15
+
+
+## to read
+
+1. Not Serializable Exception 
+2. how to  count number of words in a file 
+
+## slides
+
+## demo 
+
+1. demo  File
+
+
+- 1. 
+```java
+
+```
+
+- 2. 
+```java
+
+```
+
+- 3. 
+```java
+
+```
+
+- 4. 
+```java
+
+```
+
+- 5. 
+```java
+
+```
+
+2. demo File stream (input and output)
+
+
+- 1. 
+```java
+
+```
+
+- 2. 
+```java
+
+```
+
+3. demo Serializable 
+
+
+- 1. 
+```java
+
+```
+
+- 2. 
+```java
+
+```
+
+4. demo non Serializable 
+
+
+- 1. transient 
+```java
+
+```
+
+- 2. 
+```java
+
+```
+5. demo on socket 
+- port no : is a logical number assigned to each application process on machine/server machine 
+
+- 1. transient 
+```java
+
+```
+
+- 2. 
+```java
+
+```
+
+

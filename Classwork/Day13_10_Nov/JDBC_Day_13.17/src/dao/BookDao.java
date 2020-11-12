@@ -36,6 +36,7 @@ public class BookDao  implements Closeable{
 	
 	public int Insert(Book book ) throws SQLException {
 		
+		
 		this.stmtInsert.setInt(1, book.getBookId());
 		this.stmtInsert.setString(2, book.getSubjectName());
 		this.stmtInsert.setString(3, book.getBookName());

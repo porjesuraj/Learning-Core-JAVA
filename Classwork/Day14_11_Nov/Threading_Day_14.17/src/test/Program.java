@@ -11,7 +11,7 @@ public class Program {
 			System.out.println(str);
 			//this.wait(1000); //IllegalMonitorStateException
 			str.wait(1000); //OK
-			System.out.println(str);
+			//System.out.println(str);
 		}
 	}
 	
