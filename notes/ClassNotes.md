@@ -6990,15 +6990,53 @@ Employee emp = (Employee) inputStream.readObject();
 
 6. demo on Buffer(Input/Output)Stream
 
-- 1. 
+- 1. Writer
 ```java
-
+public abstract class Writer
+extends Object
+implements Appendable, Closeable, Flushable
 ```
-- 2. 
+- Abstract class for writing to character streams.
+-  The only methods that a subclass must implement are
+     -  write(char[], int, int),
+     -   flush(), and 
+     -   close().
+-   Most subclasses, however, will override some of the methods defined here in order to provide higher efficiency, additional functionality, or both.
+
+
+- 2. Reader
 
 ```java
-
+public abstract class Reader
+extends Object
+implements Readable, Closeable
 ```
+- Abstract class for reading character streams. - The only methods that a subclass must implement ar
+     - e read(char[], int, int) and 
+     - close(). 
+- Most subclasses, however, will override some of the methods defined here in order to provide higher efficiency, additional functionality, or both.
+
+- 3. demo on reader and writer
+```java
+public static void writeRecord( String pathname ) throws Exception
+{
+try(FileWriter writer = new FileWriter(new File(pathname));)
+{
+for(char ch = 'A'; ch <= 'Z';++ch)
+writer.write(ch);
+	}
+}
+public static void readRecord( String pathname ) throws Exception{
+try(FileReader reader = new FileReader(new File(pathname)))
+{
+int data;
+while((data = reader.read())!= -1){
+System.out.println( (char)data + " ");
+}
+	} 
+}
+```
+
 1. demo Serializable 
 
 
