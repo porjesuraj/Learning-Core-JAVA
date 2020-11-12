@@ -7058,6 +7058,8 @@ extends Reader
 public static void writeRecord( String pathname ) throws Exception{
 	try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(pathname))))
 	{
+writer.write("Diploma In Advanced Computing");
+	writer.newLine();
 	for(char ch = 'A'; ch <= 'Z';++ch)
 		writer.write(ch);
 	}
@@ -7069,11 +7071,38 @@ try(BufferedReader reader = new BufferedReader(new FileReader(new File(pathname)
 	int data;
 while((data = reader.read())!= -1)
 {System.out.println( (char)data + " ");}
+
+String line = null;
+while((line = reader.readLine()) != null)
+System.out.println(line);
 	} 
 }
 ```
 
 
+- 4. demo to implement java p command functionality 
+```java
+public static void readRecord( String pathname,String search ) throws Exception{
+try(BufferedReader reader = new BufferedReader(new FileReader(new File(pathname))))
+{
+String line = null;
+int count = 0;
+while((line = reader.readLine())!= null) {
+		++count; 
+	if(line.contains(search)) {
+System.out.println(count + " " + line.trim());
+    }
+   }			
+ }
+}
+public static void main(String[] args) throws Exception {
+String pathName = "/home/sunbeam/dac/Core Java/java_module_classwork/Classwork/Day_15_12_Nov/Day_15.11/src/test/Program.java"; 
+
+String searchString = "public"; 
+Program.readRecord(pathName,searchString);
+ }
+}
+```
 1. demo non Serializable 
 
 
