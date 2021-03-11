@@ -197,6 +197,7 @@
 
 ## JDBC  
 
+## jdbc ppt 
 
 !['Day13_JDBC.2'](JDBC_13.2.png)
 !['Day13_JDBC.3'](JDBC_13.3.png)
@@ -209,3 +210,21 @@
 
 
 
+# Day 14
+!['Day14.1'](day_14.1.png)
+!['Day14.2'](day_14.2.png)
+!['Day14.3'](day_14.3.png)
+!['Day14.4'](day_14.4.png)
+!['Day14.5'](day_14.5.png)
+!['Day14.6'](day_14.6.png)
+!['Day14.7'](day_14.7.png)
+!['Day14.8'](day_14.8.png)
+!['Day14.9'](day_14.9.png)
+!['Day14.10'](day_14.10.png)
+!['Day14.11'](day_14.11.png)
+!['Day14.12'](day_14.12.png)
+!['Day14.13'](day_14.13.png)
+!['Day14.14'](day_14.14.png)
+!['Day14.15'](day_14.15.png)
+!['Day14.16'](day_14.16.png)
+!['Day14.17'](day_14.17.png)
